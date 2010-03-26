@@ -83,7 +83,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
     if ( ! isset( $details_link[$link]) )
     {
       $title = $item->get_title();
-      $content = $item->get_content();
+      $content = bim_clean_content( $item->get_content() );
       // create most of a new entry
       $entry = new StdClass;
       $entry->id = NULL; 
@@ -382,6 +382,56 @@ function bim_check_wrong_urls( $blog_url, $feed_url ) {
         return get_string( 'bim_wrong_feed_notfinished','bim', $feed_url );
     }
     return "";
+}
+
+/*
+ * $content = bim_clean_content( $content )
+ * - do some additional cleaning of the content of a blog post.
+ *   Mostly removing "special characters" from Word copy and paste
+ * - Yep, it's a kludge
+ */
+
+function bim_clean_content( $content ) {
+
+
+    $badchr = array (
+        'â€œ',  // left side double smart quote
+        'â€'.chr(157),  // right side double smart quote
+        'â€˜',  // left side single smart quote
+        'â€™',  // right side single smart quote
+        'â€¦',  // elipsis
+        'â€”',  // em dash
+        'â€“',  // en dash
+
+        '&#8217;', // single quote
+        '&#8211;', // dash
+
+        chr(149),
+        chr(150),
+        chr(151),
+        chr(153),
+        chr(169),
+        chr(174),
+
+        chr(194),
+        chr(160),
+        chr(226),
+        chr(156),
+        chr(128),
+        chr(157),
+        chr(147),
+        chr(152)
+    );
+
+    $goodchr    = array(
+        '"', '"', "'", "'", "...", "-", "-",
+        '\'', '-',
+        '&#8226;', '&ndash;', '&mdash;', '&#8482;', '&copy;', '&ref;',
+        ' ', ' ', '"', '', '', '', '', '' );
+
+    $post = str_replace($badchr, $goodchr, $post);
+
+    return $post;
 }
 
 ?>
