@@ -406,12 +406,6 @@ function bim_clean_content( $content ) {
         '&#8217;', // single quote
         '&#8211;', // dash
 
-        chr(149),
-        chr(150),
-        chr(151),
-        chr(153),
-        chr(169),
-        chr(174),
 
         chr(194),
         chr(160),
@@ -426,10 +420,9 @@ function bim_clean_content( $content ) {
     $goodchr    = array(
         '"', '"', "'", "'", "...", "-", "-",
         '\'', '-',
-        '&#8226;', '&ndash;', '&mdash;', '&#8482;', '&copy;', '&ref;',
-        ' ', ' ', '"', '', '', '', '', '' );
+        ' ', ' ', "'", '', '', '', '', '' );
 
-    $post = str_replace($badchr, $goodchr, $post);
+    $post = str_replace($badchr, $goodchr, $content);
 
     return $post;
 }
