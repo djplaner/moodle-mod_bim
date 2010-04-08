@@ -150,9 +150,9 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
       // add in the details column
       if ( isset( $feed_details[$row["id"]] ) )
       {
-        $row["details"] = '<a href="$CFG->wwwroot/mod/bim/view.php?id=' .
-                   $cm->id .'&tab=find&details=yes&student=' . 
-                   $row["id"] .'">Show details</a>';
+        $row["details"] = "<a href=\"$CFG->wwwroot/mod/bim/view.php?id=$cm->id".
+                          "&tab=find&details=yes&student=" . $row["id"] .
+                          '">Show details</a>';
       }
       else
       {
