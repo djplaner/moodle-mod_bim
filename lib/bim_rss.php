@@ -191,6 +191,7 @@ function bim_process_unallocated( $bim, $student_feed, $questions )
         {
           $detail->question = $unanswered_q; 
           $detail->status = "Submitted";
+          $detail->timereleased = 0; 
           
           $safe = addslashes_object( $detail );
           update_record( "bim_marking", $safe );
