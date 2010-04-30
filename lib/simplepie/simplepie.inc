@@ -7683,6 +7683,8 @@ class SimplePie_File
 			{
 				$this->method = SIMPLEPIE_FILE_SOURCE_REMOTE | SIMPLEPIE_FILE_SOURCE_CURL;
 				$fp = curl_init();
+                // uncomment the following if you're getting cURL error 60
+                //curl_setopt($fp, CURLOPT_SSL_VERIFYPEER, 0);
 				$headers2 = array();
 				foreach ($headers as $key => $value)
 				{
