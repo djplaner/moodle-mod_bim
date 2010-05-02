@@ -82,7 +82,9 @@ function bim_process_feed( $bim, $student_feed, $questions )
 
     if ( ! isset( $details_link[$link]) )
     {
-      $title = $item->get_title();
+      $title = bim_truncate( $item->get_title() );
+//      $title = $item->get_title() ;
+
       $content = bim_clean_content( $item->get_content() );
       // create most of a new entry
       $entry = new StdClass;
@@ -104,7 +106,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
           // loop through each of the unallocated questions
           foreach ( $unanswered_qs as $unanswered_q )
           {
-            if ( bim_check_post( $item->get_title(), $item->get_content(), 
+            if ( bim_check_post( $title, $item->get_content(), 
                                 $questions[$unanswered_q] ))
             {
               // the question now answered, remove from unanswered
