@@ -9,10 +9,14 @@ student blogs that are hosted on external blog engines.  More information
 about BIM available on the web
  http://davidtjones.wordpress.com/research/bam-blog-aggregation-management/
 
+The latest code and issues tracking around BIM is hosted on github
+    http://github.com/djplaner/BIM/
+
 *Installing BIM*
 
-1. Create a directory bim within the mod folder of a Moodle install.
-2. Put the BIM code in the bim directory
+1. Unpack the archive from github into the mod directory
+   of your moodle installation.
+2. Re-name the directory github created (e.g. djplaner-BIM-36784f5) to bim
 3. Login to your Moodle site as administrator
 4. Click on Notifications
 5. Moodle should install BIM
@@ -22,5 +26,6 @@ about BIM available on the web
 Go to a course site and add a BIM activity.  Follow online
 help from there.
 
+ http://davidtjones.wordpress.com/research/bam-blog-aggregation-management/
 
 
