@@ -799,4 +799,23 @@ function bim_show_questions( $cm, $bim ) {
     print_table( $question_table );
 }
 
+/**********
+ * bim_truncate( $string, $limit=252, $break=" ", $pad="..." )
+ * - shorten a string to a specified length
+ * - Adapted from here
+ *    http://www.the-art-of-web.com/php/truncate/
+ */
+
+function bim_truncate( $string, $limit = 250, $break = " ", $pad = "..." ) {
+    // return with no change if string is shorter than $limit  
+    if (strlen($string) <= $limit) return $string; 
+
+    $string = substr($string, 0, $limit); 
+
+    if(false !== ($breakpoint = strrpos($string, $break))) { 
+        $string = substr($string, 0, $breakpoint); 
+    } 
+    return $string . $pad; 
+}
+
 ?>
