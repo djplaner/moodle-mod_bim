@@ -114,9 +114,11 @@ function bim_get_feed_details( $bim, $user_ids )
 function bim_get_marking_details( $bim, $user_ids )
 {
     $ids_string = implode( ",", $user_ids );
+    // make sure it was valid
+    if ( $ids_string == "" ) return Array();
 
     $marking_details = get_records_select( "bim_marking",
-                       "bim=$bim and userid in ( $ids_string ) " );
+                       "bim=$bim and userid in ( $ids_string )" );
 
     return $marking_details;
 }
