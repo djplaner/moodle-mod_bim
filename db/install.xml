@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/bim/db" VERSION="20100212" COMMENT="XMLDB file for Moodle mod/bim.  At least the first version. Getting a bit further along."
+<XMLDB PATH="mod/bim/db" VERSION="20100502" COMMENT="XMLDB file for Moodle mod/bim.  At least the first version. Getting a bit further along."
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -47,7 +47,7 @@
         <FIELD NAME="marker" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Userid of the marker who has made comments (NULL if no marking)" PREVIOUS="userid" NEXT="question"/>
         <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="ID for the question in the bim_question table. A question that is unallocated would have a null value" PREVIOUS="marker" NEXT="mark"/>
         <FIELD NAME="mark" TYPE="number" LENGTH="4" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" ENUM="false" DECIMALS="2" COMMENT="The mark assigned by the marker for the question" PREVIOUS="question" NEXT="status"/>
-        <FIELD NAME="status" TYPE="char" LENGTH="12" NOTNULL="false" DEFAULT="Unallocated" SEQUENCE="false" ENUM="true" ENUMVALUES="'Submitted', 'Marked', 'Released', 'Unallocated', 'Suspended'" COMMENT="What status is the marking/post in?" PREVIOUS="mark" NEXT="timemarked"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="12" NOTNULL="false" DEFAULT="Unallocated" SEQUENCE="false" ENUM="true" ENUMVALUES="'Submitted', 'Marked', 'Released', 'Unallocated', 'Suspended', 'Deleted'" COMMENT="What status is the marking/post in?" PREVIOUS="mark" NEXT="timemarked"/>
         <FIELD NAME="timemarked" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Time when post was marked" PREVIOUS="status" NEXT="timereleased"/>
         <FIELD NAME="timereleased" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="date/time when post was most recently released" PREVIOUS="timemarked" NEXT="link"/>
         <FIELD NAME="link" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="The link to the post on the student's blog" PREVIOUS="timereleased" NEXT="timepublished"/>
