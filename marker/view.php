@@ -603,14 +603,17 @@ function bim_create_posts_display( $cm, $user_details, $feed_details,
             "<small>$marked of $answers</small>";
 
       // need to add details about each students question
+      // go through each question configured for the BIM activity
       foreach ( $questions as $question )
       {
-        // loop through all the student details and generate the text
-        foreach ( $stud_marking_details as $row )
-        {
+        // for a given question, loop through the rows from
+        // mdl_bim_marking for the student and generate what 
+        // needs to go into the cell
+        foreach ( $stud_marking_details as $row ) {
           $qid = $row->question;
+
+          // does the student have an entry for the current question
           if ( ! isset( $questions[$row->question] ) ) continue;
-          
           if ( $questions[$row->question]->title == $question->title )
           {
             if ( $row->status == "Submitted" )
@@ -637,6 +640,8 @@ function bim_create_posts_display( $cm, $user_details, $feed_details,
             break;
           }
         }
+        // nothing was put in place when looping through the students
+        // details.  Which implies, student hasn't answered yet
         if ( ! isset( $display[$user->id][$question->title] ) )
         {
           $display[$user->id][$question->title] = "<small>No answer</small>";
@@ -1030,7 +1035,8 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
         print_string('bim_mark_marker','bim' );
         echo '</ul>';
 
-        if ( ! update_record( 'bim_marking', $marking_details[$marking] ) )
+        $safe = addslashes_object( $marking_details[$marking] );
+        if ( ! update_record( 'bim_marking', $safe ))
         {
               error( get_string('bim_error_updating', 'bim') );
         }
