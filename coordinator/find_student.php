@@ -87,7 +87,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
 
   // any only those that match search
   $sql .= "( username like '%$search%' or email like '%$search%' or " .
-         "concat(firstname,lastname) like '%$search%' )";
+           "firstname || lastname like '%search%' )";
   $match_count = 0;
 
   if ( $matches = get_records_select( "user", $sql, 'lastname', 'id', 0, 200 ) )
