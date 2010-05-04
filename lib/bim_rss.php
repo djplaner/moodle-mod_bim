@@ -106,7 +106,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
           // loop through each of the unallocated questions
           foreach ( $unanswered_qs as $unanswered_q )
           {
-            if ( bim_check_post( $title, $item->get_content(), 
+            if ( bim_check_post( $title, $content, 
                                 $questions[$unanswered_q] ))
             {
               // the question now answered, remove from unanswered
