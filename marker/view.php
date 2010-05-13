@@ -1035,6 +1035,9 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
         print_string('bim_mark_marker','bim' );
         echo '</ul>';
 
+        if ( !isset( $marking_details[$marking]->timereleased )) {
+            $marking_details[$marking]->timereleased = 0;
+        }
         $safe = addslashes_object( $marking_details[$marking] );
         if ( ! update_record( 'bim_marking', $safe ))
         {
