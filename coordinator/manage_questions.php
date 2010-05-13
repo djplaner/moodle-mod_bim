@@ -27,18 +27,14 @@ function bim_manage_questions( $bim, $cm )
     $num_questions = count( $questions );
     if ( empty($questions)) $num_questions=0;
 
-//print_object( $questions );
     $questions = bim_get_question_response_stats( $questions );
 
-    if ( $num_questions > 0 )
-    {
-      print_string( 'bim_questions_current', 'bim', $num_questions );
-    }
-    else
-    {
-      print_heading( get_string( 'bim_questions_none_heading', 'bim' ),
+    if ( $num_questions > 0 ) {
+        print_string( 'bim_questions_current', 'bim', $num_questions );
+    } else {
+        print_heading( get_string( 'bim_questions_none_heading', 'bim' ),
                          'left', 2 );
-      print_string( 'bim_questions_none_description', 'bim' );
+        print_string( 'bim_questions_none_description', 'bim' );
     }
 
     $question_form = bim_get_question_form( $questions, $cm );
@@ -48,7 +44,6 @@ function bim_manage_questions( $bim, $cm )
       add_to_log( $cm->course, "bim", "Questions manage",
                  "view.php?id=$cm->id&tab=questions",
                 "Display", $cm->id );
-      //$question_form->set_data( $toform );
       $question_form->display();
     }
     else if ( $question_form->is_cancelled() )
@@ -73,7 +68,7 @@ function bim_manage_questions( $bim, $cm )
         $new_question->max_mark = $fromform->max_new;
         $new_question->body = addslashes(
                preg_replace( '/^ /', '', $fromform->body_new ) );
-       $new_question->bim = $bim->id;
+        $new_question->bim = $bim->id;
         $new_question->id = '';
 
         print_string( 'bim_questions_adding', 'bim', $fromform->title_new );
@@ -135,8 +130,6 @@ function bim_manage_questions( $bim, $cm )
             // get a copy so the unsert won't cause problems
             $changed[$qid] = clone $question;
             unset( $changed[$qid]->status );
-            $changed[$qid]->body = addslashes( $changed[$qid]->body );
-            $changed[$qid]->title = addslashes( $changed[$qid]->title );
           }
         }
       }
