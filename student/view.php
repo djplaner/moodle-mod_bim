@@ -54,16 +54,6 @@ function show_student_details( $bim, $userid, $cm ) {
         return;
     }
   
-    // Get data from bim_student_feeds
-/*    if ( ! $feedDetails = get_record( "bim_student_feeds", "bim", $bimid,
-                               "userid", $userid )) {
-        print_heading( get_string( 'student_details_nofeed_description', 'bim' ), 
-                         "left", 1 );
-        $a = $user->firstname . ' ' . $user->lastname;
-        print_string( 'student_details_nofeed_description','bim',$a );
-        return;
-    }*/
-
     //***** Get the question hash
     $question_hash = bim_get_question_hash( $bimid );
     $total_questions = count($question_hash);
