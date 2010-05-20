@@ -62,6 +62,15 @@ function show_student_details( $bim, $userid, $cm ) {
     $student_ids = array( $userid );
     $feed_details = bim_get_feed_details( $bim->id, $student_ids );
 
+    // report error if no feed found
+    if ( empty( $feed_details )) {
+        print_heading( get_string( 'student_details_nofeed_description', 'bim' ),
+                         "left", 1 ); 
+        $a = $user->firstname . ' ' . $user->lastname;
+        print_string( 'student_details_nofeed_description','bim',$a ); 
+        return;
+    }
+
     // If questions, then process the feed
     if ( ! empty( $question_hash ) ) {
         bim_process_feed( $bim, $feed_details[$userid], $question_hash );
