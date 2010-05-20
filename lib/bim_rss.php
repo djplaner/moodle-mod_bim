@@ -417,13 +417,14 @@ function bim_clean_content( $content ) {
         chr(128),
         chr(157),
         chr(147),
-        chr(152)
+        chr(152),
+        chr(153)
     );
 
     $goodchr    = array(
         '"', '"', "'", "'", "...", "-", "-",
         '\'', '-',
-        ' ', ' ', "'", '', '', '', '', '' );
+        ' ', ' ', "'", '', '', '', '', '', '' );
 
     $post = str_replace($badchr, $goodchr, $content);
 
