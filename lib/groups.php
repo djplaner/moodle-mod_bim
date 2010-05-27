@@ -75,10 +75,14 @@ function bim_get_all_students( $cm )
             
   // generate string of ids ready for select
   $ids = array_keys( $students );
-  $ids_string = implode( ",", $ids );
 
-  // get the user details of all the students
-  $student_details = get_records_select( "user", "id in ( $ids_string ) " );
+  $student_details = Array();
+  if ( ! empty ( $ids ) ) {
+      $ids_string = implode( ",", $ids );
+
+      // get the user details of all the students
+      $student_details = get_records_select( "user", "id in ( $ids_string ) " );
+  }
 
   return $student_details;
 }
