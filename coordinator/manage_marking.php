@@ -56,7 +56,7 @@ function bim_manage_marking( $bim, $userid, $cm )
   $question_titles = array();
   foreach ( (array)$questions as $question )
   {
-    $question_titles[] = $question->title;
+    $question_titles[$question->id] = $question->title;
   }
 
   // markers details and the makers student information
@@ -89,17 +89,14 @@ function bim_manage_marking( $bim, $userid, $cm )
     $table->set_attribute('class', 'generalbox reporttable');
 
     $columns = array( 'marker', 'studs' );
-    $columns = array_merge( $columns, $question_titles );
+    $columns = array_merge( $columns, array_keys( $question_titles ) );
     $table->define_columns( $columns );
     $headers = array( 'Marker', 'Studs' );
 
     // set the column titles for the questions, including link to
     // release posts if there are any Marked posts for the question
-    foreach ( $question_titles as $title )
+    foreach ( $question_titles as $qid => $title )
     {
-      $qid = bim_get_question_id( $title, $questions );
-      if ( $qid != -1 )
-      {
         $newTitle = $title;
         if ( $questions[$qid]->status["Marked"] != 0 )
         {
@@ -107,7 +104,6 @@ function bim_manage_marking( $bim, $userid, $cm )
                    '&op=release&question='.$qid.'">release</a></small>';
         }
         $headers[] = $newTitle;
-      }
     }
     $table->define_headers( $headers );
     $table->setup();
@@ -134,11 +130,8 @@ function bim_manage_marking( $bim, $userid, $cm )
       $num_students = count( $marker->students );
       $entry["studs"] = $num_students;
 
-      foreach ( $question_titles as $title )
+      foreach ( $question_titles as $qid =>$title  )
       {
-        $qid = bim_get_question_id( $title, $questions );
-        if ( $qid != -1 )
-        {
           $question_stats = bim_get_marker_question_stats( $marker, 
                                        $qid, $questions );
        
@@ -148,7 +141,8 @@ function bim_manage_marking( $bim, $userid, $cm )
             $mark = '<a href="'.$base_url.'&op=release&marker='.$marker->marker.
                   '&question='.$qid.'">Marked:</a>';
           }
-          $entry[$title] = '<table border="0">';
+          #$entry[$title] = '<table border="0">';
+          $entry[$qid] = '<table border="0">';
      
           foreach ( array( "Submitted", "Marked", "Suspended", "Released", "Missing" ) as $status)
           {
@@ -160,7 +154,8 @@ function bim_manage_marking( $bim, $userid, $cm )
                        '&question='.$qid.'&status='.$status.'">'.$label.'</a>';
             }
 
-            $entry[$title] .= '<tr><th align="right"><small>'.$label.
+            #$entry[$title] .= '<tr><th align="right"><small>'.$label.
+            $entry[$qid] .= '<tr><th align="right"><small>'.$label.
                  '</small></th><td align="right"><small>'.
                  $question_stats[$status].'</small></td></tr>';
           }
@@ -168,16 +163,17 @@ function bim_manage_marking( $bim, $userid, $cm )
            // add the release for this question/marker if any in marked state
            if ( $question_stats["Marked"] != 0 )
            {
-             $entry[$title] .= 
+             #$entry[$title] .= 
+             $entry[$qid] .= 
                  '<tr><td colspan="2" align="center"><small><a href="' .
                  $base_url.'&op=release&marker='.$marker->marker.
                    '&question='.$qid.'">release</a><small></td></tr></table>';
            }
            else
            {
-             $entry[$title] .= '</table>';
+             #$entry[$title] .= '</table>';
+             $entry[$qid] .= '</table>';
            }
-         }
       }
       $table->add_data_keyed( $entry );
     }
