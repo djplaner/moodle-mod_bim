@@ -419,27 +419,6 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim )
   return $markers_students;
 }
 
-/******
- * $qid = bim_get_question_id( $title, $questions )
- * - given an array of content from bim_questions and a title
- *   return the id
- * - return -1 if no such title
- */
-
-function bim_get_question_id( $title, $questions )
-{
-  $qid = 0;
-  foreach ( $questions as $question )
-  {
-    if ( $question->title == $title )
-    {
-      $qid = $question->id;
-      return $qid;
-    }
-  }
-  return -1;
-}
-
 /*******
  * $q_stats = bim_get_marker_question_stats( $marker, $qid, $questions )
  * - given a array of marker stats (how many posts for each question in
