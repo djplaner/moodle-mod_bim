@@ -75,11 +75,11 @@ function bim_backup_one_mod( $bf, $preferences, $bim ) {
     $status = backup_bim_questions( $bf, $preferences, $bim->id );
 
     // do the user level data if chosen
-//    if ( backup_userdata_selected( $preferences, 'bim', $bim->id ) ) {
-//        $status = backup_bim_group_allocation( $bf, $preferences, $bim->id );
-//        $status = backup_bim_student_feeds( $bf, $preferences, $bim->id );
-//        $status = backup_bim_marking( $bf, $preferences, $bim->id );
-//    }
+    if ( backup_userdata_selected( $preferences, 'bim', $bim->id ) ) {
+        $status = backup_bim_group_allocation( $bf, $preferences, $bim->id );
+        $status = backup_bim_student_feeds( $bf, $preferences, $bim->id );
+        $status = backup_bim_marking( $bf, $preferences, $bim->id );
+    }
 
     //end MOD
     $status = fwrite( $bf, end_tag( "MOD", 3, true ));
@@ -237,7 +237,7 @@ function backup_bim_marking( $bf, $preferences, $bim ) {
 // Is this where we return the information to backup.php so it
 // it knows what options to display?
 
-function bim_check_backup_mods( $course, $user_data=false, 
+function bim_check_backup_mods( $course, $user_data=true, 
                                 $backup_unique_code, $instances=null ) {
 
     if ( !empty($instances) && is_array($instances) && count($instances)) {
@@ -259,7 +259,7 @@ function bim_check_backup_mods( $course, $user_data=false,
     } 
 
     // Now the user data, if requested
-/*    if ( $user_data ) {
+    if ( $user_data ) {
         // go through each of the user level tables
         // group_allocation
         $info[1][0] = get_string("group_allocation","forum");
@@ -284,7 +284,7 @@ function bim_check_backup_mods( $course, $user_data=false,
         } else {
             $info[3][1] = 0;
         }
-    } */
+    } 
 
     return $info;
 }
@@ -298,7 +298,7 @@ function bim_check_backup_mods_instances( $instance, $backup_unique_code ) {
     $info[$instance->id.'0'][1] = '';
 
     // user data if requested
-/*    if ( ! empty( $instances->userdata) ) {
+    if ( ! empty( $instances->userdata) ) {
         // one entry for each type of user data
 
         // group_allocation
@@ -323,7 +323,7 @@ function bim_check_backup_mods_instances( $instance, $backup_unique_code ) {
             $info[$instance->id.'3'][1]  = 0;
         }
 
-    }*/
+    }
 
     return $info;
 }
