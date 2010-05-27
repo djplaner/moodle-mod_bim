@@ -347,9 +347,7 @@ function bim_manage_view( $bim, $userid, $cm )
       // if there's a marker specified , just get all markers students
       if ( $marker == "" ) {
           $all_students = bim_get_all_students( $cm );
-      }
-      else
-      {
+      } else {
           $all_students = $marker_students;
       }
       // remove from this list the students that match the criteria
@@ -375,30 +373,26 @@ function bim_manage_view( $bim, $userid, $cm )
   print_heading( get_string( 'bim_release_manage_header', 'bim' ), "left", 2 );
   $a = count( $student_details );
   print_string( 'bim_release_manage_view', 'bim', $a );
-  if ( $marker == 0 && $status == "" && $question == 0  )
-  {
+  if ( $marker == 0 && $status == "" && $question == 0  ) {
     print_string( 'bim_release_manage_any', 'bim' );
-  }
-  else
-  {
+  } else {
     print_string( 'bim_release_manage_criteria', 'bim' );
     if ( $status != "" )
       print_string( 'bim_release_manage_status', 'bim', $status );
-    if ( $marker != "" )
-    {
+    if ( $marker != "" ) {
       // get marker user details
       $marker_details = get_records_select( "user", "id=$marker" );
       $a = $marker_details[$marker]->firstname . ' ' .
            $marker_details[$marker]->lastname;
       print_string( 'bim_release_manage_marker', 'bim', $a );
     }
-    if ( $question != "" )
+    if ( $question != "" ) {
       print_string( 'bim_release_manage_response', 'bim',
                       $questions[$question]->title );
+    }
     echo '</ul>';
   }
   print_string( 'bim_release_return', 'bim', $base_url );
-
   if ( $registered )
   {
     print_heading( get_string( 'bim_release_manage_registered_heading', 'bim' ),
@@ -406,6 +400,7 @@ function bim_manage_view( $bim, $userid, $cm )
     $a = count($registered);
     print_string( 'bim_release_manage_registered_description', 'bim', $a );
     $table = bim_setup_posts_table( $cm, $bim->id, $userid, $questions  );
+
     $reg_data = bim_create_posts_display( $cm, $registered, $feed_details,
                                 $marking_details, $questions );
     foreach ( $reg_data as $row )
