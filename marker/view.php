@@ -512,7 +512,7 @@ function bim_setup_posts_table( $cm, $bim, $userid, $questions )
       {
         foreach ( $questions as $id => $question )
         {
-          $columns[] = $question->title;
+          $columns[] = $id;
           $headers[] = $question->title;
           $no_sorting[] = $question->title;
         }
@@ -604,7 +604,7 @@ function bim_create_posts_display( $cm, $user_details, $feed_details,
 
       // need to add details about each students question
       // go through each question configured for the BIM activity
-      foreach ( $questions as $question )
+      foreach ( $questions as $bim_qid => $question )
       {
         // for a given question, loop through the rows from
         // mdl_bim_marking for the student and generate what 
@@ -614,24 +614,24 @@ function bim_create_posts_display( $cm, $user_details, $feed_details,
 
           // does the student have an entry for the current question
           if ( ! isset( $questions[$row->question] ) ) continue;
-          if ( $questions[$row->question]->title == $question->title )
+          if ( $qid == $bim_qid )
           {
             if ( $row->status == "Submitted" )
             {
-              $display[$user->id][$question->title] =
+              $display[$user->id][$qid] =
                 '<small><a href="'.$row->link.'">'.
                 get_string('bim_answer','bim').'</a><br />'.
                 '<a href="'.$baseurl.'&screen=MarkPost&markingId='.$row->id.
                 '">'. get_string('bim_not_marked','bim').'</a>';
             }
             else if ( $row->status == "Suspended" ) {
-                $display[$user->id][$question->title] = 
+                $display[$user->id][$qid] = 
                     '<small><a href="'.$row->link.'">'.
                     get_string('bim_answer','bim').'</a><br />'.
                     '<a href="'.$baseurl.'&screen=MarkPost&markingId='.$row->id.
                     '">'. get_string('bim_suspended','bim').'</a>';
             } else {
-                $display[$user->id][$question->title] = 
+                $display[$user->id][$qid] = 
                  '<small><a href="'.$row->link.'">'.
                         get_string('bim_answer','bim') . '</a><br />'.
                   '(<a href="'.$baseurl.'&screen=MarkPost&markingId='.$row->id.
@@ -642,9 +642,9 @@ function bim_create_posts_display( $cm, $user_details, $feed_details,
         }
         // nothing was put in place when looping through the students
         // details.  Which implies, student hasn't answered yet
-        if ( ! isset( $display[$user->id][$question->title] ) )
+        if ( ! isset( $display[$user->id][$bim_qid] ) )
         {
-          $display[$user->id][$question->title] = "<small>No answer</small>";
+          $display[$user->id][$bim_qid] = "<small>No answer</small>";
         }
       }
     } 
