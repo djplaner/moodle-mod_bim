@@ -41,34 +41,23 @@ function bim_restore_mods( $mod, $restore ) {
         backup_flush( 300 );
 
         if ( $newid ) {
-print '<h1> Starting object </h1>';
-print_object( $bim );
             backup_putid( $restore->backup_unique_code, $mod->modtype,
                           $mod->id, $newid );
-print "<h2> starting questions </h2>";
-print "..got new id $newid**<br />";
             $status = bim_questions_restore_mods( $newid, $info, $restore );
 
             if ( restore_userdata_selected( $restore, 'bim', $mod->id ) ){
                 // group allocation
                 if ( $status ) {
-print "<h2> starting allocations</h2>";
-print "..got questions and status is $status**<br />";
                     $status = bim_allocations_restore_mods( 
                                 $newid, $info, $restore );
                 } else { echo 'No restore questions mod<br />'; }
                 // student feed
                 if ( $status ) {
-print "<h2>start feeds</h2>";
-print "..got allocations and status is $status**<br />";
                     $status = bim_feeds_restore_mods( $newid, $info, $restore );
                 }
                 // marking
                 if ( $status ) {
-print "<h2>start marking</h2>";
-print "..got feeds and status is $status**<br />";
                     $status = bim_marking_restore_mods( $newid, $info, $restore );
-print "..got marking and status is $status**<br />";
                 }
             } 
         } else {
@@ -119,12 +108,10 @@ function bim_questions_restore_mods( $bimid, $info, $restore ) {
         }
 
         if ( $newid ) {
-print "<strong>Saving</strong>: bim_questions *$oldid* bcoming *$newid*<br />";
             backup_putid( $restore->backup_unique_code, "bim_questions", 
                           $oldid, $newid );
         } else {
             $status = false;
-echo 'No insert question<br />';
         }
     }
     return $status;
