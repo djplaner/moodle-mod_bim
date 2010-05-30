@@ -454,7 +454,12 @@ function show_marker_student_details( $bim, $userid, $cm )
       $unreg_data = bim_create_details_display( $unregistered, $feed_details, 
                                 $cm );
 
-      bim_show_unregistered_students_email( $unregistered );
+      // show the "email merge" form for 
+      $returnto = $url;
+      $userids = array_keys( $unregistered );
+      bim_email_merge( $userids, $cm->course, $returnto, 
+                        "Email unregistered students" );
+      print "<p>&nbsp;</p>";
 
       $table = bim_setup_details_table( $cm, $bim->id, $userid, 'unregistered' );
       foreach ( $unreg_data as $row )
