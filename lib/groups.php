@@ -173,22 +173,4 @@ function bim_get_all_markers_groups( $bim, $markers_ids )
   return $groups;
 }
 
-/****
- * bim_show_unregistered_students_email( $unreg )
- * - given a list of unregistered students details, show a textbox
- *   that contains their email addresses, ready to copy and past
- */
-
-function bim_show_unregistered_students_email( $unreg ) {
-
-      $unreg_email = Array();
-      foreach ( $unreg as $data ) {
-          $unreg_email[] = $data->email;
-      }
-      $email = implode( ';', $unreg_email );
-      print_string( 'bim_details_unreg_email_list', 'bim' );
-      print_textfield( 'Unregistered students\' email', $email );
-      echo '<p>&nbsp;</p>';
-}
-
 ?>
