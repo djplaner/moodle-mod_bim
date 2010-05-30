@@ -799,4 +799,30 @@ function bim_truncate( $string, $limit = 250, $break = " ", $pad = "..." ) {
     return $string . $pad; 
 }
 
+/*******
+ * bim_email_merge( $ids, $course, $returnto, $button_msg )
+ * - display/generate a form with submit button to generate
+ *   an email merge with selected users ($ids) for $course
+ *   from $returnto
+ * - $button_msg text on the button
+ */
+
+function bim_email_merge( $ids, $course, $returnto, $button_msg ) {
+
+    global $CFG;
+
+    print <<<EOF
+<form method="post" action="$CFG->wwwroot/user/messageselect.php" />
+<input type="hidden" name="id" value="$course" />
+<input type="hidden" name="returnto" value="$returnto" />
+<input type="hidden" name="formaction" value="messageselect.php" />
+<input type="submit" name="submit" value="$button_msg" />
+EOF;
+
+    foreach ( $ids as $id )  {          
+        print "<input type=\"hidden\" name=\"user{$id}\" value=\"on\" />";      
+    }
+    print "</form>";
+}
+
 ?>
