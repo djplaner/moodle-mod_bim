@@ -235,6 +235,7 @@ $string['bim_details_unreg_email_list'] = 'Unregistered students\' email address
 $string['bim_details_registered_heading'] = 'Registered student details';
 $string['bim_student_details_heading'] = 'Your students';
 $string['bim_details_count'] = '<p><strong>You have:</strong> $a->unregistered <a href=\"#unreg\">unregistered students</a>, and $a->registered <a href=\"#reg\">registered students.</a></p><p><strong>You can:</strong> View the students\' details below, or <a href=\"$a->mark\">mark their posts</a>. (see the green navigation box up and to the right.)</p>';
+$string['bim_details_opml'] = '<p>$a->help Download OPML file: <a href=\"$a->url\">your students</a></p>';
 $string['bim_details_unavailable'] = 'unavailable';
 // bim_change_blog_registration
 $string['bim_change_heading'] = 'Change student feed';
