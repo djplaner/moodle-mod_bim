@@ -35,6 +35,8 @@ function show_student( $bim, $userid, $cm, $course) {
             show_student_details( $bim, $userid, $cm );
         }
     }
+
+    print_footer( $course );
 }
 
 /*
@@ -251,4 +253,3 @@ function show_register_feed( $bim, $userid, $cm) {
 }
 
 ?>
-

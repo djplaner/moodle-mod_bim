@@ -448,8 +448,11 @@ function show_marker_student_details( $bim, $userid, $cm )
     print_heading( get_string( 'bim_student_details_heading','bim').$help,
                    'left',2);
     print_string( 'bim_details_count', 'bim', $a );
-    $opml_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=generateOpml";
-    print_string( 'bim_details_opml', 'bim', $opml_url );
+    $help = helpbutton( 'opml', 'opml', 'bim', true, false, '', true );
+    $opml->url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=generateOpml";
+    $opml->help = $help;
+
+    print_string( 'bim_details_opml', 'bim', $opml );
 
     //********* View data
     // uncregistred students
@@ -1237,4 +1240,3 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
 }
 
 ?>
-
