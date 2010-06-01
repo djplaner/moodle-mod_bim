@@ -11,6 +11,7 @@ require_once($CFG->dirroot.'/mod/bim/marker/allocation_form.php');
 require_once($CFG->dirroot.'/mod/bim/marker/marking_form.php');
 require_once($CFG->dirroot.'/mod/bim/marker/lib.php');
 require_once($CFG->dirroot.'/mod/bim/marker/change_blog_form.php');
+require_once($CFG->dirroot.'/mod/bim/marker/generateOpml.php');
 
 /*************************************
  * show_marker( $bim, $userid, $cm )
@@ -24,7 +25,9 @@ function show_marker( $bim, $userid, $cm, $course )
     $screen = optional_param('screen', 0, PARAM_ALPHA);
     if ( $screen == "" ) $screen = "ShowDetails";
 
-    bim_print_header( $cm, $bim, $course, $screen);
+    if ( $screen != "generateOpml" ) {
+        bim_print_header( $cm, $bim, $course, $screen);
+    }
 
     //** create the tabs
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
@@ -47,6 +50,12 @@ function show_marker( $bim, $userid, $cm, $course )
         bim_change_blog_registration( $bim, $student, $cm );
     } else if ( $screen == "showQuestions" ) {
         bim_show_questions( $cm, $bim );
+    } else if ( $screen == "generateOpml" ) {
+        bim_generate_opml( $cm, $bim );
+    }
+
+    if ( $screen != "generateOpml" ) {
+        print_footer( $course );
     }
 }
 
@@ -439,6 +448,8 @@ function show_marker_student_details( $bim, $userid, $cm )
     print_heading( get_string( 'bim_student_details_heading','bim').$help,
                    'left',2);
     print_string( 'bim_details_count', 'bim', $a );
+    $opml_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=generateOpml";
+    print_string( 'bim_details_opml', 'bim', $opml_url );
 
     //********* View data
     // uncregistred students
