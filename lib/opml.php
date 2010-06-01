@@ -12,7 +12,6 @@
  */
 
 function bim_generate_opml_string( $structure ) {
-    $opml = ""; 
     $header_fields = Array( "title", "dateCreated", "dataModified",
                             "ownerName", "ownerEmail" );
     $item_fields = Array( "text", "description", "htmlUrl", "language",
