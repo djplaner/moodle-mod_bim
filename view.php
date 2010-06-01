@@ -43,8 +43,7 @@ $id = optional_param('id', 0, PARAM_INT);
 // $course - row from course
 // $bim - row from bim
 
-if ($id) 
-{
+if ($id) {
     if (! $cm = get_coursemodule_from_id('bim', $id)) {
         error('Course Module ID was incorrect');
     }
@@ -88,33 +87,21 @@ if ( empty($USER->id)) {
     $userid = $USER->id;
 }
 
-
 //*****************************
-// Let's show the different user screens
+// Time to handle over to the different functions that
+// figure out what to show for each "type of user"
 
 if ( has_capability( 'mod/bim:coordinator', $context)) {
-// administrator can the configure stuff
+    // administrator can the configure stuff
     show_coordinator( $bim, $userid, $cm, $course );
 }else if (has_capability('mod/bim:student', $context)) {
-// student can see details of their registered blog
+    // student can see details of their registered blog
     show_student($bim, $userid, $cm, $course );
-//}elseif ( has_capability('mod/bim:marker', $context )) {
-}
-else if ( has_capability( 'mod/bim:marker', $context )) {
+} else if ( has_capability( 'mod/bim:marker', $context )) {
     show_marker( $bim, $userid, $cm, $course );
-}
-else
-{
+} else {
   error( "No capability to access this page" );
 }
-/*$courseContext = get_context_instance( CONTEXT_COURSE, $bim->course );
-if ( $roles = get_user_roles( $courseContext, $USER->id ) ){
-    foreach ( $roles as $role ) {
-        echo $role->roleid . ' -- ' . $role->name . '<br />';
-    }
-}*/
-/// Finish the page
-print_footer($course);
 
 
 ?>
