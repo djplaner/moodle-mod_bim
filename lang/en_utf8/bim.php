@@ -100,7 +100,7 @@ $string['bim_release_errors'] = '<p>Errors encountered while releasing results.<
 $string['bim_release_return'] = '<p>Return to <a href=\"$a\">manage marking</a></p>';
 // bim_manage_view
 $string['bim_release_manage_header'] = 'View details';
-$string['bim_release_manage_view'] = '<p>Viewing details of $a students';
+$string['bim_release_manage_view'] = '<p>Viewing details of $a->match students (<a href=\"#registered\">$a->registered registered</a> and <a href=\"#unregistered\">$a->unregistered unregistered</a>)';
 $string['bim_release_manage_any'] = ' with any posts.</p>';
 $string['bim_release_manage_criteria'] = ' with posts matching these criteria:</p><ul>';
 $string['bim_release_manage_status'] = '<li> status equal to <strong>$a</strong></li>';
