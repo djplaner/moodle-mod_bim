@@ -204,7 +204,11 @@ function bim_manage_marking( $bim, $userid, $cm )
   print_container( "<p>The following " . count($unregistered) . 
                    " student(s) have not yet registered their feeds</p>" );
   // show the email textbox
-  bim_show_unregistered_students_email( $unregistered );
+  //bim_show_unregistered_students_email( $unregistered );
+  $userids = array_keys( $unregistered );
+  bim_email_merge( $userids, $cm->course, $base_url, 
+                   "Email unregistered students" );
+  echo '<br />';
   $table->print_html();
 }
 
