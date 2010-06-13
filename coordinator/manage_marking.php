@@ -317,19 +317,15 @@ function bim_manage_view( $bim, $userid, $cm )
   $status = optional_param( "status", NULL, PARAM_ALPHA);
   $marker = optional_param( "marker", NULL, PARAM_INT);
   $question = optional_param( "question", NULL, PARAM_INT);
-  // - detailed checks not needed, should come out in SQL
-  //   results 
 
   // get list of all student ids that have posts matching
   // details from parameters i.e. 
   //    select distinct userid from bim_marking where
   //        status='' and marker='' and question=''
-
   $sql = "";
   $students = array();
 
   // get the students that match the critiera
-
   $sql = "select distinct userid as userid from {$CFG->prefix}bim_marking " .
          "where bim=$bim->id";
 
@@ -363,7 +359,8 @@ function bim_manage_view( $bim, $userid, $cm )
       $ids = array_keys( $matching_students );
   }
 
-  // get list of student_details, $marking_details and feed_details
+  // give the list of students matching the critera
+  // get their details, marking and feed details
   // for all students in STATUS MARKER and QUESTION 
   $feed_details = bim_get_feed_details( $bim->id, $ids );
   $marking_details = bim_get_marking_details( $bim->id, $ids );
@@ -373,10 +370,15 @@ function bim_manage_view( $bim, $userid, $cm )
   $unregistered = array_diff_key( $student_details, $feed_details);
   $registered = array_diff_key( $student_details, $unregistered );
 
-  // Show the data??
+  //**************************
+  // Show the what we found
   print_heading( get_string( 'bim_release_manage_header', 'bim' ), "left", 2 );
-  $a = count( $student_details );
+  $a->match = count( $student_details );
+  $a->registered = count( $registered );
+  $a->unregistered = count($unregistered);
+  // how many students matched
   print_string( 'bim_release_manage_view', 'bim', $a );
+
   if ( $marker == 0 && $status == "" && $question == 0  ) {
     print_string( 'bim_release_manage_any', 'bim' );
   } else {
@@ -396,13 +398,20 @@ function bim_manage_view( $bim, $userid, $cm )
     }
     echo '</ul>';
   }
+  // show email merge
+  bim_email_merge( array_keys( $student_details), $cm->course, $base_url,
+                    "Email all matching students" );
   print_string( 'bim_release_return', 'bim', $base_url );
   if ( $registered )
   {
+    echo '<a name="registered"></a>';
     print_heading( get_string( 'bim_release_manage_registered_heading', 'bim' ),
                         "left", 2 );
     $a = count($registered);
     print_string( 'bim_release_manage_registered_description', 'bim', $a );
+    bim_email_merge( array_keys( $registered), $cm->course, $base_url,
+                    "Email registered students" );
+    echo '<br />';
     $table = bim_setup_posts_table( $cm, $bim->id, $userid, $questions  );
 
     $reg_data = bim_create_posts_display( $cm, $registered, $feed_details,
@@ -416,10 +425,14 @@ function bim_manage_view( $bim, $userid, $cm )
 
   if ( $unregistered )
   {
+    echo '<a name="unregistered"></a>';
     print_heading(get_string('bim_release_manage_unregistered_heading', 'bim' ),
                             "left", 2 );
     $a = count($unregistered);
     print_string( 'bim_release_manage_unregistered_description', 'bim', $a );
+    bim_email_merge( array_keys( $unregistered), $cm->course, $base_url,
+                    "Email unregistered students" );
+    echo '<br />';
     $unreg_data = bim_create_details_display( $unregistered, $feed_details, $cm );
     $table = bim_setup_details_table( $cm, $bim->id, $userid, 'unregistered' );
     foreach ( $unreg_data as $row )
