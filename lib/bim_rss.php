@@ -396,8 +396,20 @@ function bim_check_wrong_urls( $blog_url, $feed_url ) {
 
 function bim_clean_content( $content ) {
 
+  // thanks http://www.toao.net/48-replacing-smart-quotes-and-em-dashes-in-mysql
+  // First, replace UTF-8 characters
+  $content = str_replace( array("\xe2\x80\x98", "\xe2\x80\x99", "\xe2\x80\x9c", 
+                                "\xe2\x80\x9d", "\xe2\x80\x93", "\xe2\x80\x94", 
+                                "\xe2\x80\xa6"),
+                          array("'", "'", '"', '"', '-', '--', '...'), $content);
+  // Next, replace their Windows-1252 equivalents.
+  $content = str_replace( array(chr(145), chr(146), chr(147), chr(148), chr(150),
+                                chr(151), chr(133)),
+                          array("'", "'", '"', '"', '-', '--', '...'), $content);
 
-    $badchr = array (
+
+  $badchr = array (
+         chr(153),
          chr(0xe2) . chr(0x80) . chr(0x98),
          chr(0xe2) . chr(0x80) . chr(0xa6),
          chr(187),
@@ -406,8 +418,8 @@ function bim_clean_content( $content ) {
          chr(132), chr(162), chr(196), chr(129), chr(148), chr(195),
         'â€œ',  // left side double smart quote
         'â€'.chr(157),  // right side double smart quote
-        'â€˜',  // left side single smart quote
-        'â€™',  // right side single smart quote
+  //      'â€˜',  // left side single smart quote
+   //     'â€™',  // right side single smart quote
         'â€¦',  // elipsis
         'â€”',  // em dash
         'â€“',  // en dash
@@ -428,11 +440,15 @@ function bim_clean_content( $content ) {
     );
 
     $goodchr    = array(
+        "**'++",
         '&lsquo;',
         '...',
         '',
         '', '', '', '', '', '', '', '',
-        '"', '"', "'", "'", "...", "-", "-",
+        '"', '"', 
+//        "'", 
+ //       "'", 
+        "...", "-", "-",
         '\'', '-',
         ' ', ' ', "'", '', '', '', '', '', '', '', 
         '', '', '', '' );
