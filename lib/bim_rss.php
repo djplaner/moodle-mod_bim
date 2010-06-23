@@ -97,6 +97,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
       $entry->status = "Unallocated";
       $entry->timepublished = $item->get_date( "U" );
       $entry->timemarked = NULL; 
+      $entry->timereleased = NULL; 
       $entry->link = $link;
       $entry->title = $title;
       $entry->post = $content;
