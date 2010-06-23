@@ -246,11 +246,11 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
             // Change status to unallocated and question to NULL
             $detail->status = "Unallocated";
             $detail->question = "";
-            // update database
-//            if ( ! set_field( 'bim_marking', 'status', $detail->status,
- //                             'question', $detail->question ) )
             $post = $detail->post;
             $detail->post = addslashes( $detail->post );
+            if ( !isset( $detail->timereleased )) {
+                $detail->timereleased = 0;
+            }
             if ( ! update_record( 'bim_marking', $detail ) )
             {
               error( get_string('bim_error_updating','bim') );
@@ -276,6 +276,9 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
             // update database
             $post = $detail->post;
             $detail->post = addslashes( $detail->post );
+            if ( !isset( $detail->timereleased )) {
+                $detail->timereleased = 0;
+            }
             if ( ! update_record( 'bim_marking', $detail ) )
             {
               error( get_string('bim_error_updating','bim') );
@@ -1058,6 +1061,9 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
             $marking_details[$marking]->timereleased = 0;
         }
         $safe = addslashes_object( $marking_details[$marking] );
+        if ( !isset( $safe->timereleased )) {
+            $safe->timereleased = 0;
+        }
         if ( ! update_record( 'bim_marking', $safe ))
         {
               error( get_string('bim_error_updating', 'bim') );
