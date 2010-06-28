@@ -245,7 +245,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
 //print "...unallocate..";
             // Change status to unallocated and question to NULL
             $detail->status = "Unallocated";
-            $detail->question = "";
+            $detail->question = 0;
             $post = $detail->post;
             $detail->post = addslashes( $detail->post );
             if ( !isset( $detail->timereleased )) {
@@ -1037,7 +1037,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
         if ( $fromform->$menu_name == "Unallocate" )
         {
           $marking_details[$marking]->status = "Unallocated";
-          $marking_details[$marking]->question = "";
+          $marking_details[$marking]->question = 0;
           print_string('bim_mark_unallocated','bim' );
         }
         else // re-allocating to a different question
