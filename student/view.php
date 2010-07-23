@@ -8,7 +8,6 @@
  * show_student( $bim, $userid, $cm, $course )
  */
 
-require_once('lib.php');
 require_once($CFG->dirroot.'/mod/bim/student/register_form.php');
 
 /*************************************
