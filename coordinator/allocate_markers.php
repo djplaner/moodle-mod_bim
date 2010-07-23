@@ -29,7 +29,6 @@ function bim_allocate_markers( $bim, $cm, $userid )
   $markers_ids = array_keys( $markers );
 
   $markers_allocations = bim_get_all_markers_groups( $bim, $markers_ids );
-
   // connect the groups for each marker into $markers->allocations
   // markers_allocations will be empty initially
   if ( $markers_allocations )
