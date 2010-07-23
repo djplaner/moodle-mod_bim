@@ -248,7 +248,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
             $detail->question = 0;
             $post = $detail->post;
             $detail->post = addslashes( $detail->post );
-            if ( !isset( $detail->timereleased )) {
+            if ( !isset( $detail->timereleased ) || $safe->timereleased == '') {
                 $detail->timereleased = 0;
             }
             if ( ! update_record( 'bim_marking', $detail ) )
@@ -276,7 +276,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
             // update database
             $post = $detail->post;
             $detail->post = addslashes( $detail->post );
-            if ( !isset( $detail->timereleased )) {
+            if ( !isset( $detail->timereleased ) || $safe->timereleased == '') {
                 $detail->timereleased = 0;
             }
             if ( ! update_record( 'bim_marking', $detail ) )
@@ -1057,11 +1057,8 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
         print_string('bim_mark_marker','bim' );
         echo '</ul>';
 
-        if ( !isset( $marking_details[$marking]->timereleased )) {
-            $marking_details[$marking]->timereleased = 0;
-        }
         $safe = addslashes_object( $marking_details[$marking] );
-        if ( !isset( $safe->timereleased )) {
+        if ( !isset( $safe->timereleased ) || $safe->timereleased == '') {
             $safe->timereleased = 0;
         }
         if ( ! update_record( 'bim_marking', $safe ))
