@@ -1,6 +1,5 @@
 <?php  // $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
 
-require_once('lib.php');
 require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/manage_questions.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/manage_marking.php');
