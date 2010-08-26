@@ -85,6 +85,14 @@ function bim_process_feed( $bim, $student_feed, $questions )
       $title = bim_truncate( $item->get_title() );
 
       $content = bim_clean_content( $item->get_content() );
+# KLUDGE: simple test to find out which special characters are
+#  causing problems
+#      $contenta = str_split( $content);
+#print "<h1> $title </h1>";
+#      foreach ( $contenta as $char )
+#      {
+#        echo "$char .. " . ord( $char ) . "<br />";
+#      }
   
       // create most of a new entry
       $entry = new StdClass;
@@ -143,7 +151,6 @@ function bim_process_feed( $bim, $student_feed, $questions )
 
     } // item not in bim_marking
   } // looping through all items
-
 }
 
 /*
@@ -455,6 +462,8 @@ function bim_clean_content( $content ) {
         '', '', '', '' );
 
     $post = str_replace($badchr, $goodchr, $content);
+
+    $post = ereg_replace( chr(189), "-", $post );
 
     $post = normalize_special_characters( $post );
     return $post;
