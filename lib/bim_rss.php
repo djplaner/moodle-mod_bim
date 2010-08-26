@@ -84,10 +84,13 @@ function bim_process_feed( $bim, $student_feed, $questions )
     {
       $title = bim_truncate( $item->get_title() );
 
-      $content = bim_clean_content( $item->get_content() );
+      $raw_content = $item->get_content();
+      $content = normalize_special_characters( $item->get_content() );
+      $content = bim_clean_content( $content );
+
 # KLUDGE: simple test to find out which special characters are
 #  causing problems
-#      $contenta = str_split( $content);
+#      $contenta = getCharArray2( $content );
 #print "<h1> $title </h1>";
 #      foreach ( $contenta as $char )
 #      {
@@ -404,12 +407,14 @@ function bim_check_wrong_urls( $blog_url, $feed_url ) {
 
 function bim_clean_content( $content ) {
 
+//  $content = htmlentities( $content, ENT_COMPAT, "UTF-8" );
   // thanks http://www.toao.net/48-replacing-smart-quotes-and-em-dashes-in-mysql
   // First, replace UTF-8 characters
-  $content = str_replace( array("\xe2\x80\x98", "\xe2\x80\x99", "\xe2\x80\x9c", 
+  $content = str_replace( array( "\xe2\x80\x98", "\xe2\x80\x99", "\xe2\x80\x9c", 
                                 "\xe2\x80\x9d", "\xe2\x80\x93", "\xe2\x80\x94", 
                                 "\xe2\x80\xa6"),
                           array("'", "'", '"', '"', '-', '--', '...'), $content);
+
   // Next, replace their Windows-1252 equivalents.
   $content = str_replace( array(chr(145), chr(146), chr(147), chr(148), chr(150),
                                 chr(151), chr(133)),
@@ -435,7 +440,7 @@ function bim_clean_content( $content ) {
         '&#8217;', // single quote
         '&#8211;', // dash
 
-
+        chr(189),
         chr(194),
         chr(160),
         chr(226),
@@ -443,8 +448,7 @@ function bim_clean_content( $content ) {
         chr(128),
         chr(157),
         chr(147),
-        chr(152),
-
+        chr(152)
     );
 
     $goodchr    = array(
@@ -458,14 +462,12 @@ function bim_clean_content( $content ) {
  //       "'", 
         "...", "-", "-",
         '\'', '-',
+        ' ',
         ' ', ' ', "'", '', '', '', '', '', '', '', 
-        '', '', '', '' );
+        '', '', '', ''  );
 
     $post = str_replace($badchr, $goodchr, $content);
 
-    $post = ereg_replace( chr(189), "-", $post );
-
-    $post = normalize_special_characters( $post );
     return $post;
 }
 
@@ -498,4 +500,22 @@ function normalize_special_characters( $str )
 
     return $str;
 }
+
+# support function for the kludge to diagnose problems
+# with special characters
+
+function getCharArray2 ($jstring)
+{
+  $len = mb_strlen ($jstring, 'UTF-8');
+  if (mb_strlen ($jstring, 'UTF-8') == 0)
+    return array();
+
+  while ($len) {
+    $ret[]  = mb_substr($jstring,0,1,"UTF-8");
+    $jstring = mb_substr($jstring,1,$len,"UTF-8");
+    $len = mb_strlen($jstring);
+  }
+  return $ret;
+}
+
 ?>
