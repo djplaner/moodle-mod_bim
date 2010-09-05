@@ -83,11 +83,10 @@ function bim_process_feed( $bim, $student_feed, $questions )
           $raw_content = $item->get_content();
           $content = normalize_special_characters( $item->get_content() );
           $content = bim_clean_content( $content );
-
 # KLUDGE: simple test to find out which special characters are
 #  causing problems
-      $contenta = getCharArray2( $content );
-#print "<h1> $title </h1>";
+#      $contenta = getCharArray2( $content );
+#
 #      foreach ( $contenta as $char )
 #      {
 #        if ( ord( $char ) > 128 ) echo "<h4>";
