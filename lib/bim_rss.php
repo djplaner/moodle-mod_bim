@@ -45,7 +45,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
     if ( ! check_dir_exists( $dir, true, true ) ) {
           mtrace( "Unable to create directory $dir" );
           return false;
-      }
+    }
 
     // get the RSS file 
     $feed = new SimplePie();
@@ -65,28 +65,24 @@ function bim_process_feed( $bim, $student_feed, $questions )
                    Array( $student_feed->userid => $student_feed->userid ) );
     $details_link = Array();
  
-    if ( ! empty( $marking_details ))
-    {
-      foreach ( $marking_details as $detail ) 
-      {
-        $details_link[$detail->link] = $detail;
-      }
+    if ( ! empty( $marking_details )) {
+        foreach ( $marking_details as $detail ) {
+            $details_link[$detail->link] = $detail;
+        }
     }
 
   $unanswered_qs = bim_get_unanswered( $marking_details, $questions );
 
-  foreach ( $feed->get_items() as $item )
-  {
-    // Only process this item, if it isn't already in bim_marking
-    $link = $item->get_permalink();
+  foreach ( $feed->get_items() as $item ) {
+      // Only process this item, if it isn't already in bim_marking
+      $link = $item->get_permalink();
 
-    if ( ! isset( $details_link[$link]) )
-    {
-      $title = bim_truncate( $item->get_title() );
+      if ( ! isset( $details_link[$link]) ) {
+          $title = bim_truncate( $item->get_title() );
 
-      $raw_content = $item->get_content();
-      $content = normalize_special_characters( $item->get_content() );
-      $content = bim_clean_content( $content );
+          $raw_content = $item->get_content();
+          $content = normalize_special_characters( $item->get_content() );
+          $content = bim_clean_content( $content );
 
 # KLUDGE: simple test to find out which special characters are
 #  causing problems
@@ -97,62 +93,58 @@ function bim_process_feed( $bim, $student_feed, $questions )
 #        echo "$char .. " . ord( $char ) . "<br />";
 #      }
   
-      // create most of a new entry
-      $entry = new StdClass;
-      $entry->id = NULL; 
-      $entry->bim = $bim->id;
-      $entry->userid = $student_feed->userid;
-      $entry->marker = NULL; 
-      $entry->question = NULL; 
-      $entry->mark = NULL; 
-      $entry->status = "Unallocated";
-      $entry->timepublished = $item->get_date( "U" );
-      $entry->timemarked = NULL; 
-      $entry->timereleased = NULL; 
-      $entry->link = $link;
-      $entry->title = $title;
-      $entry->post = $content;
-      $entry->comments = NULL ;
+          // create most of a new entry
+          $entry = new StdClass;
+          $entry->id = NULL; 
+          $entry->bim = $bim->id;
+          $entry->userid = $student_feed->userid;
+          $entry->marker = NULL; 
+          $entry->question = NULL; 
+          $entry->mark = NULL; 
+          $entry->status = "Unallocated";
+          $entry->timepublished = $item->get_date( "U" );
+          $entry->timemarked = NULL; 
+          $entry->timereleased = NULL; 
+          $entry->link = $link;
+          $entry->title = $title;
+          $entry->post = $content;
+          $entry->comments = NULL ;
 
-      if ( ! empty( $questions ) ) {
-          // loop through each of the unallocated questions
-          foreach ( $unanswered_qs as $unanswered_q )
-          {
-            if ( bim_check_post( $title, $content, 
-                                $questions[$unanswered_q] ))
-            {
-              // the question now answered, remove from unanswered
-              $entry->question = $unanswered_q; 
-              $entry->status = "Submitted";
+          if ( ! empty( $questions ) ) {
+              // loop through each of the unallocated questions
+              foreach ( $unanswered_qs as $unanswered_q )
+              {
+                if ( bim_check_post( $title, $content, 
+                                    $questions[$unanswered_q] )) {
+                   // the question now answered, remove from unanswered
+                   $entry->question = $unanswered_q; 
+                   $entry->status = "Submitted";
           
-              // the question isn't unanswered now
-              unset( $unanswered_qs[$unanswered_q] );
+                   // the question isn't unanswered now
+                   unset( $unanswered_qs[$unanswered_q] );
      
-              break;  
-            } // bim_check_post
-          } // loop through unallocated questions
-      } // empty questions
+                   break;  
+                 } // bim_check_post
+              } // loop through unallocated questions
+          } // empty questions
  
-      // insert the new entry
-      $safe = addslashes_object( $entry );
-      if ( ! insert_record( "bim_marking", $safe ) )
-      {
-        mtrace( get_string( 'bim_process_feed_error', 'bim', $entry->link ) );
-        return false;
+          // insert the new entry
+          $safe = addslashes_object( $entry );
+          if ( ! insert_record( "bim_marking", $safe ) ) {
+              mtrace( get_string( 'bim_process_feed_error', 'bim', 
+                            $entry->link ) );
+          } else { 
+              // time to update the lastpost field in bim_student_feeds
+              if ( $student_feed->lastpost < $entry->timepublished ) {
+                 $student_feed->lastpost = $entry->timepublished;
+              }
+              $student_feed->numentries++;
+              $safe = addslashes_object( $student_feed );
+              if ( ! update_record( 'bim_student_feeds', $student_feed ) ) {
+                  mtrace( "unable to update record for feed" );
+              }
+          } // couldn't insert into bim_marking
       }
-      // time to update the lastpost field in bim_student_feeds
-      if ( $student_feed->lastpost < $entry->timepublished )
-      {
-        $student_feed->lastpost = $entry->timepublished;
-      }
-      $student_feed->numentries++;
-      $safe = addslashes_object( $student_feed );
-      if ( ! update_record( 'bim_student_feeds', $student_feed ) ) {
-          mtrace( "unable to update record for feed" );
-          return false;
-      }
-
-    } // item not in bim_marking
   } // looping through all items
 }
 
