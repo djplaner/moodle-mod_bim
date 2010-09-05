@@ -86,11 +86,13 @@ function bim_process_feed( $bim, $student_feed, $questions )
 
 # KLUDGE: simple test to find out which special characters are
 #  causing problems
-#      $contenta = getCharArray2( $content );
+      $contenta = getCharArray2( $content );
 #print "<h1> $title </h1>";
 #      foreach ( $contenta as $char )
 #      {
+#        if ( ord( $char ) > 128 ) echo "<h4>";
 #        echo "$char .. " . ord( $char ) . "<br />";
+#        if ( ord( $char ) > 128 ) echo "</h4>";
 #      }
   
           // create most of a new entry
@@ -466,14 +468,15 @@ function bim_clean_content( $content ) {
 function normalize_special_characters( $str )
 {
     # Quotes cleanup
-    $str = ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = ereg_replace( chr(ord("´")), "'", $str );        # ´
-    $str = ereg_replace( chr(ord("„")), ",", $str );        # „
-    $str = ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = ereg_replace( chr(ord("´")), "'", $str );        # ´
-    $str = ereg_replace( chr(ord("“")), "\"", $str );        # “
-    $str = ereg_replace( chr(ord("”")), "\"", $str );        # ”
-    $str = ereg_replace( chr(ord("´")), "'", $str );        # ´
+    # - we're talking multi-byte here, so use mb_ereg..
+    $str = mb_ereg_replace( chr(ord("`")), "'", $str );        # `
+    $str = mb_ereg_replace( chr(ord("´")), "'", $str );        # ´
+    $str = mb_ereg_replace( chr(ord("„")), ",", $str );        # „
+    $str = mb_ereg_replace( chr(ord("`")), "'", $str );        # `
+    $str = mb_ereg_replace( chr(ord("´")), "'", $str );        # ´
+    $str = mb_ereg_replace( chr(ord("“")), "\"", $str );        # “
+    $str = mb_ereg_replace( chr(ord("”")), "\"", $str );        # ”
+    $str = mb_ereg_replace( chr(ord("´")), "'", $str );        # ´
 
     $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
                                 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
@@ -483,10 +486,12 @@ function normalize_special_characters( $str )
     $str = strtr( $str, $unwanted_array );
 
     # Bullets, dashes, and trademarks
+    # - this ain't multi-byte, standard ascii, so no need for mb_...
     $str = ereg_replace( chr(149), "&#8226;", $str );    # bullet •
+    $str = ereg_replace( chr(183), "&#8226;", $str );    # middot but treat as bullet •
     $str = ereg_replace( chr(150), "&ndash;", $str );    # en dash
     $str = ereg_replace( chr(151), "&mdash;", $str );    # em dash
-//    $str = ereg_replace( chr(153), "&#8482;", $str );    # trademark
+//    $str = mb_ereg_replace( chr(153), "&#8482;", $str );    # trademark
     $str = ereg_replace( chr(169), "&copy;", $str );    # copyright mark
     $str = ereg_replace( chr(174), "&reg;", $str );        # registration mark
 
