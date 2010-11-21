@@ -26,6 +26,14 @@ function bim_allocate_markers( $bim, $cm, $userid )
                 array( 'mod/bim:marker', 'mod/bim:coordinator' ),
                 'u.id,u.firstname,u.lastname', 'u.lastname',
                 '', '', '', '', false, true );
+
+  // error if no markers
+  if ( empty( $markers )) {
+        print_heading( get_string( 'bim_allocate_marker_nomarkers_heading','bim'),
+                     'left', 2 );
+        print_string( 'bim_allocate_marker_nomarkers_description', 'bim' );
+        return;
+  }
   $markers_ids = array_keys( $markers );
 
   $markers_allocations = bim_get_all_markers_groups( $bim, $markers_ids );
