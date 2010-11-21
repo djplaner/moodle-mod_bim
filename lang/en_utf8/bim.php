@@ -52,6 +52,8 @@ $string['bim_allocate_marker_description'] =
           'The staff member will only be able to view progress and mark ' .
           'those students who belong to these groups.</p>' .
   '<p>To add groups or staff, user the normal Moodle processes for assigning roles and managing groups for this course.</p>';
+$string['bim_allocate_marker_nomarkers_heading'] = 'Can not allocate markers';
+$string['bim_allocate_marker_nomarkers_description'] = '<p>Unable to find any markers for this course.  You will need to allocate some people to this course in teaching roles using the Moodle role facility.</p>';
 $string['bim_allocate_marker_nogroups_heading'] = 'Can not allocate markers';
 $string['bim_allocate_marker_nogroups_description'] = '<p>Unable to find any groups for this course.  Marker allocation is only possible with existing course groups.</p><p>Course groups need to be created using Moodle\'s groups facility.</p>';
 // process_markers_form
