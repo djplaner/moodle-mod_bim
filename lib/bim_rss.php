@@ -81,8 +81,11 @@ function bim_process_feed( $bim, $student_feed, $questions )
           $title = bim_truncate( $item->get_title() );
 
           $raw_content = $item->get_content();
-          $content = normalize_special_characters( $item->get_content() );
-          $content = bim_clean_content( $content );
+          $content = iconv( "ISO-8859-1", "UTF-8//IGNORE", $raw_content );
+
+# FOLLOWING is old KLUDGE, will need to be removed if the above works
+#          $content = normalize_special_characters( $item->get_content() );
+#          $content = bim_clean_content( $content );
 # KLUDGE: simple test to find out which special characters are
 #  causing problems
 #      $contenta = getCharArray2( $content );
