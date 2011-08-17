@@ -21,10 +21,10 @@ class mod_bim_register_form extends moodleform {
         $mform->addElement('html', $unregistered );
 
 #        $mform->addElement('text' 'blogurl', get_string('fooname', 'foo'),
-        $mform->addElement('text', 'blogurl', 'Blog URL', 
-                array('size'=>'50','maxlength'=>'255' ));
-        $mform->setType( 'blogurl', PARAM_URL );
+        $mform->addElement('text', 'blogurl', 'Blog URL', array('size'=>'50','maxlength'=>'255' ));
+        $mform->setType( 'blogurl', PARAM_TEXT );
         $mform->addRule( 'blogurl', null, 'required', null, 'client' );
+
 
 //-------------------------------------------------------------------------------
         // add standard buttons, common to all modules

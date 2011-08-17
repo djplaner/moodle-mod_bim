@@ -292,7 +292,7 @@ function bim_get_feed_url( $fromform, $cm, $bim )
 
 function bim_is_valid_url($url)
 {
- return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', 
+ return preg_match('|^http(s)?://[a-z0-9-]+(.[\[\]a-z0-9-]+)*(:[0-9\[\]]+)?(/.*\[*\]*)?$|i', 
                      $url);
 } 
 
