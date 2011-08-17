@@ -230,6 +230,9 @@ function bim_get_feed_url( $fromform, $cm, $bim )
 {
   global $CFG;
 
+  //Remove white space from the URL
+  $fromform->blogurl = trim($fromform->blogurl);
+  
   //** do some pre-checks on the URL
   if ( ! bim_is_valid_url( $fromform->blogurl )) {
       $fromform->feedurl = BIM_FEED_INVALID_URL;
