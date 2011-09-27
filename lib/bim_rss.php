@@ -230,6 +230,9 @@ function bim_get_feed_url( $fromform, $cm, $bim )
 {
   global $CFG;
 
+  //Remove white space from the URL
+  $fromform->blogurl = trim($fromform->blogurl);
+  
   //** do some pre-checks on the URL
   if ( ! bim_is_valid_url( $fromform->blogurl )) {
       $fromform->feedurl = BIM_FEED_INVALID_URL;
@@ -292,7 +295,7 @@ function bim_get_feed_url( $fromform, $cm, $bim )
 
 function bim_is_valid_url($url)
 {
- return preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', 
+ return preg_match('|^http(s)?://[a-z0-9-]+(.[\[\]a-z0-9-]+)*(:[0-9\[\]]+)?(/.*\[*\]*)?$|i', 
                      $url);
 } 
 
@@ -403,101 +406,9 @@ function bim_check_wrong_urls( $blog_url, $feed_url ) {
 
 function bim_clean_content( $content ) {
 
-//  $content = htmlentities( $content, ENT_COMPAT, "UTF-8" );
-  // thanks http://www.toao.net/48-replacing-smart-quotes-and-em-dashes-in-mysql
-  // First, replace UTF-8 characters
-  $content = str_replace( array( "\xe2\x80\x98", "\xe2\x80\x99", "\xe2\x80\x9c", 
-                                "\xe2\x80\x9d", "\xe2\x80\x93", "\xe2\x80\x94", 
-                                "\xe2\x80\xa6"),
-                          array("'", "'", '"', '"', '-', '--', '...'), $content);
-
-  // Next, replace their Windows-1252 equivalents.
-  $content = str_replace( array(chr(145), chr(146), chr(147), chr(148), chr(150),
-                                chr(151), chr(133)),
-                          array("'", "'", '"', '"', '-', '--', '...'), $content);
-
-
-  $badchr = array (
-         chr(153),
-         chr(0xe2) . chr(0x80) . chr(0x98),
-         chr(0xe2) . chr(0x80) . chr(0xa6),
-         chr(187),
-         chr(239),
-         chr(191),
-         chr(132), chr(162), chr(196), chr(129), chr(148), chr(195),
-        'â€œ',  // left side double smart quote
-        'â€'.chr(157),  // right side double smart quote
-  //      'â€˜',  // left side single smart quote
-   //     'â€™',  // right side single smart quote
-        'â€¦',  // elipsis
-        'â€”',  // em dash
-        'â€“',  // en dash
-
-        '&#8217;', // single quote
-        '&#8211;', // dash
-
-        chr(189),
-        chr(194),
-        chr(160),
-        chr(226),
-        chr(156),
-        chr(128),
-        chr(157),
-        chr(147),
-        chr(152)
-    );
-
-    $goodchr    = array(
-        "**'++",
-        '&lsquo;',
-        '...',
-        '',
-        '', '', '', '', '', '', '', '',
-        '"', '"', 
-//        "'", 
- //       "'", 
-        "...", "-", "-",
-        '\'', '-',
-        ' ',
-        ' ', ' ', "'", '', '', '', '', '', '', '', 
-        '', '', '', ''  );
-
-    $post = str_replace($badchr, $goodchr, $content);
-
+    $post = clean_text( $content );
     return $post;
-}
 
-function normalize_special_characters( $str )
-{
-    # Quotes cleanup
-    # - we're talking multi-byte here, so use mb_ereg..
-    $str = mb_ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = mb_ereg_replace( chr(ord("´")), "'", $str );        # ´
-    $str = mb_ereg_replace( chr(ord("„")), ",", $str );        # „
-    $str = mb_ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = mb_ereg_replace( chr(ord("´")), "'", $str );        # ´
-    $str = mb_ereg_replace( chr(ord("“")), "\"", $str );        # “
-    $str = mb_ereg_replace( chr(ord("”")), "\"", $str );        # ”
-    $str = mb_ereg_replace( chr(ord("´")), "'", $str );        # ´
-
-    $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
-                                'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
-                                'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
-                                'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
-                                'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' );
-    $str = strtr( $str, $unwanted_array );
-
-    # Bullets, dashes, and trademarks
-    # - this ain't multi-byte, standard ascii, so no need for mb_...
-    $str = ereg_replace( chr(149), "&#8226;", $str );    # bullet •
-    $str = ereg_replace( chr(183), "&#8226;", $str );    # middot but treat as bullet •
-    $str = ereg_replace( chr(150), "&ndash;", $str );    # en dash
-    $str = ereg_replace( chr(151), "&mdash;", $str );    # em dash
-//    $str = mb_ereg_replace( chr(153), "&#8482;", $str );    # trademark
-    $str = ereg_replace( chr(169), "&copy;", $str );    # copyright mark
-    $str = ereg_replace( chr(174), "&reg;", $str );        # registration mark
-
-    return $str;
 }
 
 # support function for the kludge to diagnose problems

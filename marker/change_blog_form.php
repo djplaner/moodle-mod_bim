@@ -35,7 +35,7 @@ class change_blog_form extends moodleform {
         $mform->addElement('text', 'blogurl', 
                    get_string( 'bim_change_form_url','bim' ), 
                 array('size'=>'50','maxlength'=>'255' ));
-        $mform->setType( 'blogurl', PARAM_URL );
+        $mform->setType( 'blogurl', PARAM_TEXT );
         $mform->addRule( 'blogurl', null, 'required', null, 'client' );
 
         // add standard buttons, common to all modules
