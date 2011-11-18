@@ -337,78 +337,71 @@ function bim_check_backup_mods_instances( $instance, $backup_unique_code ) {
 
 // return an array of bim ids
 function bim_ids( $course ) {
-    global $CFG;
     global $DB;
 
     return $DB->get_records_sql( 
-              "SELECT bim.id,bim.course FROM {$CFG->prefix}bim bim" .
+              "SELECT bim.id,bim.course FROM bim bim" .
               "WHERE bim.course='$course'" );
 }
 
 // return an array of allocations ids
 function bim_allocations_ids_by_course( $course ) {
-    global $CFG;
     global $DB;
 
     return $DB->get_records_sql( 
               "SELECT a.id,a.bim " .
-                  "FROM {$CFG->prefix}group_allocation a, {$CFG->prefix}bim bim" .
+                  "FROM group_allocation a, bim bim" .
               "WHERE bim.course='$course' AND a.bim=bim.id" );
 }
 
 // return an array of allocations ids
 function bim_allocations_ids_by_instance( $instanceid ) {
-    global $CFG;
     global $DB;
 
     return $DB->get_records_sql( 
               "SELECT a.id,a.bim " .
-                  "FROM {$CFG->prefix}group_allocation a " .
+                  "FROM group_allocation a " .
               "WHERE a.bim=$instanceid" );
 }
 
 // return an array of feeds ids
 function bim_feed_ids_by_course( $course ) {
-    global $CFG;
     global $DB;
 
     return $DB->get_records_sql( 
               "SELECT f.id,f.bim " .
-                  "FROM {$CFG->prefix}student_feeds f, {$CFG->prefix}bim bim" .
+                  "FROM student_feeds f, bim bim" .
               "WHERE bim.course='$course' AND f.bim=bim.id" );
 }
 
 // return an array of feeds ids
 function bim_feed_ids_by_instance( $instanceid ) {
-    global $CFG;
     global $DB;
 
     return $DB->get_records_sql( 
               "SELECT f.id,f.bim " .
-                  "FROM {$CFG->prefix}student_feeds f " .
+                  "FROM student_feeds f " .
               "WHERE f.bim=$instanceid" );
 }
 
 
 // return an array of markings ids
 function bim_marking_ids_by_course( $course ) {
-    global $CFG;
     global $DB;
 
     return $DB->get_records_sql( 
               "SELECT m.id,m.bim " .
-                  "FROM {$CFG->prefix}marking m, {$CFG->prefix}bim bim " .
+                  "FROM marking m, bim bim " .
               "WHERE bim.course='$course' AND m.bim=bim.id" );
 }
 
 // return an array of markings ids
 function bim_marking_ids_by_instance( $instanceid ) {
-    global $CFG;
     global $DB;
 
     return $DB->get_records_sql( 
               "SELECT m.id,m.bim " .
-                  "FROM {$CFG->prefix}marking m " .
+                  "FROM marking m " .
               "WHERE m.bim=$instanceid" );
 }
 
