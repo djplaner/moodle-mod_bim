@@ -13,7 +13,7 @@
 function  bim_get_next_prev_student( $question, $student, 
                                      $markers_students, $bim ) {
 
-    global $CFG;
+    global $DB;
 
     $results = Array( 'NEXT' => "", 'PREV' => "" );
 
@@ -21,12 +21,12 @@ function  bim_get_next_prev_student( $question, $student,
     $students = array_keys( $markers_students )  ;
     $student_ids = implode( ',', $students );
 
-    $sql = "select userid,id from {$CFG->prefix}bim_marking where " .
+    $sql = "select userid,id from bim_marking where " .
            "question=$question and " .
            "status in ('Submitted','Marked','Released','Suspended') ".
            " and userid in ( $student_ids ) order by userid";
 
-    $details = get_records_sql( $sql );
+    $details = $DB->get_records_sql( $sql );
     if ( ! empty( $details ) ) {
         // find where $student is
         // - just get the array pointer to the right place

@@ -68,6 +68,7 @@ function show_marker( $bim, $userid, $cm, $course )
 function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
 {
     global $CFG;
+    global $DB;
 
     print_box( '<a href="'.
         "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
@@ -98,7 +99,7 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
     }
 
     // get student user details
-    $student_details = get_records_select( "user", "id=$student" );
+    $student_details = $DB->get_records_select( "user", "id=$student" );
 
     // get student details from bim_student_feeds
     // *** should be just for this student, not all students for the marker
@@ -224,6 +225,8 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
 function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
                 $questions, $cm, $student ) */
 {
+    global $DB;
+
     foreach ( $marking_details as $detail )
     {
       // get the key and value for the select menu matching
@@ -251,7 +254,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
             if ( !isset( $detail->timereleased ) || $safe->timereleased == '') {
                 $detail->timereleased = 0;
             }
-            if ( ! update_record( 'bim_marking', $detail ) )
+            if ( ! $DB->update_record( 'bim_marking', $detail ) )
             {
               error( get_string('bim_error_updating','bim') );
             }
@@ -279,7 +282,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
             if ( !isset( $detail->timereleased ) || $safe->timereleased == '') {
                 $detail->timereleased = 0;
             }
-            if ( ! update_record( 'bim_marking', $detail ) )
+            if ( ! $DB->update_record( 'bim_marking', $detail ) )
             {
               error( get_string('bim_error_updating','bim') );
             }
@@ -321,6 +324,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
 function show_marker_post_details( $bim, $userid, $cm )
 {
     global $CFG;
+    global $DB;
 
     $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails";
     $show_qs_url = $CFG->wwwroot.'/mod/bim/view.php?id='.$cm->id.
@@ -341,7 +345,7 @@ function show_marker_post_details( $bim, $userid, $cm )
     $student_details = bim_get_markers_students( $bim, $userid );
 
     // get marker user details
-    $marker_details = get_records_select( "user", "id=$userid" );
+    $marker_details = $DB->get_records_select( "user", "id=$userid" );
 
     // get student details from bim_student_feeds
     $student_ids = array_keys( $student_details );
@@ -388,6 +392,7 @@ function show_marker_post_details( $bim, $userid, $cm )
 function show_marker_student_details( $bim, $userid, $cm )
 {
     global $CFG;
+    global $DB;
     $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails";
 
      add_to_log( $cm->course, "bim", "students details", 
@@ -400,7 +405,7 @@ function show_marker_student_details( $bim, $userid, $cm )
     $student_details = bim_get_markers_students( $bim, $userid );
 
     // get marker user details
-    $marker_details = get_records_select( "user", "id=$userid" );
+    $marker_details = $DB->get_records_select( "user", "id=$userid" );
 
     // get student details from bim_student_feeds
     $student_ids = array_keys( $student_details );
@@ -827,7 +832,7 @@ function bim_create_details_display( $user_details, $feed_details=NULL,
 function bim_marker_mark_post( $bim, $userid, $cm, $marking )
 {
     global $CFG;
-
+    global $DB;
     // show navigation to view all student options
     print_box( '<a href="'.
         "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
@@ -841,7 +846,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
     //************ Get the necessary data
 
     // get the student for the entry
-    $student = get_field( 'bim_marking', 'userid', 'id', $marking );
+    $student = $DB->get_field( 'bim_marking', 'userid', 'id', $marking );
 
     if ( ! $student )
     {
@@ -1064,7 +1069,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
         if ( !isset( $safe->timereleased ) || $safe->timereleased == '') {
             $safe->timereleased = 0;
         }
-        if ( ! update_record( 'bim_marking', $safe ))
+        if ( ! $DB->update_record( 'bim_marking', $safe ))
         {
               error( get_string('bim_error_updating', 'bim') );
         }
@@ -1115,7 +1120,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
  */
 
 function bim_change_blog_registration( $bim, $student, $cm ) {
-
+    global $DB;
     global $CFG;
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=".
                 "changeBlogRegistration&student=$student";
@@ -1190,13 +1195,13 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
            // blog - so needs to be able to insert or update
            $feed_id = 0;
            if ( isset( $feed->id ) ) {
-               if ( ! $feed_id = update_record( 'bim_student_feeds', $feed ) ) {
+               if ( ! $feed_id = $DB->update_record( 'bim_student_feeds', $feed ) ) {
                    mtrace( 'Error unable to update existing feed for student ' .
                            $student . ' for bim activity ' . $bim->id );
                    print_string( 'bim_error_updating', 'bim' );
                    return false;
                } 
-           } else if ( ! $feed_id = insert_record( 'bim_student_feeds', $feed )){
+           } else if ( ! $feed_id = $DB->insert_record( 'bim_student_feeds', $feed )){
                mtrace( 'Error unable to insert feed for student ' .
                            $student . ' for bim activity ' . $bim->id );
                print_string( 'bim_error_updating', 'bim' );
@@ -1204,7 +1209,7 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
            }    
 
            // ***** delete the existing entries in bim_marking
-           if ( ! delete_records( 'bim_marking', 'bim', $bim->id,
+           if ( ! $DB->delete_records( 'bim_marking', 'bim', $bim->id,
                            'userid', $student ) ) {
                mtrace( 'Error deleting marking records for bim ' . $bim->id .
                        ' and student ' . $student );
