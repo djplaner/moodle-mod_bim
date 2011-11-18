@@ -67,8 +67,8 @@ function bim_manage_questions( $bim, $cm )
         $new_question->title = $fromform->title_new;
         $new_question->min_mark = $fromform->min_new;
         $new_question->max_mark = $fromform->max_new;
-        $new_question->body = addslashes(
-               preg_replace( '/^ /', '', $fromform->body_new ) );
+//        $new_question->body = addslashes(
+//               preg_replace( '/^ /', '', $fromform->body_new ) );
         $new_question->bim = $bim->id;
         $new_question->id = '';
 
