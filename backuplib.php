@@ -27,11 +27,12 @@ Database structure
 // Backup the chosen bims
 function bim_backup_mods( $bf, $preferences ) {
     global $CFG;
+    global $DB;
 
     $status = true;
 
     // get the matching bims
-    $bims = get_records( 'bim', 'course', $preferences->backup_course, 'id' );
+    $bims = $DB->get_records( 'bim', 'course', $preferences->backup_course, 'id' );
     
     // if we got something, loop through and backup each one
     if ( $bims ) {
@@ -48,10 +49,11 @@ function bim_backup_mods( $bf, $preferences ) {
 function bim_backup_one_mod( $bf, $preferences, $bim ) {
 
     global $CFG;
+    global $DB;
 
     // if given an id, get the record
     if ( is_numeric( $bim ) ) {
-        $bim = get_record( 'bim', 'id', $bim );
+        $bim = $DB->get_record( 'bim', 'id', $bim );
     }
 
     $status = true;
@@ -93,10 +95,11 @@ function bim_backup_one_mod( $bf, $preferences, $bim ) {
 function backup_bim_questions( $bf, $preferences, $bim ) {
 
     global $CFG;
+    global $DB;
 
     $status = true;
 
-    $bim_questions = get_records( 'bim_questions', 'bim', $bim, 'id' );
+    $bim_questions = $DB->get_records( 'bim_questions', 'bim', $bim, 'id' );
 
     // Are there questions?
     if ( $bim_questions ) {
@@ -128,10 +131,11 @@ function backup_bim_questions( $bf, $preferences, $bim ) {
 function backup_bim_group_allocation( $bf, $preferences, $bim ) {
 
     global $CFG;
+    global $DB;
 
     $status = true;
 
-    $bim_allocations = get_records( 'bim_group_allocation', 'bim', $bim, 'id' );
+    $bim_allocations = $DB->get_records( 'bim_group_allocation', 'bim', $bim, 'id' );
 
     // Are there questions?
     if ( $bim_allocations) {
@@ -162,10 +166,11 @@ function backup_bim_group_allocation( $bf, $preferences, $bim ) {
 function backup_bim_student_feeds( $bf, $preferences, $bim ) {
 
     global $CFG;
+    global $DB;
 
     $status = true;
 
-    $bim_student_feeds = get_records( 'bim_student_feeds', 'bim', $bim, 'id' );
+    $bim_student_feeds = $DB->get_records( 'bim_student_feeds', 'bim', $bim, 'id' );
 
     // Are there questions?
     if ( $bim_student_feeds) {
@@ -197,10 +202,10 @@ function backup_bim_student_feeds( $bf, $preferences, $bim ) {
 function backup_bim_marking( $bf, $preferences, $bim ) {
 
     global $CFG;
-
+    global $DB;
     $status = true;
 
-    $bim_marking = get_records( 'bim_marking', 'bim', $bim, 'id' );
+    $bim_marking = $DB->get_records( 'bim_marking', 'bim', $bim, 'id' );
 
     // Are there questions?
     if ( $bim_marking) {
@@ -333,8 +338,9 @@ function bim_check_backup_mods_instances( $instance, $backup_unique_code ) {
 // return an array of bim ids
 function bim_ids( $course ) {
     global $CFG;
+    global $DB;
 
-    return get_records_sql( 
+    return $DB->get_records_sql( 
               "SELECT bim.id,bim.course FROM {$CFG->prefix}bim bim" .
               "WHERE bim.course='$course'" );
 }
@@ -342,8 +348,9 @@ function bim_ids( $course ) {
 // return an array of allocations ids
 function bim_allocations_ids_by_course( $course ) {
     global $CFG;
+    global $DB;
 
-    return get_records_sql( 
+    return $DB->get_records_sql( 
               "SELECT a.id,a.bim " .
                   "FROM {$CFG->prefix}group_allocation a, {$CFG->prefix}bim bim" .
               "WHERE bim.course='$course' AND a.bim=bim.id" );
@@ -352,8 +359,9 @@ function bim_allocations_ids_by_course( $course ) {
 // return an array of allocations ids
 function bim_allocations_ids_by_instance( $instanceid ) {
     global $CFG;
+    global $DB;
 
-    return get_records_sql( 
+    return $DB->get_records_sql( 
               "SELECT a.id,a.bim " .
                   "FROM {$CFG->prefix}group_allocation a " .
               "WHERE a.bim=$instanceid" );
@@ -362,8 +370,9 @@ function bim_allocations_ids_by_instance( $instanceid ) {
 // return an array of feeds ids
 function bim_feed_ids_by_course( $course ) {
     global $CFG;
+    global $DB;
 
-    return get_records_sql( 
+    return $DB->get_records_sql( 
               "SELECT f.id,f.bim " .
                   "FROM {$CFG->prefix}student_feeds f, {$CFG->prefix}bim bim" .
               "WHERE bim.course='$course' AND f.bim=bim.id" );
@@ -372,8 +381,9 @@ function bim_feed_ids_by_course( $course ) {
 // return an array of feeds ids
 function bim_feed_ids_by_instance( $instanceid ) {
     global $CFG;
+    global $DB;
 
-    return get_records_sql( 
+    return $DB->get_records_sql( 
               "SELECT f.id,f.bim " .
                   "FROM {$CFG->prefix}student_feeds f " .
               "WHERE f.bim=$instanceid" );
@@ -383,8 +393,9 @@ function bim_feed_ids_by_instance( $instanceid ) {
 // return an array of markings ids
 function bim_marking_ids_by_course( $course ) {
     global $CFG;
+    global $DB;
 
-    return get_records_sql( 
+    return $DB->get_records_sql( 
               "SELECT m.id,m.bim " .
                   "FROM {$CFG->prefix}marking m, {$CFG->prefix}bim bim " .
               "WHERE bim.course='$course' AND m.bim=bim.id" );
@@ -393,8 +404,9 @@ function bim_marking_ids_by_course( $course ) {
 // return an array of markings ids
 function bim_marking_ids_by_instance( $instanceid ) {
     global $CFG;
+    global $DB;
 
-    return get_records_sql( 
+    return $DB->get_records_sql( 
               "SELECT m.id,m.bim " .
                   "FROM {$CFG->prefix}marking m " .
               "WHERE m.bim=$instanceid" );
