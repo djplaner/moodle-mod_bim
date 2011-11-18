@@ -33,6 +33,7 @@ require_once($CFG->dirroot.'/mod/bim/lib/bim_rss.php');
 require_once($CFG->dirroot.'/lib/tablelib.php' );
 
 global $USER;
+global $DB;
 
 // course_module id ($cm) entry from course_modules table
 // - is the unique combination of course and module/activity
@@ -47,10 +48,10 @@ if ($id) {
     if (! $cm = get_coursemodule_from_id('bim', $id)) {
         error('Course Module ID was incorrect');
     }
-    if (! $course = get_record('course', 'id', $cm->course)) {
+    if (! $course = $DB->get_record('course', 'id', $cm->course)) {
         error('Course is misconfigured');
     }
-    if (! $bim = get_record('bim', 'id', $cm->instance)) {
+    if (! $bim = $DB->get_record('bim', 'id', $cm->instance)) {
         error('Course module is incorrect');
     }
 /*} else if ($a) {
