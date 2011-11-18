@@ -45,12 +45,13 @@ function show_student( $bim, $userid, $cm, $course) {
 function show_student_details( $bim, $userid, $cm ) {
 
     global $CFG;
+    global $DB;
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=showQuestions";
 
     $bimid = $bim->id;
 
     // * get user details??
-    if ( ! $user = get_record( "user", "id", $userid ) ) {
+    if ( ! $user = $DB->get_record( "user", "id", $userid ) ) {
         print_string( 'student_details_user_error','bim', $userid );
         return;
     }
@@ -79,7 +80,7 @@ function show_student_details( $bim, $userid, $cm ) {
     }
     // Get data from bim_marking
     $markSelect = "( bim= " . $bimid . " AND userid=" . $userid . ")";
-    $markDetails = get_records_select( "bim_marking", $markSelect );
+    $markDetails = $DB->get_records_select( "bim_marking", $markSelect );
 
 
     //**** Start calculating some data
@@ -180,7 +181,7 @@ function show_student_details( $bim, $userid, $cm ) {
 
 function show_register_feed( $bim, $userid, $cm) {
 
-   global $CFG;
+   global $CFG, $DB;
    $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
 
    // don't let registration proceed if register_feed off
@@ -215,7 +216,7 @@ function show_register_feed( $bim, $userid, $cm) {
            $response->lastpost = $fromform->lastpost;
 
            $feed_id = 0;
-           if ( ! $feed_id = insert_record( 'bim_student_feeds', $response ) ) {
+           if ( ! $feed_id = $DB->insert_record( 'bim_student_feeds', $response ) ) {
              print_string('bim_error_updating','bim');
            } else {
              add_to_log( $cm->course, "bim", "registration success", 
