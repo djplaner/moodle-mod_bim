@@ -32,13 +32,13 @@ require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
  * @return int The id of the newly inserted bim record
  */
 function bim_add_instance($bim) {
+    global $DB;
 
     $bim->timecreated = time();
 
     # You may have to add extra stuff in here #
 
-    //if ( ! $bim->id = insert_record('bim', $bim) ) {
-    if ( ! $bim->id = insert_record('bim', $bim) ) {
+    if ( ! $bim->id = $DB->insert_record('bim', $bim) ) {
         return false;
     }
 
@@ -59,12 +59,13 @@ function bim_add_instance($bim) {
  * @return boolean Success/Fail
  */
 function bim_update_instance($bim) {
+    global $DB;
 
     $bim->timemodified = time();
     $bim->id = $bim->instance;
 
     // - what about removing grades?
-    if ( ! update_record('bim', $bim) ) {
+    if ( ! $DB->update_record('bim', $bim) ) {
         error( 'Can not update bim' );
     }
 
@@ -88,31 +89,32 @@ function bim_update_instance($bim) {
  * @return boolean Success/Failure
  */
 function bim_delete_instance($id) {
+    global $DB;
 
-    if (! $bim = get_record('bim', 'id', $id)) {
+    if (! $bim = $DB->get_record('bim', 'id', $id)) {
         return false;
     }
 
     $result = true;
 
     // bim_group_allocation
-    if ( ! delete_records( 'bim_group_allocation', 'id', $bim->id )) {
+    if ( ! $DB->delete_records( 'bim_group_allocation', 'id', $bim->id )) {
        $result = false;
     }
     // bim_questions
-    if ( ! delete_records( 'bim_questions', 'id', $bim->id )) {
+    if ( ! $DB->delete_records( 'bim_questions', 'id', $bim->id )) {
        $result = false;
     }
     // bim_marking
-    if ( ! delete_records( 'bim_marking', 'id', $bim->id )) {
+    if ( ! $DB->delete_records( 'bim_marking', 'id', $bim->id )) {
        $result = false;
     }
     // bim_student_feeds
-    if ( ! delete_records( 'bim_student_feeds', 'id', $bim->id )) {
+    if ( ! $DB->delete_records( 'bim_student_feeds', 'id', $bim->id )) {
        $result = false;
     }
     // bim
-    if ( !delete_records('bim', 'id', $bim->id)) {
+    if ( !$DB->delete_records('bim', 'id', $bim->id)) {
        $result = false;
     }
 
@@ -251,7 +253,9 @@ function bim_scale_used($bimid, $scaleid) {
  * @return boolean True if the scale is used by any bim
  */
 function bim_scale_used_anywhere($scaleid) {
-    if ($scaleid and record_exists('bim', 'grade', -$scaleid)) {
+    global $DB;
+
+    if ($scaleid and $DB->record_exists('bim', 'grade', -$scaleid)) {
         return true;
     } else {
         return false;
