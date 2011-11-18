@@ -22,13 +22,14 @@
 
 function bim_get_markers_students( $bim, $marker )
 {
+    global $DB;
     $student_details = array();
     // get list of students
 //    $students = get_records_select( "bim_markers_students",
  //                  "course=$course and marker=$marker" );
 
     // get the groups belonging to the marker
-    $groups = get_records_select( "bim_group_allocation",
+    $groups = $DB->get_records_select( "bim_group_allocation",
                      "bim=$bim->id and userid=$marker" );
 
     // if no groups allocated, no students
@@ -42,7 +43,7 @@ function bim_get_markers_students( $bim, $marker )
     $group_ids_string = implode( ",", $group_ids );
  
     // now get the list of students from group_members
-    $students = get_records_select( "groups_members",
+    $students = $DB->get_records_select( "groups_members",
                      "groupid in ( $group_ids_string )" );
 
     if ( empty( $students )) return $student_details;
@@ -54,7 +55,7 @@ function bim_get_markers_students( $bim, $marker )
     }
     $student_ids_string = implode( ",", $student_ids );
     // get the user details of all the students
-    $student_details = get_records_select( "user", 
+    $student_details = $DB->get_records_select( "user", 
                         "id in ( $student_ids_string ) " );
 
     return $student_details;
@@ -81,7 +82,7 @@ function bim_get_all_students( $cm )
       $ids_string = implode( ",", $ids );
 
       // get the user details of all the students
-      $student_details = get_records_select( "user", "id in ( $ids_string ) " );
+      $student_details = $DB->get_records_select( "user", "id in ( $ids_string ) " );
   }
 
   return $student_details;
@@ -95,10 +96,12 @@ function bim_get_all_students( $cm )
 
 function bim_get_student_details( $ids )
 {
+    global $DB;
+
   $ids_string = implode( ",", $ids );
 
   // get the user details of all the students
-  $student_details = get_records_select( "user",
+  $student_details = $DB->get_records_select( "user",
                   "id in ( $ids_string ) " );
 
   return $student_details;
@@ -113,15 +116,15 @@ function bim_get_student_details( $ids )
 
 function bim_get_all_markers_students( $bim )
 {
-    global $CFG;
+    global $DB;
 
     // get the ids for the markers
-    $groups = get_records_select( "bim_group_allocation",
+    $groups = $DB->get_records_select( "bim_group_allocation",
                      "bim=$bim->id" );
     $sql = "select distinct userid as marker from " .
-           "{$CFG->prefix}bim_group_allocation where " .
+           "bim_group_allocation where " .
            "bim=$bim->id";
-    $markers = get_records_sql( $sql );
+    $markers = $DB->get_records_sql( $sql );
  
     if ( empty( $markers ))
     {
@@ -136,7 +139,7 @@ function bim_get_all_markers_students( $bim )
     // add in the marker user details
     $marker_ids = array_keys( $markers );
     $ids_string = implode( ",", $marker_ids );
-    $marker_details = get_records_select( "user",
+    $marker_details = $DB->get_records_select( "user",
                     "id in ( $ids_string ) " );
 
     // link the marker_details into the structure being passed back
@@ -157,9 +160,11 @@ function bim_get_all_markers_students( $bim )
 
 function bim_get_all_markers_groups( $bim, $markers_ids )
 {
+  global $DB;
+
   $ids = implode( ', ', $markers_ids );
 
-  $groups = get_records_select( "bim_group_allocation",
+  $groups = $DB->get_records_select( "bim_group_allocation",
                    "bim=$bim->id and userid in ( $ids )" );
 
   if ( $groups )

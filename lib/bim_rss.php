@@ -36,7 +36,7 @@ define( "BIM_FEED_TIMEOUT", 6 );
 function bim_process_feed( $bim, $student_feed, $questions )
 {
     global $CFG;
-
+    global $DB;
     if ( $student_feed->userid == "" )
        return;
 
@@ -134,7 +134,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
  
           // insert the new entry
           $safe = addslashes_object( $entry );
-          if ( ! insert_record( "bim_marking", $safe ) ) {
+          if ( ! $DB->insert_record( "bim_marking", $safe ) ) {
               mtrace( get_string( 'bim_process_feed_error', 'bim', 
                             $entry->link ) );
           } else { 
@@ -144,7 +144,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
               }
               $student_feed->numentries++;
               $safe = addslashes_object( $student_feed );
-              if ( ! update_record( 'bim_student_feeds', $student_feed ) ) {
+              if ( ! $DB->update_record( 'bim_student_feeds', $student_feed ) ) {
                   mtrace( "unable to update record for feed" );
               }
           } // couldn't insert into bim_marking
@@ -203,7 +203,7 @@ function bim_process_unallocated( $bim, $student_feed, $questions )
           $detail->timereleased = 0; 
           
           $safe = addslashes_object( $detail );
-          update_record( "bim_marking", $safe );
+          $DB->update_record( "bim_marking", $safe );
           unset( $unanswered_qs[$unanswered_q] );
        
           // update the database with the new entry now

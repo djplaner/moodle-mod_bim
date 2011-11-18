@@ -22,8 +22,8 @@ require_once($CFG->dirroot.'/mod/bim/lib/bim_rss.php');
  */
 
 function bim_feed_exists( $bim, $userid ) {
-
-  return record_exists( 'bim_student_feeds', 'bim', $bim, 'userid', $userid );
+  global $DB;
+  return $DB->record_exists( 'bim_student_feeds', 'bim', $bim, 'userid', $userid );
 }
 
 /**
@@ -34,7 +34,8 @@ function bim_feed_exists( $bim, $userid ) {
 
 function bim_get_mirrored() 
 {
-    $mirrored = get_records_select( "bim", "mirror_feed=1" );
+    global $DB; 
+    $mirrored = $DB->get_records_select( "bim", "mirror_feed=1" );
 
     $bims = array();
 
@@ -57,7 +58,8 @@ function bim_get_mirrored()
 
 function bim_get_student_feeds( $bim )
 {
-    $students = get_records_select( "bim_student_feeds",
+    global $DB;
+    $students = $DB->get_records_select( "bim_student_feeds",
                                     "bim=$bim", "id" );
     return $students;
 }
@@ -71,7 +73,8 @@ function bim_get_student_feeds( $bim )
 
 function bim_get_question_hash( $bim )
 {
-    $questions = get_records_select( "bim_questions", "bim=$bim", "id" );
+    global $DB;
+    $questions = $DB->get_records_select( "bim_questions", "bim=$bim", "id" );
 
     return $questions;
 }
@@ -85,6 +88,7 @@ function bim_get_question_hash( $bim )
 
 function bim_get_feed_details( $bim, $user_ids )
 {
+    global $DB;
     // create the array where key is userid, not feed id
     $student_feeds = array();
 
@@ -92,7 +96,7 @@ function bim_get_feed_details( $bim, $user_ids )
 
     $ids_string = implode( ",", $user_ids );
 
-    $feed_details = get_records_select( "bim_student_feeds",
+    $feed_details = $DB->get_records_select( "bim_student_feeds",
                        "bim=$bim and userid in ( $ids_string ) " );
   
     if ( $feed_details )
@@ -113,11 +117,12 @@ function bim_get_feed_details( $bim, $user_ids )
 
 function bim_get_marking_details( $bim, $user_ids )
 {
+    global $DB;
     $ids_string = implode( ",", $user_ids );
     // make sure it was valid
     if ( $ids_string == "" ) return Array();
 
-    $marking_details = get_records_select( "bim_marking",
+    $marking_details = $DB->get_records_select( "bim_marking",
                        "bim=$bim and userid in ( $ids_string )" );
 
     return $marking_details;
@@ -330,17 +335,16 @@ function bim_build_coordinator_tabs( $cm, $tab )
 
 function bim_get_question_response_stats( $questions )
 {
-  global $CFG;
-
+  global $DB;
   if ( empty($questions)) return NULL;
 
   foreach ( $questions as $question )
   {
     // get count of student posts in each status for this question
-    $sql = "select status,count(id) as x from {$CFG->prefix}bim_marking where " .
+    $sql = "select status,count(id) as x from bim_marking where " .
            "question=$question->id and status!='Unallocated' " .
            "group by status";
-    $marking_details = get_records_sql( $sql );
+    $marking_details = $DB->get_records_sql( $sql );
  
     // get ready to update $question->status with information
     $question->status = array();
@@ -396,20 +400,20 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim )
       // get the data
       // - have to use recordset_sql because no unique id
       $sql = "select question,status,count(id) as x from " .
-             "{$CFG->prefix}bim_marking where " .
+             "bim_marking where " .
              "userid in ( $students ) and " .
              "question in ( $question_ids ) and bim=$bim->id " .
              "group by question,status";
-      $rs = get_recordset_sql( $sql );
+      $rs = $DB->get_recordset_sql( $sql );
       $stats = array();
       $total = new StdClass;
-      while ( $rec = rs_fetch_next_record( $rs )) 
+      while ( $rec = $DB->rs_fetch_next_record( $rs )) 
       {
         $status = $rec->status;
         $stats[$rec->question]->$status = $rec->x;
         $total->$status += $rec->x;
       }
-      rs_close( $rs );
+      $DB->rs_close( $rs );
       $stats["Total"] = $total;
       $marker->statistics = $stats;
       $marker->total = $total;
@@ -573,6 +577,7 @@ function bim_get_unanswered( $marking_details, $questions )
 function bim_show_student_details( $student, $marking_details,
                                    $questions, $feed_details, $cm )
 {
+    global $DB;
     // calculate stats for student posts
     $post_stats = bim_generate_marking_stats( $marking_details );
 
@@ -582,7 +587,7 @@ function bim_show_student_details( $student, $marking_details,
     if ( empty( $questions ) )  {
         $num_questions = 0;
     }
-    $student_details = get_record( "user", "id", $student ) ;
+    $student_details = $DB->get_record( "user", "id", $student ) ;
 
     print_heading( get_string('bim_find_student_details_heading','bim'),
                       'left', 2 );
@@ -646,16 +651,15 @@ function bim_show_student_details( $student, $marking_details,
  */
 
 function bim_get_marked( $bim ) {
-
-    global $CFG;
+    global $DB;
 
     // define the SQL
     // get count of student posts in each status for this question
-    $sql = "select count(id) as x from {$CFG->prefix}bim_marking where " .
+    $sql = "select count(id) as x from bim_marking where " .
            "bim=$bim->id and status='Marked' " ;
 
      // get the value
-     $details = get_records_sql( $sql );
+     $details = $DB->get_records_sql( $sql );
      // return it
      if (empty( $details ) ) {
          return 0;
