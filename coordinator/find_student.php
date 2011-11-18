@@ -70,6 +70,7 @@ function bim_find_student( $bim, $cm )
 function bim_process_find_student( $fromform, $bim, $cm, $find_form )
 {
   global $CFG;
+  global $DB;
 
   $search = $fromform->student;
 
@@ -97,7 +98,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
                $concat . ")";
   $match_count = 0;
 
-  if ( $matches = get_records_select( "user", $sql, 'lastname', 'id', 0, 200 ) )
+  if ( $matches = $DB->get_records_select( "user", $sql, 'lastname', 'id', 0, 200 ) )
   {
     $match_count = count( $matches );
   }
@@ -121,7 +122,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
     print_string( 'bim_find_one_description', 'bim', $search );
 
     $find_form->display();
-    $student_details = get_records_select( "user",
+    $student_details = $DB->get_records_select( "user",
                         "id=$userid " );
     show_student_details( $bim, $userid, $cm );
   }
@@ -146,7 +147,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
     // get matching student details
     $student_ids_string = implode( ",", $match_ids );
     // get the user details of all the students
-    $student_details = get_records_select( "user",
+    $student_details = $DB->get_records_select( "user",
                         "id in ( $student_ids_string ) " );
     // details of who has registered 
     $feed_details = bim_get_feed_details( $bim->id, $match_ids ); 

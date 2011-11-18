@@ -22,6 +22,7 @@ require_once($CFG->dirroot.'/mod/bim/coordinator/question_form.php');
 function bim_manage_questions( $bim, $cm )
 {
     global $CFG;
+    global $DB;
 
     $questions = bim_get_question_hash( $bim->id );
     $num_questions = count( $questions );
@@ -73,7 +74,7 @@ function bim_manage_questions( $bim, $cm )
 
         print_string( 'bim_questions_adding', 'bim', $fromform->title_new );
 
-        if ( ! insert_record( "bim_questions", $new_question ) )
+        if ( ! $DB->insert_record( "bim_questions", $new_question ) )
         {
           error( get_string( 'bim_questions_error_insert', 'bim' ) );
         }
@@ -101,7 +102,7 @@ function bim_manage_questions( $bim, $cm )
           if ( isset( $fromform->$delete ) )
           {
 
-            if ( ! delete_records( "bim_questions", "id", $qid ) )
+            if ( ! $DB->delete_records( "bim_questions", "id", $qid ) )
             {
               print_string( 'bim_questions_error_delete', 'bim',
                                $question->title );
@@ -141,7 +142,7 @@ function bim_manage_questions( $bim, $cm )
       foreach ( $changed as $change )
         {
           echo "<li> $change->title </li> ";
-          if ( ! update_record( 'bim_questions', $change ) )
+          if ( ! $DB->update_record( 'bim_questions', $change ) )
           {
             error( get_string( 'bim_questions_error_changing_title','bim' ) );
           }

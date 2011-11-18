@@ -226,6 +226,8 @@ function bim_manage_marking( $bim, $userid, $cm )
 function bim_manage_release( $bim, $userid, $cm )
 {
   global $CFG;
+  global $DB;
+
   $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
   add_to_log( $cm->course, "bim", "manage marking",
@@ -251,13 +253,13 @@ function bim_manage_release( $bim, $userid, $cm )
 
   // get the id,userid,mark fields from the rows that will be changed
   // Has to be done here before thte values are changed below
-  $students_changing = get_fieldset_select( "bim_marking", "userid", $sql );
+  $students_changing = $DB->get_fieldset_select( "bim_marking", "userid", $sql );
 
   // set status=Released
-  $released = set_field_select( "bim_marking", "status", "Released", $sql );
+  $released = $DB->set_field_select( "bim_marking", "status", "Released", $sql );
   // set timereleased=now
   $time = time();
-  $timeReleased = set_field_select( "bim_marking", "timereleased", $time, $sql );
+  $timeReleased = $DB->set_field_select( "bim_marking", "timereleased", $time, $sql );
 
   if ( ! $timeReleased ) {
       print "ERROR with time relase<br />";
@@ -308,6 +310,8 @@ function bim_manage_release( $bim, $userid, $cm )
 function bim_manage_view( $bim, $userid, $cm )
 {
   global $CFG;
+  global $DB;
+
   $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
   add_to_log( $cm->course, "bim", "manage marking",
@@ -326,7 +330,7 @@ function bim_manage_view( $bim, $userid, $cm )
   $students = array();
 
   // get the students that match the critiera
-  $sql = "select distinct userid as userid from {$CFG->prefix}bim_marking " .
+  $sql = "select distinct userid as userid from bim_marking " .
          "where bim=$bim->id";
 
   if ( $marker != "" )
@@ -355,7 +359,7 @@ function bim_manage_view( $bim, $userid, $cm )
       $matching = array_keys( $matching_students );
       $ids = array_diff( $all, $matching );
   } else {
-      $matching_students = get_records_sql( $sql );
+      $matching_students = $DB->get_records_sql( $sql );
       $ids = array_keys( $matching_students );
   }
 
@@ -387,7 +391,7 @@ function bim_manage_view( $bim, $userid, $cm )
       print_string( 'bim_release_manage_status', 'bim', $status );
     if ( $marker != "" ) {
       // get marker user details
-      $marker_details = get_records_select( "user", "id=$marker" );
+      $marker_details = $DB->get_records_select( "user", "id=$marker" );
       $a = $marker_details[$marker]->firstname . ' ' .
            $marker_details[$marker]->lastname;
       print_string( 'bim_release_manage_marker', 'bim', $a );

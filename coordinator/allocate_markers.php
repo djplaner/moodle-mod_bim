@@ -110,6 +110,8 @@ function bim_allocate_markers( $bim, $cm, $userid )
 
 function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
 {
+    global $DB;
+
     print_box_start( "noticebox boxwidthnormal" );
   $heading = get_string( "bim_group_allocations_heading", "bim" );
   print_heading( $heading, "left", 1 );
@@ -136,7 +138,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
           $insert->bim = $bim->id;
           $insert->userid = $marker->id;
           $insert->groupid = $group;
-          if ( insert_record( "bim_group_allocation", $insert, true ) > 0 )
+          if ( $DB->insert_record( "bim_group_allocation", $insert, true ) > 0 )
           {
  //'<li>Added group "'. $groups[$group]->name . '" for ' .
             $a = new StdClass;
@@ -163,7 +165,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
         // nothing at all in the form for this marker 
         if ( ! isset( $fromform->$id ) )
         {
-          if ( delete_records( "bim_group_allocation", "bim", $bim->id,
+          if ( $DB->delete_records( "bim_group_allocation", "bim", $bim->id,
                                   "groupid", $group, "userid", $marker->id))
           {
             $a = new StdClass;
@@ -179,7 +181,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
           $flip = array_flip( $fromform->$id );
           if ( ! isset( $flip[$group] ))
           {
-            if ( delete_records( "bim_group_allocation", "bim", $bim->id,
+            if ( $BD->delete_records( "bim_group_allocation", "bim", $bim->id,
                                   "groupid", $group, "userid", $marker->id))
             {
               $a = new StdClass;
