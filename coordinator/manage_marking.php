@@ -272,7 +272,7 @@ function bim_manage_release( $bim, $userid, $cm )
   if ( $bim->grade_feed == 1 )
   {
     $raw_sql = "bim=$bim->id and status='Released' group by userid";
-    $grades = get_records_select( 'bim_marking', $raw_sql, '',
+    $grades = $DB->get_records_select( 'bim_marking', $raw_sql, '',
                                 'userid,sum(mark) as rawgrade' );
     bim_grade_item_update( $bim, $grades );
     // get results for all students_changing
