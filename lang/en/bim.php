@@ -2,6 +2,9 @@
 
 $string['bim'] = 'BIM';
 
+$string['pluginname'] = 'BIM';
+$string['pluginadministration' ] = 'BIM Administration';
+
 $string['modulename'] = 'BIM';
 $string['modulenameplural'] = 'BIMs';
 
@@ -16,6 +19,7 @@ $string['student_feeds'] = 'Student feeds';
 // General settings
 $string['bimfieldset'] = 'BIM settings';
 $string['bimintro'] = 'About BIM activity';
+$string['bimintro_help'] = 'This information is meant to describe the purpose of this particular BIM activity and will be displayed to students when they register and view details about their blog/feed.';
 $string['bimname'] = 'Name of BIM activity';
 
 $string['bim_submit'] = 'Submit';
@@ -26,8 +30,11 @@ $string['bim_error_updating'] = 'Error updating database';
 // BIM specific settings
 
 $string['bim_register_feed'] = 'Allow registration?';
+$string['bim_register_feed_help'] = 'Typically students have to register a Web feed for their blog or other service before BIM can start doing anything useful. To allow them to register select this option. If you do not want students to register their feed, do not select it.';
 $string['bim_mirror_feed'] = 'Enable mirroring?';
+$string['bim_mirror_feed_help'] = 'BIM creates a mirror of the feed for each student blog or resource. A mirror is a local up-to-date copy of the feed. While this option is selected the feeds registered for this course will be mirrored. De-select and the mirror process will cease. Typically the mirror process is only left on while the course is being offered. The mirror process is run once when the student first registers their feed. It is then run every hour on all student feeds to see if any changes have occured.';
 $string['bim_grade_feed'] = 'Enable grading?';
+$string['bim_grade_feed_help'] = 'If this option is selected then a new field will appear in the gradebook for this course.  The name of the field will match the name of this BIM activity. When you release students\' marked posts the mark will appear in that field in the gradebook. The final result for each student in the gradebook will be the total of all the student\'s released posts added together.';
 // change not implemented at the moment
 //$string['bim_change_feed'] = 'Enable change of feed?';
 
@@ -159,9 +166,16 @@ $string['bim_qform_delete'] = 'Delete question?';
 $string['bim_process_feed_error'] = 'bim_process_feed: inserting bim_marking {$a}';
 // bim_is_item_allocated
 $string['bim_item_allocated_not'] = 'Not allocated to a question';
+$string['bim_item_allocated_not_help'] = 'Normally, a BIM activity requires you to post to your blog answers to a set of questions designed by the course teachers. When BIM sees a new post on your blog, it tries to allocate it to one of the questions. "Not allocated" means that BIM saw your post and made a copy of it (mirrored it) locally. However, it could not match your post with one of the questions.
+Eventually, one of the teachers will manually allocate your post to a question, though this may take a little while.  To make sure BIM automatically allocates your posts, make sure you use the title of the question in the title or body of your blog post.  For example, if you are answering a question with the title "Week 12 - Reflection", make sure that "Week 12 - Reflection" is part of (or all of) the title of your post.';
 $string['bim_item_allocated_released'] = 'Allocated to the question <strong>{$a->title}</strong><br />Marked: {$a->mark} out of {$a->max}';
+
 $string['bim_item_allocated_allocated'] = 'Allocated to the question <strong>{$a}</strong><br />(not marked yet)';
+$string['bim_item_allocated_allocated'] = '>When BIM finds a new post to your blog, it tries to see if it matches one of the questions created by the teachers of your course. When it finds a match, it allocates your post to that question.
+Initially the newly allocated post will be "not marked". It is waiting for one of the teachers to mark the post. Once a post is marked, you will not be able to see any marks or comments on your post from the teachers, until your post is released. This delay is so that the marks/comments can be checked and compared with others.';
 $string['bim_item_allocated_marked'] = 'Allocated to the question <strong>{$a}</strong><br />(marked but not released)';
+$string['bim_item_allocated_marked'] = 'A teacher has given your post a mark and perhaps added some comments. You will not be able to see these marks/comments until your post is released.';
+
 // bim_display_error
 // bim_display_error
 $string['bim_register_invalid_url_heading'] = 'Not a valid url';
@@ -216,9 +230,14 @@ $string['bim_marker_student'] = 'Student';
 $string['bim_marker_blog'] = 'Your blog';
 //$string['bim_marker_posts'] = 'Num. of Posts';
 $string['bim_marker_answers'] = '# actual answers / # required answers';
+$string['bim_marker_answers_help'] = 'Normally BIM expects you to respond to a range of questions set by the teacher. "Required answers" is the total number of questions you need to respond to. "Actual answers" is the number of posts BIM has automatically allocated as an answer to one of these questions.';
 $string['bim_marker_m_r'] = '# Released / # Marked';
+$string['bim_marker_m_r_help'] = 'Eventually a teacher should mark the posts you have made which are answers to questions.  # Marked" is the number of your posts that teachers have marked.  You cannot see the marks or comments from the teachers on your marked posts until they are released, i.e. made available to you.
+# Released" is the number of your marked posts that have been released.';
 $string['bim_marker_progress'] = 'Progress result';
+$string['bim_marker_progress_help'] = 'Each of your posts that answers a question and is marked, will be given a numeric mark. Progress result is the total number of marks from your marked and released posts.';
 $string['bim_marker_posts'] = '# posts mirrored';
+$string['bim_marker_posts_help'] = 'BIM tries to keep a copy of every post you have ever made on your registered blog/feed.  This is a process called mirroring.  # posts mirrored" is the number of posts from your blog/feed that BIM has copied locally.';
 $string['bim_marker_error_heading'] = 'Error: validating form data for allocation';
 $string['bim_marker_error_description'] = '<p>No changes made.</p>';
 // bim_process_allocate_form
@@ -320,9 +339,15 @@ $string['marker_allocation_heading'] = 'All student posts';
 $string['allocation_form_original'] = 'Original post';
 $string['allocation_form_posted'] = 'Posted:';
 $string['allocation_form_change'] = 'Change allocation to';
+$string['allocation_form_change_help'] = 'Before you can mark a student post it has to be allocated as an answer to one of the specified questions. This allocation is done either automatically by BIM or manually be a teacher.
+The "Change allocation to" drop box provides a list of the question titles for all the questions not yet answered by this student.  If you select one of these question titles, the post will be reallocated to that question.';
 $string['allocation_form_post_title'] = 'Title: ';
 $string['allocation_form_mark'] = 'Mark';
+$string['allocation_form_mark_help'] = 'Each student post allocated to a question can be awarded a mark. Usually this mark should be no less than a minimum mark and no greater than a maximum mark allocated by the teacher in charge to this question. The form shows the minimum and maximum mark for the question on the Marking page as min and max.
+BIM will not stop you from awarding a mark outside of the range specified by min and max.  It will warn you, but still store the mark you have awarded.';
 $string['allocation_form_suspend'] = 'Suspended?';
+$string['allocation_form_suspend_help'] = 'A student's post can be suspended. This means that the post, and in particular any mark or comments you have made, cannot be released back to the student. If the checkbox is ticked, the post is suspended.
+This is provided in case there is some problem with the student post (e.g. possible plagiarism), which requires additional consideration before release.';
 // marker/marking_form.php
 $string['marking_form_mark'] = 'Mark:';
 $string['marking_form_status'] = 'Status: {$a}';
