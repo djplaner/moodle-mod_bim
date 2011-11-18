@@ -8,7 +8,7 @@
 function bim_restore_mods( $mod, $restore ) {
 
     global $CFG;
-
+    global $DB;
   $CFG->debugdisplay = true;
 
     $status = true;
@@ -32,7 +32,7 @@ function bim_restore_mods( $mod, $restore ) {
         $bim->grade_feed = backup_todb( $info['MOD']['#']['GRADE_FEED']['0']['#'] );
 
         // stick in the dBase
-        $newid = insert_record( 'bim', $bim );
+        $newid = $DB->insert_record( 'bim', $bim );
         // Doing some output?
         if ( ! defined( 'RESTORE_SILENTLY' ) ) {
             echo "<li>".get_string("modulename",'bim')." \"".
@@ -74,6 +74,7 @@ echo 'No insert bim<br />';
 function bim_questions_restore_mods( $bimid, $info, $restore ) {
 
     global $CFG;
+    global $DB;
 
     $status = true;
 
@@ -94,7 +95,7 @@ function bim_questions_restore_mods( $bimid, $info, $restore ) {
         $question->max_mark =  backup_todb( $q_info['#']['MAX_MARK']['0']['#'] );
 
         // insert it
-        $newid = insert_record( 'bim_questions', $question );
+        $newid = $DB->insert_record( 'bim_questions', $question );
 
         // do some output essentially a slowly growing list of full stops
         if (($i+1) % 50 == 0) {
@@ -123,6 +124,7 @@ function bim_questions_restore_mods( $bimid, $info, $restore ) {
 function bim_allocations_restore_mods( $bimid, $info, $restore ) {
 
     global $CFG;
+    global $DB;
 
     $status = true;
 
@@ -170,7 +172,7 @@ echo 'Error with getting group id<br />';
         // insert it
         $newid = 0;
         if ( $toinsert ) {
-            $newid = insert_record( 'bim_group_allocation', $allocation );
+            $newid = $DB->insert_record( 'bim_group_allocation', $allocation );
         }
 
         // do some output essentially a slowly growing list of full stops
@@ -200,6 +202,7 @@ echo 'Error with inserting<br />';
 function bim_feeds_restore_mods( $bimid, $info, $restore ) {
 
     global $CFG;
+    global $DB;
 
     $status = true;
 
@@ -235,7 +238,7 @@ function bim_feeds_restore_mods( $bimid, $info, $restore ) {
         // insert it
         $newid = 0;
         if ( $toinsert ) {
-            $newid = insert_record( 'bim_student_feeds', $feed );
+            $newid = $DB->insert_record( 'bim_student_feeds', $feed );
         }
 
         // do some output essentially a slowly growing list of full stops
@@ -264,6 +267,7 @@ function bim_feeds_restore_mods( $bimid, $info, $restore ) {
 function bim_marking_restore_mods( $bimid, $info, $restore ) {
 
     global $CFG;
+    global $DB;
 
     $status = true;
 
@@ -334,7 +338,7 @@ print_object( $question );
         // insert it
         $newid = 0;
         if ( $toinsert ) {
-            $newid = insert_record( 'bim_marking', $mark );
+            $newid = $DB->insert_record( 'bim_marking', $mark );
         }
 print "    ... INSERTED OBJECT new id is $newid**<br />";
 if ( $newid == 0 ) {
