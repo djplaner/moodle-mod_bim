@@ -133,7 +133,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
           } // empty questions
  
           // insert the new entry
-          $safe = addslashes_object( $entry );
+//          $safe = addslashes_object( $entry );
           if ( ! $DB->insert_record( "bim_marking", $safe ) ) {
               mtrace( get_string( 'bim_process_feed_error', 'bim', 
                             $entry->link ) );
@@ -143,7 +143,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
                  $student_feed->lastpost = $entry->timepublished;
               }
               $student_feed->numentries++;
-              $safe = addslashes_object( $student_feed );
+//              $safe = addslashes_object( $student_feed );
               if ( ! $DB->update_record( 'bim_student_feeds', $student_feed ) ) {
                   mtrace( "unable to update record for feed" );
               }
@@ -202,7 +202,7 @@ function bim_process_unallocated( $bim, $student_feed, $questions )
           $detail->status = "Submitted";
           $detail->timereleased = 0; 
           
-          $safe = addslashes_object( $detail );
+//          $safe = addslashes_object( $detail );
           $DB->update_record( "bim_marking", $safe );
           unset( $unanswered_qs[$unanswered_q] );
        
