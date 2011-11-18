@@ -1,5 +1,7 @@
 <?php
 
+global $DB;
+
 print "<h1> hello </h1>";
 
 require_once( dirname(dirname(dirname(dirname(__FILE__)))).'/config.php' );
@@ -171,12 +173,12 @@ print "<strong>after</strong> $content<br />";
      $entry->post = $content;
      $entry->comments = NULL ;
 
-     $safe = addslashes_object( $entry );
-     $id = insert_record( "bim_marking", $safe ) ;
+//     $safe = addslashes_object( $entry );
+     $id = $DB->insert_record( "bim_marking", $safe ) ;
 print "<h3> id is $id </h3>"; 
      // remove it if ok
      if ( $id > 0 ) {
-       delete_records( 'bim_marking', 'id', $id );
+       $DB->delete_records( 'bim_marking', 'id', $id );
      }
   }
 die;
