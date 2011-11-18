@@ -54,17 +54,6 @@ if ($id) {
     if (! $bim = $DB->get_record('bim', 'id', $cm->instance)) {
         error('Course module is incorrect');
     }
-/*} else if ($a) {
-    if (! $bim = get_record('bim', 'id', $a)) {
-        error('Course module is incorrect');
-    }
-    if (! $course = get_record('course', 'id', $bim->course)) {
-        error('Course is misconfigured');
-    }
-    if (! $cm = get_coursemodule_from_instance('bim', $bim->id, $course->id)) {
-        error('Course Module ID was incorrect');
-    }
-*/
 } else {
     error('You must specify a course_module ID or an instance ID');
 }
