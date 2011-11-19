@@ -4,6 +4,8 @@
  *
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 $capabilities = array(
   // administrator can do lots of things
   'mod/bim:coordinator' => array(
