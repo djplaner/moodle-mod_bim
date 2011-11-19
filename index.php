@@ -3,48 +3,51 @@
 /**
  * This page lists all the instances of bim in a particular course
  *
- * @author  Your Name <your@email.address>
- * @version $Id: index.php,v 1.7.2.2 2009/03/31 13:07:21 mudrd8mz Exp $
+ * @author  David Jones <davidthomjones@gmail.com>
+ * @version $Id$ 
  * @package mod/bim
  */
-
-/// Replace bim with the name of your module and remove this line
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 
-global $DB;
-
 $id = required_param('id', PARAM_INT);   // course
 
+// **** ADDD THIS BACK
 if (! $course = $DB->get_record('course', 'id', $id)) {
     error('Course ID is incorrect');
 }
 
 require_course_login($course);
+$context = get_context_instance( CONTEXT_COURSE, $course->id );
 
 add_to_log($course->id, 'bim', 'view all', "index.php?id=$course->id", '');
 
-
 /// Get all required stringsbim
 
-$strbims = get_string('modulenameplural', 'bim');
-$strbim  = get_string('modulename', 'bim');
-
+//$strbims = get_string('modulenameplural', 'bim');
+//$strbim  = get_string('modulename', 'bim');
 
 /// Print the header
+$PAGE->set_url( '/mod/bim/index.php', array( 'id' => $id) );
+$PAGE->set_title( format_string($course->fullname));
+$PAGE->set_heading( format_string($course->fullname)); );
+$PAGE->set_context( $context);
 
-$navlinks = array();
-$navlinks[] = array('name' => $strbims, 'link' => '', 'type' => 'activity');
-$navigation = build_navigation($navlinks);
+// ?? not sure whether this is needed
+//$navlinks = array();
+//$navlinks[] = array('name' => $strbims, 'link' => '', 'type' => 'activity');
+//$navigation = build_navigation($navlinks);
 
-print_header_simple($strbims, '', $navigation, '', '', true, '', navmenu($course));
+echo $OUTPUT->header();
 
 /// Get all the appropriate data
 
 if (! $bims = get_all_instances_in_course('bim', $course)) {
-    notice('There are no instances of bim', "../../course/view.php?id=$course->id");
-    die;
+    echo $OUTPUT->heading(get_string('nonewbims', 'bim'), 2);
+    echo $OUTPUT->continue_button("view.php?id=$course->id");
+    echo $OUTPUT->footer();
+    die();
 }
 
 /// Print the list of instances (your module will probably extend this)
@@ -81,11 +84,10 @@ foreach ($bims as $bim) {
     }
 }
 
-print_heading($strbims);
+echo $OUTPUT->heading( get_string('modulenameplural', 'bim'), 2);
 print_table($table);
 
 /// Finish the page
 
-print_footer($course);
-
+echo $OUTPUT->footer();
 ?>
