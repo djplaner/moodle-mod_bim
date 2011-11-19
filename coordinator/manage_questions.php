@@ -102,7 +102,7 @@ function bim_manage_questions( $bim, $cm )
           if ( isset( $fromform->$delete ) )
           {
 
-            if ( ! $DB->delete_records( "bim_questions", "id", $qid ) )
+            if ( ! $DB->delete_records( "bim_questions", array("id"=>$qid)) )
             {
               print_string( 'bim_questions_error_delete', 'bim',
                                $question->title );

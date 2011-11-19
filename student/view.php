@@ -51,7 +51,7 @@ function show_student_details( $bim, $userid, $cm ) {
     $bimid = $bim->id;
 
     // * get user details??
-    if ( ! $user = $DB->get_record( "user", "id", $userid ) ) {
+    if ( ! $user = $DB->get_record( "user",array("id"=>$userid)) ) {
         print_string( 'student_details_user_error','bim', $userid );
         return;
     }

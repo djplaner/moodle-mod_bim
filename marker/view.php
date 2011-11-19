@@ -1209,8 +1209,8 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
            }    
 
            // ***** delete the existing entries in bim_marking
-           if ( ! $DB->delete_records( 'bim_marking', 'bim', $bim->id,
-                           'userid', $student ) ) {
+           if ( ! $DB->delete_records( 'bim_marking', array('bim'=>$bim->id,
+                           'userid'=>$student)) ) {
                mtrace( 'Error deleting marking records for bim ' . $bim->id .
                        ' and student ' . $student );
                return false; 

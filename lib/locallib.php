@@ -208,8 +208,10 @@ function bim_generate_student_results( $marking_details, $questions, $cm )
 function bim_print_header($cm, $bim, $course, $screen)
 {
   global $CFG;
+  global $PAGE;
 
-  $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
+  $PAGE->set_url( 'mod/bim/view.php?id=$cm->id' );
+//  $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
 
   $strbims = get_string('modulenameplural', 'bim');
   $strbim  = get_string('modulename', 'bim');
@@ -280,12 +282,19 @@ function bim_print_header($cm, $bim, $course, $screen)
     }
   }
 
-  $navigation = build_navigation($navlinks);
+// *** BRING IT BACK
+//  $navigation = build_navigation($navlinks);
 
-  print_header_simple(format_string($bim->name), '', $navigation, '', '', true,
-              update_module_button($cm->id, $course->id, $strbim), 
-              navmenu($course, $cm));
+//  print_header_simple(format_string($bim->name), '', $navigation, '', '', true,
+ //             update_module_button($cm->id, $course->id, $strbim), 
+  //            navmenu($course, $cm));
 
+  $PAGE->set_title( format_string($bim->name) );
+  $PAGE->set_heading();
+  $PAGE->set_cacheable( true );
+  $PAGE->set_button( update_module_button($cm->id, $course->id, $strbim) );
+global $OUTPUT;
+echo $OUTPUT->header();
 }
 
 /**********

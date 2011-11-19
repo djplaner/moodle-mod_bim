@@ -165,8 +165,9 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
         // nothing at all in the form for this marker 
         if ( ! isset( $fromform->$id ) )
         {
-          if ( $DB->delete_records( "bim_group_allocation", "bim", $bim->id,
-                                  "groupid", $group, "userid", $marker->id))
+          if ( $DB->delete_records( "bim_group_allocation", 
+                    array("bim" => $bim->id, "groupid" => $group,   
+                          "userid"=> $marker->id)))
           {
             $a = new StdClass;
             $a->group = $groups[$group]->name;
@@ -181,8 +182,9 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
           $flip = array_flip( $fromform->$id );
           if ( ! isset( $flip[$group] ))
           {
-            if ( $BD->delete_records( "bim_group_allocation", "bim", $bim->id,
-                                  "groupid", $group, "userid", $marker->id))
+            if ( $BD->delete_records( "bim_group_allocation", 
+                    array("bim"=> $bim->id, "groupid"=> $group, 
+                          "userid"=>$marker->id)))
             {
               $a = new StdClass;
               $a->group = $groups[$group]->name;

@@ -346,7 +346,7 @@ $string['allocation_form_mark'] = 'Mark';
 $string['allocation_form_mark_help'] = 'Each student post allocated to a question can be awarded a mark. Usually this mark should be no less than a minimum mark and no greater than a maximum mark allocated by the teacher in charge to this question. The form shows the minimum and maximum mark for the question on the Marking page as min and max.
 BIM will not stop you from awarding a mark outside of the range specified by min and max.  It will warn you, but still store the mark you have awarded.';
 $string['allocation_form_suspend'] = 'Suspended?';
-$string['allocation_form_suspend_help'] = 'A student's post can be suspended. This means that the post, and in particular any mark or comments you have made, cannot be released back to the student. If the checkbox is ticked, the post is suspended.
+$string['allocation_form_suspend_help'] = 'A student\'s post can be suspended. This means that the post, and in particular any mark or comments you have made, cannot be released back to the student. If the checkbox is ticked, the post is suspended.
 This is provided in case there is some problem with the student post (e.g. possible plagiarism), which requires additional consideration before release.';
 // marker/marking_form.php
 $string['marking_form_mark'] = 'Mark:';

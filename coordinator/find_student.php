@@ -88,11 +88,11 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
 
   // any only those that match search
   $concat = " firstname || lastname like '%$search%'";
-  if ( $CFG->dbfamily == "mysql" ) {
-    $concat = "concat(firstname,lastname) like '%$search%'";
-  } else if ( $CFG->dbfamily == "mssql" ) {
-    $concat = "firstname + lastname like '%$search%'";
-  }
+//  if ( $CFG->dbfamily == "mysql" ) {
+//    $concat = "concat(firstname,lastname) like '%$search%'";
+//  } else if ( $CFG->dbfamily == "mssql" ) {
+//    $concat = "firstname + lastname like '%$search%'";
+//  }
 
   $sql .= "( username like '%$search%' or email like '%$search%' or " .
                $concat . ")";

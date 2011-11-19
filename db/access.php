@@ -4,15 +4,14 @@
  *
  */
 
-$mod_bim_capabilities = array(
+$capabilities = array(
   // administrator can do lots of things
   'mod/bim:coordinator' => array(
      'captype' => 'manage',
      'contextlevel' => CONTEXT_MODULE,
-     'legacy' => array(
+     'archetypes' => array(
          'editingteacher' => CAP_ALLOW,
          'coursecreator' => CAP_ALLOW,
-//         'admin' => CAP_ALLOW,
      )
   ), 
 
@@ -20,7 +19,7 @@ $mod_bim_capabilities = array(
     'mod/bim:marker' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
+        'archetypes' => array(
            'teacher' => CAP_ALLOW,
         ),
     ),
@@ -29,12 +28,11 @@ $mod_bim_capabilities = array(
   'mod/bim:student' => array(
       'captype' => 'read',
       'contextlevel' => CONTEXT_MODULE,
-      'legacy' => array(
+      'archetypes' => array(
           'guest' => CAP_PROHIBIT,
           'student' => CAP_ALLOW,
 /*          'teacher' => CAP_PROHIBIT,
-          'editingteacher' => CAP_PROHIBIT,
-          'admin' => CAP_PROHIBIT, */
+          'editingteacher' => CAP_PROHIBIT, */
       ),
   )
 );
