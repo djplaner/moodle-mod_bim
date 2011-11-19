@@ -1,0 +1,5 @@
+Using this as a temp holding place for tasks I need to revisit
+during the bim2 conversion process
+
+lib.php
+- Get bim_cron working
