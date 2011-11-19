@@ -24,6 +24,8 @@
  *             function for more info
  */
 
+defined( 'MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
 class mod_bim_mod_form extends moodleform_mod {
@@ -52,13 +54,14 @@ class mod_bim_mod_form extends moodleform_mod {
                           $editor_settings);
         $mform->setType('intro', PARAM_RAW);
         $mform->addRule('intro', get_string('required'), 'required', null, 'client');
-        $mform->setHelpButton( 'intro', 
+        $mform->addHelpButton( 'intro', 
                                array( 'intro', 
                                get_string( 'bim_register_feed', 'bim' ), 
                                'bim' ));
 
     /// Adding "introformat" field
-        $mform->addElement('format', 'introformat', get_string('format'));
+//        $mform->addElement('format', 'introformat', get_string('format'));
+        $this->add_intro_editor();
 
 //-------------------------------------------------------------------------------
     /// Adding the rest of bim settings, spreeading all them into this fieldset
@@ -75,12 +78,12 @@ class mod_bim_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'grade_feed', 
                     get_string('bim_grade_feed', 'bim'), '' );
 
-        $mform->setHelpButton( 'register_feed', 
+        $mform->addHelpButton( 'register_feed', 
                                array( 'register_feed', 
                                get_string( 'bim_register_feed', 'bim' ), 
                                'bim' ));
-        $mform->setHelpButton( 'mirror_feed', array( 'mirror_feed', get_string( 'bim_mirror_feed', 'bim' ), 'bim' ));
-        $mform->setHelpButton( 'grade_feed', array( 'grade_feed', get_string( 'bim_grade_feed', 'bim' ), 'bim' ));
+        $mform->addHelpButton( 'mirror_feed', array( 'mirror_feed', get_string( 'bim_mirror_feed', 'bim' ), 'bim' ));
+        $mform->addHelpButton( 'grade_feed', array( 'grade_feed', get_string( 'bim_grade_feed', 'bim' ), 'bim' ));
 //        $mform->setHelpButton( 'change_feed', array( 'change_feed', get_string( 'change_feed', 'bim' ), 'bim' ));
 
 //-------------------------------------------------------------------------------

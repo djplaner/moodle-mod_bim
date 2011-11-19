@@ -9,8 +9,11 @@
  * @package mod/bim
  */
 
+defined('MOODLE_INTERNAL') || die;
+
 $module->version  = 2011013115;  // The current module version (Date: YYYYMMDDXX)
-$module->requires = 2010080300;
+$module->requires = 2010031900;
 $module->cron     = 3600;           // Period for cron to check this module (secs)
+$module->component = 'mod_bim';
 
 ?>

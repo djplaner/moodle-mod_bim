@@ -14,7 +14,7 @@ require_once(dirname(__FILE__).'/lib.php');
 $id = required_param('id', PARAM_INT);   // course
 
 // **** ADDD THIS BACK
-if (! $course = $DB->get_record('course', 'id', $id)) {
+if (! $course = $DB->get_record('course', array('id'=> $id))) {
     error('Course ID is incorrect');
 }
 
@@ -31,7 +31,7 @@ add_to_log($course->id, 'bim', 'view all', "index.php?id=$course->id", '');
 /// Print the header
 $PAGE->set_url( '/mod/bim/index.php', array( 'id' => $id) );
 $PAGE->set_title( format_string($course->fullname));
-$PAGE->set_heading( format_string($course->fullname)); );
+$PAGE->set_heading( format_string($course->fullname));
 $PAGE->set_context( $context);
 
 // ?? not sure whether this is needed

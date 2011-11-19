@@ -4,6 +4,7 @@ defined('MOODLE_INTERNAL') || die();
 
 // NOT SURE IF THIS SHOULD BE commented out DJ
 /*require_once($CFG->libdir.'/filelib.php');
+  ** the following (locallib.php) should never be here **
 require_once($CFG->dirroot.'/mod/bim/lib/locallib.php'); */
 
 /**
@@ -184,8 +185,7 @@ function bim_print_recent_activity($course, $isteacher, $timestart) {
     return false;  //  True if anything was printed, otherwise false
 }
 
-function bim_get_recent_mod_activity(&$activities, &$index, $timestart, $co
-urseid, $cmid, $userid=0, $groupid=0) {}
+function bim_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid=0, $groupid=0) {}
 
 
 
