@@ -50,17 +50,12 @@ class mod_bim_mod_form extends moodleform_mod {
                    'rows' => 20, 'cols' => 40, 'width' => 0,
                    'height' => 0, 'course' => 0 );
 
-        $mform->addElement('htmleditor', 'intro', get_string('bimintro', 'bim'),
-                          $editor_settings);
-        $mform->setType('intro', PARAM_RAW);
-        $mform->addRule('intro', get_string('required'), 'required', null, 'client');
-        $mform->addHelpButton( 'intro', 
-                               array( 'intro', 
-                               get_string( 'bim_register_feed', 'bim' ), 
-                               'bim' ));
+//        $mform->addElement('htmleditor', 'intro', get_string('bimintro', 'bim'),
+ //                         $editor_settings);
+  //      $mform->setType('intro', PARAM_RAW);
+//        $mform->addRule('intro', get_string('required'), 'required', null, 'client');
+        $mform->addHelpButton( 'intro', 'bimintro', 'bim' );
 
-    /// Adding "introformat" field
-//        $mform->addElement('format', 'introformat', get_string('format'));
         $this->add_intro_editor();
 
 //-------------------------------------------------------------------------------
@@ -78,13 +73,9 @@ class mod_bim_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'grade_feed', 
                     get_string('bim_grade_feed', 'bim'), '' );
 
-        $mform->addHelpButton( 'register_feed', 
-                               array( 'register_feed', 
-                               get_string( 'bim_register_feed', 'bim' ), 
-                               'bim' ));
-        $mform->addHelpButton( 'mirror_feed', array( 'mirror_feed', get_string( 'bim_mirror_feed', 'bim' ), 'bim' ));
-        $mform->addHelpButton( 'grade_feed', array( 'grade_feed', get_string( 'bim_grade_feed', 'bim' ), 'bim' ));
-//        $mform->setHelpButton( 'change_feed', array( 'change_feed', get_string( 'change_feed', 'bim' ), 'bim' ));
+        $mform->addHelpButton( 'register_feed', 'bim_register_feed', 'bim' );
+        $mform->addHelpButton( 'mirror_feed', 'bim_mirror_feed', 'bim' );
+        $mform->addHelpButton( 'grade_feed', 'bim_grade_feed', 'bim' );
 
 //-------------------------------------------------------------------------------
         // add standard elements, common to all modules
