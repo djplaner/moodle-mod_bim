@@ -47,7 +47,7 @@ $string['bim:coordinator'] = 'Admin do just about anything';
 // student/register_form.php
 $string['bim_please_register_heading'] = 'Please register your blog';
 
-$string['bim_please_register_description'] = '<p>Copy the URL of your blog/feed into the box below and hit the \"Register your blog\" button. At this stage BIM will:</p><ol><li>Check your URL for any problems.<p>If there are any problems it will tell you what they are and ask you to register the correct URL.</p></li><li>Make a copy (mirror) any existing posts on your blog into this system.<p><strong>Warning:</strong> This may take a little while, please be patient.</p></li><li>Display details of what it found.<p>This is how you can check what BIM knows about your blog. Once you register your blog, BIM will only ever show  you the details.</p></li></ol>';
+$string['bim_please_register_description'] = '<p>Copy the URL of your blog/feed into the box below and hit the "Register your blog" button. At this stage BIM will:</p><ol><li>Check your URL for any problems.<p>If there are any problems it will tell you what they are and ask you to register the correct URL.</p></li><li>Make a copy (mirror) any existing posts on your blog into this system.<p><strong>Warning:</strong> This may take a little while, please be patient.</p></li><li>Display details of what it found.<p>This is how you can check what BIM knows about your blog. Once you register your blog, BIM will only ever show  you the details.</p></li></ol>';
 
 $string['bim_register'] = 'Register your blog';
 //*****************
@@ -78,7 +78,7 @@ $string['bim_group_allocations_none'] =
 $string['bim_find_again_heading'] = "Search again?";
 $string['bim_find_again_description'] = '<p>The details of the student you selected appears below.</p>';
 $string['bim_find_heading'] = 'Find student';
-$string['bim_find_description'] = '<p>View details of a specific student by entering all or part of the student\'s name, username or email address. Some examples:</p> <ul> <li> <strong>joe bloggs</strong> - will find all students with \"joe bloggs\" as their name. </li><li> <strong>j.bloggs</strong> - find all students with \"j.bloggs\" in their name, username or email adress. </li> <li> <strong>j</strong> find all students with \"j\" in their name, username or email address.</li><li> <strong>%%</strong> will match all students.</li></ul><p> <strong>NOTE:</strong> Only search strings that return less than 200 matches will work. This search is likely to be much more. </p>';
+$string['bim_find_description'] = '<p>View details of a specific student by entering all or part of the student\'s name, username or email address. Some examples:</p> <ul> <li> <strong>joe bloggs</strong> - will find all students with "joe bloggs" as their name. </li><li> <strong>j.bloggs</strong> - find all students with "j.bloggs" in their name, username or email adress. </li> <li> <strong>j</strong> find all students with "j" in their name, username or email address.</li><li> <strong>%%</strong> will match all students.</li></ul><p> <strong>NOTE:</strong> Only search strings that return less than 200 matches will work. This search is likely to be much more. </p>';
 // find_student_form.php
 $string['bim_find_text'] = 'Search for student:';
 // bim_process_find_student
@@ -87,7 +87,7 @@ $string['bim_find_none_description'] = '<p>Unable to find any students with a na
 $string['bim_find_one_heading'] = 'One student found';
 $string['bim_find_one_description'] = '<p>Your search for<blockquote><strong>{$a}</strong></blockquote>matched one student.  That student\'s details follow after the search form.</p>';
 $string['bim_find_x_heading'] = '$a students found';
-$string['bim_find_x_description'] = '<p>Your search for<blockquote><strong>{$a->search}</strong></blockquote>matched {$a->count} students.  A list of matching students is shown below. Click on the \"details\" column to view more detail about that student.</p>';
+$string['bim_find_x_description'] = '<p>Your search for<blockquote><strong>{$a->search}</strong></blockquote>matched {$a->count} students.  A list of matching students is shown below. Click on the "details" column to view more detail about that student.</p>';
 $string['bim_find_student_details_heading'] = 'Student details';
 $string['bim_find_too_many'] = '<p>Your search for <blockquote><strong>{$a->search}</strong></blockquote>matched {$a->count} students.  This is too many (from a system resources perspective) to display.  Please refine your search and try again.</p>';
 
@@ -99,17 +99,17 @@ $string['bim_marking_no_markers_description'] = '<p>There are no markers with st
 
 $string['bim_marking_to_do'] = '<p>The following table gives an overview of marking progress for the different markers for this BIM.  There are two main tasks you can perform from here:</p><ul> <li> release marked posts so that students can see marker comments and marks; and<br /> (Only possible when there are <em>Marked</em> posts) </li><li> drill down to see more detail on groups of students.</li></ul>';
 $string['bim_marking_heading'] = 'Manage marking';
-$string['bim_marking_no_questions'] = '<p>There are currently no questions defined for this activity. This means that no marking can be done.  Use the \"Manage Questions\" tab above to add questions.</p>';
-$string['bim_marking_unregistered'] = '<p><strong><a href=\"#unreg\">Unregistered students</a>:</strong> There are {$a} student(s) who have not registered their feeds.</p>';
+$string['bim_marking_no_questions'] = '<p>There are currently no questions defined for this activity. This means that no marking can be done.  Use the "Manage Questions" tab above to add questions.</p>';
+$string['bim_marking_unregistered'] = '<p><strong><a href="#unreg">Unregistered students</a>:</strong> There are {$a} student(s) who have not registered their feeds.</p>';
 $string['bim_marking_release'] = 'Release all {$a} marked post(s)';
 // binm_manage_release
 $string['bim_release_heading'] = 'Release marking';
 $string['bim_release_success'] = '<p>Successfully released marked posts.</p>';
 $string['bim_release_errors'] = '<p>Errors encountered while releasing results.</p>';
-$string['bim_release_return'] = '<p>Return to <a href=\"{$a}\">manage marking</a></p>';
+$string['bim_release_return'] = '<p>Return to <a href="{$a}">manage marking</a></p>';
 // bim_manage_view
 $string['bim_release_manage_header'] = 'View details';
-$string['bim_release_manage_view'] = '<p>Viewing details of {$a->match} students (<a href=\"#registered\">{$a->registered} registered</a> and <a href=\"#unregistered\">{$a->unregistered} unregistered</a>)';
+$string['bim_release_manage_view'] = '<p>Viewing details of {$a->match} students (<a href="#registered">{$a->registered} registered</a> and <a href="#unregistered">{$a->unregistered} unregistered</a>)';
 $string['bim_release_manage_any'] = ' with any posts.</p>';
 $string['bim_release_manage_criteria'] = ' with posts matching these criteria:</p><ul>';
 $string['bim_release_manage_status'] = '<li> status equal to <strong>{$a}</strong></li>';
@@ -124,7 +124,7 @@ $string['bim_release_no_students_description'] = '<p>You have not yet been alloc
 //************
 // coordinator/view.php
 // bim_configuration_screen
-$string['bim_configuration_screen'] = '<p>The general configuration of BIM is done using the <a href=\"{$a->wwwroot}/course/modedit.php?update={$a->cmid}&return=1\">standard activity configure interface</a></p><p>Some basic advice on the steps to configure a BIM activity are <a href=\"#steps\">provided below</a>.</p>';
+$string['bim_configuration_screen'] = '<p>The general configuration of BIM is done using the <a href="{$a->wwwroot}/course/modedit.php?update={$a->cmid}&return=1">standard activity configure interface</a></p><p>Some basic advice on the steps to configure a BIM activity are <a href="#steps">provided below</a>.</p>';
 $string['bim_configuration_details'] = 'Current configuration settings';
 $string['bim_configuration_name'] = 'BIM name:';
 $string['bim_configuration_intro'] = 'About:';
@@ -179,11 +179,11 @@ $string['bim_item_allocated_marked'] = 'A teacher has given your post a mark and
 // bim_display_error
 // bim_display_error
 $string['bim_register_invalid_url_heading'] = 'Not a valid url';
-$string['bim_register_invalid_url_description'] = '<p>The URL you provided <strong>{$a}</strong> is not a valid URL.</p><p>A valid URL will typically look something like this - <strong>http://davidtjones.wordpress.com/</strong>. For more information about what a URL is, please read <a href=\"http://www.utoronto.ca/web/HTMLdocs/NewHTML/url.html\">this page</a>.</p>';
+$string['bim_register_invalid_url_description'] = '<p>The URL you provided <strong>{$a}</strong> is not a valid URL.</p><p>A valid URL will typically look something like this - <strong>http://davidtjones.wordpress.com/</strong>. For more information about what a URL is, please read <a href="http://www.utoronto.ca/web/HTMLdocs/NewHTML/url.html">this page</a>.</p>';
 $string['bim_register_no_retrieve_heading'] = 'Could not access the URL';
 $string['bim_register_no_retrieve_description'] = '<p>Unable to access the URL you provided <blockquote><strong>{$a->url}</strong></blockquote>The error created was <blockquote><strong>{$a->error}</strong></blockquote> ';
 $string['bim_register_nolinks_heading'] = 'Could not find any feeds';
-$string['bim_register_nolinks_description'] = '<p>Unable to find any feeds from the URL you provided via auto-discovery.  Would appear that there are no feeds. </p><p>If you know the URL for the feed, please try registering it.</p><p>For more information about feeds (aka Web feed) see the <a href=\"http://en.wikipedia.org/wiki/Web_feed\">wikipedia page</a>. Normally a blog home page will include a link to a feed.  This error suggests BIM cannot find the feed.</p>';
+$string['bim_register_nolinks_description'] = '<p>Unable to find any feeds from the URL you provided via auto-discovery.  Would appear that there are no feeds. </p><p>If you know the URL for the feed, please try registering it.</p><p>For more information about feeds (aka Web feed) see the <a href="http://en.wikipedia.org/wiki/Web_feed">wikipedia page</a>. Normally a blog home page will include a link to a feed.  This error suggests BIM cannot find the feed.</p>';
 
 //***********
 // lib/locallib.php
@@ -242,28 +242,28 @@ $string['bim_marker_error_heading'] = 'Error: validating form data for allocatio
 $string['bim_marker_error_description'] = '<p>No changes made.</p>';
 // bim_process_allocate_form
 $string['marker_unallocating_heading'] = 'Unallocating the post';
-$string['marker_unallocating_description'] = '<p>This <a href=\"{$a}\">student post</a> has been unallocated as an answer to a question.</p>';
+$string['marker_unallocating_description'] = '<p>This <a href="{$a}">student post</a> has been unallocated as an answer to a question.</p>';
 $string['marker_change_alloc_heading'] = 'Changing question allocation';
 $string['marker_change_alloc_description'] = 
-         '<p>This <a href=\"{$a->link}\">student post</a> has been reallocated from question <strong>{$a->old}</strong> to question <strong>{$a->new}</strong>.</p>';
-$string['marker_allocate'] = '<p>This <a href=\"{$a->link}\">student post</a> has been allocated to question </strong>{$a->title}</strong>.</p>';
+         '<p>This <a href="{$a->link}">student post</a> has been reallocated from question <strong>{$a->old}</strong> to question <strong>{$a->new}</strong>.</p>';
+$string['marker_allocate'] = '<p>This <a href="{$a->link}">student post</a> has been allocated to question </strong>{$a->title}</strong>.</p>';
 // show_marker_post_details
 $string['bim_post_heading'] = 'Mark posts';
-$string['bim_post_no_questions'] = '<p>There are no questions currently defined for this activity. Use the \"Manage Questions\" tab above to add questions.</p>';
+$string['bim_post_no_questions'] = '<p>There are no questions currently defined for this activity. Use the "Manage Questions" tab above to add questions.</p>';
 // show_marker_student_details
 $string['bim_details_unregistered_description'] = '<p>These students have not yet registered their feeds</p>';
 $string['bim_details_unreg_email_list'] = 'Unregistered students\' email addresses: ';
 $string['bim_details_registered_heading'] = 'Registered student details';
 $string['bim_student_details_heading'] = 'Your students';
-$string['bim_details_count'] = '<p><strong>You have:</strong> {$a->unregistered} <a href=\"#unreg\">unregistered students</a>, and {$a->registered} <a href=\"#reg\">registered students.</a></p><p><strong>You can:</strong> View the students\' details below, or <a href=\"{$a->mark}\">mark their posts</a>. (see the green navigation box up and to the right.)</p>';
-$string['bim_details_opml'] = '<p>{$a->help} Download OPML file: <a href=\"{$a->url}\">your students</a></p>';
+$string['bim_details_count'] = '<p><strong>You have:</strong> {$a->unregistered} <a href="#unreg">unregistered students</a>, and {$a->registered} <a href="#reg">registered students.</a></p><p><strong>You can:</strong> View the students\' details below, or <a href="{$a->mark}">mark their posts</a>. (see the green navigation box up and to the right.)</p>';
+$string['bim_details_opml'] = '<p>{$a->help} Download OPML file: <a href="{$a->url}">your students</a></p>';
 $string['bim_details_unavailable'] = 'unavailable';
 // bim_change_blog_registration
 $string['bim_change_heading'] = 'Change student feed';
 $string['bim_change_description'] = '<p>The following allows you to change the registered blog/feed for a specific student. The form contains:</p><ol> <li> Current details about the student, their feed and any marking. <br /><strong>Important:</strong> If you change a student\'s blog/feed any record of the old blog/feed (including any marks and comments) will be <strong>deleted</strong>.</li><li> A text box for you to enter the URL for the new feed.</li></ol>';
 $string['bim_change_register_heading'] = 'Register student feed';
 $string['bim_change_register_description'] = '<p>Use the form below to register the student\'s blog URL';
-$string['bim_change_again'] = '<p>Please try to <a href=\"{$a}\">change the student blog</a> again.</p>';
+$string['bim_change_again'] = '<p>Please try to <a href="{$a}">change the student blog</a> again.</p>';
 $string['bim_change_success_heading'] = 'Student feed changed';
 $string['bim_change_success_description'] = '<p>The student blog has been successfully changed. The details of the new feed are shown below.</p>';
 
@@ -297,13 +297,13 @@ $string['bim_not_marked'] = 'Mark it';
 // bim_marker_mark_post
 $string['bim_mark_prev_next_q'] = 'For this student: ';
 $string['bim_mark_prev_next_s'] = 'For this question: ';
-$string['bim_mark_prev_q'] = '<a href=\"{$a}\">mark previous question</a>';
+$string['bim_mark_prev_q'] = '<a href="{$a}">mark previous question</a>';
 $string['bim_mark_prev_q_none'] = 'mark previous question';
-$string['bim_mark_next_q'] = '<a href=\"{$a}\">mark next question</a>';
+$string['bim_mark_next_q'] = '<a href="{$a}">mark next question</a>';
 $string['bim_mark_next_q_none'] = 'mark next question';
-$string['bim_mark_prev_s'] = '<a href=\"{$a}\">mark previous student</a>';
+$string['bim_mark_prev_s'] = '<a href="{$a}">mark previous student</a>';
 $string['bim_mark_prev_s_none'] = 'mark previous student';
-$string['bim_mark_next_s'] = '<a href=\"{$a}\">mark next student</a>';
+$string['bim_mark_next_s'] = '<a href="{$a}">mark next student</a>';
 $string['bim_mark_next_s_none'] = 'mark next student';
 $string['bim_mark_prev_next_sep'] = ' | ';
 $string['bim_mark_prev_next_none_q'] = ' no other questions';
@@ -333,8 +333,8 @@ $string['bim_mark_continue'] = 'Make more changes?';
 
 //********************
 // marker/allocation_form.php
-$string['allocation_form_description'] = '<p>The following is a list of all the posts this student has made. Some may have been allocated to questions. Some may not.</p><p>Use the \"Change allocation to:\" menu to change the allocation of any student posts.</p>';
-$string['allocation_form_status'] = '<span class=\"{$a->class}\">Status: {$a->status}</span>';
+$string['allocation_form_description'] = '<p>The following is a list of all the posts this student has made. Some may have been allocated to questions. Some may not.</p><p>Use the "Change allocation to:" menu to change the allocation of any student posts.</p>';
+$string['allocation_form_status'] = '<span class="{$a->class}">Status: {$a->status}</span>';
 $string['marker_allocation_heading'] = 'All student posts';
 $string['allocation_form_original'] = 'Original post';
 $string['allocation_form_posted'] = 'Posted:';
@@ -351,7 +351,7 @@ This is provided in case there is some problem with the student post (e.g. possi
 // marker/marking_form.php
 $string['marking_form_mark'] = 'Mark:';
 $string['marking_form_status'] = 'Status: {$a}';
-$string['marking_form_student_post'] = '<strong>Student post <small(<a href=\"{$a}\">original post</a>)</small></strong>';
+$string['marking_form_student_post'] = '<strong>Student post <small(<a href="{$a}">original post</a>)</small></strong>';
 $string['marking_form_min'] = 'min: ';
 $string['marking_form_max'] = 'max: ';
 
@@ -369,7 +369,7 @@ $string['student_details_noposts_heading'] = '<p>No posts yet.</p>';
 $string['student_details_noposts_description'] = '<p>There appear to be no posts from you feed stored here.</p>';         
 $string['student_details_not_mirrored'] = '<p>This is because student feeds are not yet being mirrored for this activity.</p>';
 $string['student_details_reasons'] = '<p>Possible reasons for this include:</p><ul><li> you have posted anything yet; </li><li> your feed could not be mirrored due to error; </li><li> your feed has not yet been mirrored (it should happen within a few hours) </li></ul>';
-$string['student_details_details'] = '<p>Number of recorded posts: <strong>{$a->total_posts}</strong> (A summary of all posts appears in the <a href=\"#allposts\">All posts</a> table below.) </p><p>Number of answers required: <strong>{$a->total_questions}</strong></p><p>Number answers identified: <strong>{$a->num_answered}</strong> (if this is incorrect please contact your teacher).</p>' ;
+$string['student_details_details'] = '<p>Number of recorded posts: <strong>{$a->total_posts}</strong> (A summary of all posts appears in the <a href="#allposts">All posts</a> table below.) </p><p>Number of answers required: <strong>{$a->total_questions}</strong></p><p>Number answers identified: <strong>{$a->num_answered}</strong> (if this is incorrect please contact your teacher).</p>' ;
 $string['student_details_none_marked'] = '<p>None of your posts have yet been marked.</p>';
 $string['student_details_num_marked'] = '<p>Of these posts {$a} have been marked, but the marks/comments are not yet available to you.</p>';
 $string['student_details_released_heading'] = 'Marks and comments for released posts';
@@ -391,7 +391,7 @@ $string['student_details_about_description'] = '<p>The following information abo
 // show_registere_feed
 $string['register_cannot_heading'] = 'Cannot register your feed yet';
 $string['register_cannot_description'] = '<p>This activity is currently configured so that you can not register your feed. This will be possible once the teaching staff change the activity configuration.</p>';
-$string['register_again'] = '<p>Please try to <a href=\"{$a}\">register your URL</a> again.</p>';
+$string['register_again'] = '<p>Please try to <a href="{$a}">register your URL</a> again.</p>';
 $string['register_success_heading'] = 'Successful registration';
 $string['register_success_description'] = '<p>Your URL has been successfully registered.</p><p>What is now known about your blog is shown in the following information.</p>';
 
