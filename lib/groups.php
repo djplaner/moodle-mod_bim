@@ -40,11 +40,12 @@ function bim_get_markers_students( $bim, $marker )
     {
       $group_ids[] = $group->groupid;
     }
-    $group_ids_string = implode( ",", $group_ids );
- 
+//    $group_ids_string = implode( ",", $group_ids );
+    list( $usql, $params ) = $DB->get_in_or_equal( $group_ids ); 
     // now get the list of students from group_members
     $students = $DB->get_records_select( "groups_members",
-                     "groupid in ( $group_ids_string )" );
+                        'groupid ' . $usql, $params );
+ //                    "groupid in ( $group_ids_string )" );
 
     if ( empty( $students )) return $student_details;
 
@@ -53,10 +54,11 @@ function bim_get_markers_students( $bim, $marker )
     {
       $student_ids[] = $student->userid;
     }
-    $student_ids_string = implode( ",", $student_ids );
+//    $student_ids_string = implode( ",", $student_ids );
+    list( $usql, $params ) = $DB->get_in_or_equal( $student_ids ); 
     // get the user details of all the students
-    $student_details = $DB->get_records_select( "user", 
-                        "id in ( $student_ids_string ) " );
+    $student_details = $DB->get_records_select( "user", 'id ' . $usql, $params );
+ //                       "id in ( $student_ids_string ) " );
 
     return $student_details;
 }
@@ -68,21 +70,21 @@ function bim_get_markers_students( $bim, $marker )
 
 function bim_get_all_students( $cm )
 {
+  global $DB;
   // get list of students in the course
   $context = get_context_instance( CONTEXT_COURSE, $cm->course );
   $students = get_users_by_capability( $context, 'mod/bim:student', 
                       'u.id,u.username,u.firstname,u.lastname,u.email',
                       'u.lastname', '', '', '', '', false, true );
-            
+
   // generate string of ids ready for select
   $ids = array_keys( $students );
-
   $student_details = Array();
   if ( ! empty ( $ids ) ) {
-      $ids_string = implode( ",", $ids );
-
+      //$ids_string = implode( ",", $ids );
+      list( $usql, $params ) = $DB->get_in_or_equal( $ids );
       // get the user details of all the students
-      $student_details = $DB->get_records_select( "user", "id in ( $ids_string ) " );
+      $student_details = $DB->get_records_select( "user", 'id ' . $usql, $params );
   }
 
   return $student_details;
@@ -96,13 +98,13 @@ function bim_get_all_students( $cm )
 
 function bim_get_student_details( $ids )
 {
-    global $DB;
+  global $DB;
 
-  $ids_string = implode( ",", $ids );
+  list( $usql, $params ) = $DB->get_in_or_equal( $ids );
 
   // get the user details of all the students
   $student_details = $DB->get_records_select( "user",
-                  "id in ( $ids_string ) " );
+                  'id ' . $usql, $params );
 
   return $student_details;
 }
@@ -122,9 +124,10 @@ function bim_get_all_markers_students( $bim )
     $groups = $DB->get_records_select( "bim_group_allocation",
                      "bim=$bim->id" );
     $sql = "select distinct userid as marker from " .
-           "bim_group_allocation where " .
-           "bim=$bim->id";
-    $markers = $DB->get_records_sql( $sql );
+           "{bim_group_allocation} where " .
+           "bim=?";
+//           "bim=$bim->id";
+    $markers = $DB->get_records_sql( $sql, Array( $bim->id ) );
  
     if ( empty( $markers ))
     {
@@ -138,9 +141,10 @@ function bim_get_all_markers_students( $bim )
 
     // add in the marker user details
     $marker_ids = array_keys( $markers );
-    $ids_string = implode( ",", $marker_ids );
-    $marker_details = $DB->get_records_select( "user",
-                    "id in ( $ids_string ) " );
+//    $ids_string = implode( ",", $marker_ids );
+    list( $usql, $params ) = $DB->get_in_or_equal( $marker_ids );
+    $marker_details = $DB->get_records_select( "user", 'id ' . $usql, $params );
+ //                   "id in ( $ids_string ) " );
 
     // link the marker_details into the structure being passed back
     foreach ( $marker_ids as $id )
@@ -162,10 +166,11 @@ function bim_get_all_markers_groups( $bim, $markers_ids )
 {
   global $DB;
 
-  $ids = implode( ', ', $markers_ids );
+ // $ids = implode( ', ', $markers_ids );
+  list( $usql, $params ) = $DB->get_in_or_equal( $markers_ids );
 
   $groups = $DB->get_records_select( "bim_group_allocation",
-                   "bim=$bim->id and userid in ( $ids )" );
+                   "bim=$bim->id and userid " . $usql, $params );
 
   if ( $groups )
   {
