@@ -74,7 +74,7 @@ function bim_get_student_feeds( $bim )
 function bim_get_question_hash( $bim )
 {
     global $DB;
-    $questions = $DB->get_records_select( "bim_questions", "bim=$bim", "id" );
+    $questions = $DB->get_records_select( "bim_questions", "bim=?", array($bim) );
 
     return $questions;
 }
@@ -95,9 +95,11 @@ function bim_get_feed_details( $bim, $user_ids )
     if ( empty( $user_ids )) return $student_feeds;
 
     $ids_string = implode( ",", $user_ids );
+//    list( $usql, $params ) = $DB->get_in_or_equal( $user_ids );
 
     $feed_details = $DB->get_records_select( "bim_student_feeds",
-                       "bim=$bim and userid in ( $ids_string ) " );
+                       "bim=? and userid in ( ? ) ",
+                       array( $bim, $ids_string ) );
   
     if ( $feed_details )
     {
@@ -118,12 +120,14 @@ function bim_get_feed_details( $bim, $user_ids )
 function bim_get_marking_details( $bim, $user_ids )
 {
     global $DB;
-    $ids_string = implode( ",", $user_ids );
+//    $ids_string = implode( ",", $user_ids );
     // make sure it was valid
     if ( $ids_string == "" ) return Array();
 
     $marking_details = $DB->get_records_select( "bim_marking",
-                       "bim=$bim and userid in ( $ids_string )" );
+                       "bim=? and userid in ( ? )",
+                       array( $bim, $ids_string ) );
+//                       "bim=$bim and userid in ( $ids_string )" );
 
     return $marking_details;
 }
@@ -208,13 +212,18 @@ function bim_generate_student_results( $marking_details, $questions, $cm )
 function bim_print_header($cm, $bim, $course, $screen)
 {
   global $CFG;
-  global $PAGE;
+  global $PAGE, $OUTPUT;
 
-  $PAGE->set_url( 'mod/bim/view.php?id=$cm->id' );
+  $context = get_context_instance( CONTEXT_MODULE, $cm->id );
+
+  $PAGE->set_url( '/mod/bim/view.php', array( 'id'=> $cm->id ));
+  $PAGE->set_title(format_string($bim->name));
+  $PAGE->set_heading(format_string($course->fullname));
+  $PAGE->set_context($context);
 //  $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
 
-  $strbims = get_string('modulenameplural', 'bim');
-  $strbim  = get_string('modulename', 'bim');
+ // $strbims = get_string('modulenameplural', 'bim');
+ // $strbim  = get_string('modulename', 'bim');
 
   $navlinks = array();
 
@@ -289,12 +298,7 @@ function bim_print_header($cm, $bim, $course, $screen)
  //             update_module_button($cm->id, $course->id, $strbim), 
   //            navmenu($course, $cm));
 
-  $PAGE->set_title( format_string($bim->name) );
-  $PAGE->set_heading();
-  $PAGE->set_cacheable( true );
-  $PAGE->set_button( update_module_button($cm->id, $course->id, $strbim) );
-global $OUTPUT;
-echo $OUTPUT->header();
+     echo $OUTPUT->header();
 }
 
 /**********
@@ -350,7 +354,7 @@ function bim_get_question_response_stats( $questions )
   foreach ( $questions as $question )
   {
     // get count of student posts in each status for this question
-    $sql = "select status,count(id) as x from bim_marking where " .
+    $sql = "select status,count(id) as x from {bim_marking} where " .
            "question=$question->id and status!='Unallocated' " .
            "group by status";
     $marking_details = $DB->get_records_sql( $sql );
@@ -664,7 +668,7 @@ function bim_get_marked( $bim ) {
 
     // define the SQL
     // get count of student posts in each status for this question
-    $sql = "select count(id) as x from bim_marking where " .
+    $sql = "select count(id) as x from {bim_marking} where " .
            "bim=$bim->id and status='Marked' " ;
 
      // get the value
