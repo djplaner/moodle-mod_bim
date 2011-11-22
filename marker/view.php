@@ -54,9 +54,9 @@ function show_marker( $bim, $userid, $cm, $course )
         bim_generate_opml( $cm, $bim );
     }
 
-    if ( $screen != "generateOpml" ) {
-        print_footer( $course );
-    }
+//    if ( $screen != "generateOpml" ) {
+//        //print_footer( $course );
+//    }
 }
 
 /****
@@ -391,19 +391,17 @@ function show_marker_post_details( $bim, $userid, $cm )
 
 function show_marker_student_details( $bim, $userid, $cm )
 {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
+
     $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails";
 
      add_to_log( $cm->course, "bim", "students details", 
                  "view.php?id=$cm->id&screen=ShowDetails",
                 "", $cm->id );
 
-
     //********* Get data
     // Array of all student information
     $student_details = bim_get_markers_students( $bim, $userid );
-
     // get marker user details
     $marker_details = $DB->get_records_select( "user", "id=$userid" );
 
@@ -423,8 +421,8 @@ function show_marker_student_details( $bim, $userid, $cm )
 
     // show some information about config if registration/mirroring not turned on
     if ( $bim->register_feed == 0 || $bim->mirror_feed == 0 ) {
-        print_heading( get_string( 'marker_student_config_heading', 'bim' ),
-                        'left', 2 );
+        echo $OUTPUT->heading(get_string('marker_student_config_heading','bim'),
+                        2 );
 
         print_string( 'marker_student_config_description', 'bim' );
         if ( $bim->register_feed == 0 ) {
@@ -438,66 +436,65 @@ function show_marker_student_details( $bim, $userid, $cm )
 
     // display reason for no markers and advise what to do
     if ( $a->registered == 0 && $a->unregistered == 0 ) {
-        print_heading( get_string('bim_release_no_students_heading','bim' ),
-                       'left', 2);
+        echo $OUTPUT->heading( get_string('bim_release_no_students_heading','bim' ), 2);
         print_string('bim_release_no_students_description', 'bim' );
         return;
     }
     // Start displaying details about students
-     print_box( '<strong>' .
+     echo $OUTPUT->box( '<strong>' .
            get_string( 'bim_marker_student_details', 'bim' ) . 
           '</strong> | <a href="'.
         "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails".'">'.
            get_string( 'bim_marker_post_details', 'bim' ) .  '</a>',
            'noticebox boxaligncenter boxwidthnarrow centerpara highlight ' );
 
-    $help = helpbutton( 'yourStudents', 'yourStudents', 'bim',
-                          true, false, '', true );
-    print_heading( get_string( 'bim_student_details_heading','bim').$help,
-                   'left',2);
+//    $help = helpbutton( 'yourStudents', 'yourStudents', 'bim',
+ //                         true, false, '', true );
+    //echo $OUTPUT->heading(get_string('bim_student_details_heading','bim').$help, 2);
+    echo $OUTPUT->heading(get_string('bim_student_details_heading','bim'), 2);
     print_string( 'bim_details_count', 'bim', $a );
-    $help = helpbutton( 'opml', 'opml', 'bim', true, false, '', true );
-    $opml->url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=generateOpml";
-    $opml->help = $help;
+//    $help = helpbutton( 'opml', 'opml', 'bim', true, false, '', true );
+    
+      $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=generateOpml";
+ //   $opml->help = $help;
 
-    print_string( 'bim_details_opml', 'bim', $opml );
+      $help = $OUTPUT->help_icon( 'opml', 'bim' );
+      print_string( 'bim_details_opml', 'bim',Array(help=>$help, url=>$url ) );
 
     //********* View data
     // uncregistred students
     if ( isset( $unregistered ))
     {
-      $help = helpbutton( 'unregisteredDetails', 'unregdetails', 'bim',
-                          true, false, '', true );
+//      $help = helpbutton( 'unregisteredDetails', 'unregdetails', 'bim',
+//                          true, false, '', true );
       echo '<a name="unreg"></a>';
-      print_heading( get_string('bim_release_manage_unregistered_heading','bim').
-                     $help, "left", 2 );
-      print_string( 'bim_details_unregistered_description', 'bim' );
 
+      $helpString = $OUTPUT->help_icon( "unregisteredDetails", "bim" );
+      print_heading( get_string('bim_release_manage_unregistered_heading','bim').
+                     $helpString, "left", 2 );
+      print_string( 'bim_details_unregistered_description', 'bim' );
       $unreg_data = bim_create_details_display( $unregistered, $feed_details, 
                                 $cm );
-
       // show the "email merge" form for 
       $returnto = $url;
       $userids = array_keys( $unregistered );
       bim_email_merge( $userids, $cm->course, $returnto, 
                         "Email unregistered students" );
-      print "<p>&nbsp;</p>";
-
       $table = bim_setup_details_table( $cm, $bim->id, $userid, 'unregistered' );
-      foreach ( $unreg_data as $row )
-      {
-        $table->add_data_keyed( $row );
+      foreach ( $unreg_data as $row ) {
+          $table->data[] = array( $row['username'], $row['name'], $row['email'],
+                                  $row['register'] );
       }
-#       $unreg_table->add_data_keyed( $unregistered );
-      $table->print_html();
+      echo html_writer::table( $table );
     }
 
     // Show registered information
     $help = helpbutton( 'registeredDetails', 'regdetails', 'bim',
                           true, false, '', true );
     echo '<a name="reg"></a>';
-    print_heading( get_string('bim_details_registered_heading', 'bim' ).$help, 
-                               "left", 2 );
+    $helpString = $OUTPUT->help_icon( "registeredDetails", 'bim' );
+    echo $OUTPUT->heading( get_string('bim_details_registered_heading', 'bim' ).$helpString, 2 );
+
     $table = bim_setup_details_table( $cm, $bim->id, $userid, 'registered' );
     $reg_data = bim_create_details_display( $registered, $feed_details,
                     $cm );
@@ -689,59 +686,67 @@ function bim_setup_details_table( $cm, $bim, $userid, $table_id )
 //      global $CFG;
  //     $baseurl = $CFG->wwwroot.'/mod/bim/view.php?id='.$cm->id.'&tab=manage';
 
-      $table = new flexible_table( $table_id.'-'.$cm->id.
-                                            '-'.$bim.'-'.$userid );
-      $table->course = $cm->course;
-  //    $table->define_baseurl( $baseurl );
+//      $table = new flexible_table( $table_id.'-'.$cm->id.'-'.$bim.'-'.$userid );
+      $table = new html_table();
+//      $table->course = $cm->course;
   
       if ( $table_id == "unregistered" )
       {
-        $table->define_columns( array( "username", "name", "email", "register" ) );
-        $table->define_headers( array( 
+ //       $table->define_columns( array( "username", "name", "email", "register" ) );
+        $table->head = array(
                     get_string('bim_table_username','bim' ),
                     get_string('bim_table_name','bim'),
                     get_string('bim_table_email','bim'),
-                    get_string('bim_table_register','bim') ));
-        $table->no_sorting( 'email', 'name' );
+                    get_string('bim_table_register','bim') );
+//        $table->define_headers( array( 
+ //                   get_string('bim_table_username','bim' ),
+  //                  get_string('bim_table_name','bim'),
+   //                 get_string('bim_table_email','bim'),
+    //                get_string('bim_table_register','bim') ));
+     //   $table->no_sorting( 'email', 'name' );
       }
       else if ( $table_id == "registered" )
       {
-        $table->define_columns( array( "username", "name", "email",
-                                       "num_entries", "last_post", 
-                                       "blog_url" ) );
-        $table->define_headers( array(
+//        $table->define_columns( array( "username", "name", "email",
+ //                                      "num_entries", "last_post", 
+  //                                     "blog_url" ) );
+        $table->head = array(
                     get_string('bim_table_username','bim' ),
                     get_string('bim_table_name','bim'),
                     get_string('bim_table_email','bim'),
                     get_string('bim_table_entries','bim'),
                     get_string('bim_table_last_post','bim'),
-                    get_string('bim_table_live_blog','bim') ));
+                    get_string('bim_table_live_blog','bim') );
+//        $table->define_headers( array(
+ //                   get_string('bim_table_username','bim' ),
+  //                  get_string('bim_table_name','bim'),
+   //                 get_string('bim_table_email','bim'),
+    //                get_string('bim_table_entries','bim'),
+     //               get_string('bim_table_last_post','bim'),
+      //              get_string('bim_table_live_blog','bim') ));
       }
       else
       {
-        $table->define_columns( array( "username", "name", "details" ) );
-        $table->define_headers( array( 
+       // $table->define_columns( array( "username", "name", "details" ) );
+        $table->head = array(
                     get_string('bim_table_username','bim' ),
                     get_string('bim_table_name','bim'),
-                    get_string('bim_table_details','bim') ));
+                    get_string('bim_table_details','bim') );
+//        $table->define_headers( array( 
+ //                   get_string('bim_table_username','bim' ),
+  //                  get_string('bim_table_name','bim'),
+   //                 get_string('bim_table_details','bim') ));
       }
 
 
 //    $table->sortable( true, 'name' );
 //      $table->sortable( true, 'username', 'ASC' );
 
-      $table->set_attribute('cellpadding','5');
-      $table->set_attribute('class', 'generaltable generalbox reporttable');
+// ********** WHAT ABOUT THESE??
+//      $table->set_attribute('cellpadding','5');
+ //     $table->set_attribute('class', 'generaltable generalbox reporttable');
 
-/*      $table->set_control_variables(array(
-                                            TABLE_VAR_SORT    => 'ssort'.$table_id,
-                                            TABLE_VAR_HIDE    => 'shide'.$table_id,
-                                            TABLE_VAR_SHOW    => 'sshow'.$table_id,
-                                            TABLE_VAR_IFIRST  => 'sifirst'.$table_id,
-                                            TABLE_VAR_ILAST   => 'silast'.$table_id,
-                                            TABLE_VAR_PAGE    => 'spage'.$table_id
-                                            )); */
-      $table->setup();
+//      $table->setup();
       return $table;
 }
 
