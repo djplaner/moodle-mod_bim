@@ -3,3 +3,28 @@ during the bim2 conversion process
 
 lib.php
 - Get bim_cron working
+
+
+
+All
+- replace print_heading print_box_start with
+   echo $OUTPUT->
+- change get_records_sql
+- Use of implode for generatin IN SQL may need to be changed
+- replace implode with DB->get...
+- fix up table names in get_records_select
+
+Checks
+- internal jumps e.g. Manage Marking for coordinator
+
+Replace
+- helpbutton($page, $title, $module, $image, $linktext, $text, $return, $imagetext);
+with 
+$helpicon = new help_icon();
+$helpicon->page = $page; // required
+$helpicon->text = $title; // required
+$helpicon->module = $module; // defaults to 'moodle'
+$helpicon->linktext = $linktext;
+ 
+echo $OUTPUT->help_icon($helpicon);
+ *** need to fix this help icons up
