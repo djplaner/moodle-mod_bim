@@ -1,5 +1,7 @@
 <?php  // $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/manage_questions.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/manage_marking.php');
@@ -12,7 +14,8 @@ require_once($CFG->dirroot.'/mod/bim/coordinator/find_student.php');
  */
 
 function show_coordinator( $bim, $userid, $cm, $course ) {
-
+    global $OUTPUT;
+//echo $OUTPUT->heading( "Hello there coordinator" );
     // optional params required to chose screen/tab
     $tab = optional_param('tab', "config", PARAM_ALPHA);
     $screen = optional_param('screen', "", PARAM_ALPHA);
@@ -67,9 +70,9 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
             bim_generate_opml( $bim, $cm, $userid );
         }
     }
-    if ( $screen != "generateOpml" ) {
+/*    if ( $screen != "generateOpml" ) {
         print_footer( $course );
-    }
+    } */
 }
 
 /*******
@@ -79,7 +82,7 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
 
 function bim_configuration_screen( $bim, $cm )
 {
-  global $CFG;
+  global $CFG, $OUTPUT;
 
   $a = new StdClass();
   $a->wwwroot = $CFG->wwwroot;
@@ -87,7 +90,7 @@ function bim_configuration_screen( $bim, $cm )
 
   print_string( 'bim_configuration_screen', 'bim', $a );
 
-  print_heading( get_string( 'bim_configuration_details', 'bim' ), 'left', 2);
+  echo $OUTPUT->heading( get_string( 'bim_configuration_details', 'bim' ), 2);
 
   $details = new stdClass;
   $details->class = 'generaltable';
@@ -126,8 +129,7 @@ function bim_configuration_screen( $bim, $cm )
   print_table( $details );
 
   // display general advice on steps
-  print_heading( get_string('bim_configuration_steps_heading', 'bim' ),
-                   'left', 2 );
+  echo $OUTPUT->heading( get_string('bim_configuration_steps_heading', 'bim' ), 2 );
   echo '<a name="steps"></a>';
   print_string( 'bim_configuration_steps_description', 'bim' );
 

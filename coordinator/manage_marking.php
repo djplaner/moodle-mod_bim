@@ -18,8 +18,7 @@ require_once($CFG->dirroot.'/mod/bim/lib/groups.php');
 
 function bim_manage_marking( $bim, $userid, $cm )
 {
-  global $CFG;
-
+  global $CFG, $OUTPUT;
   $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
   add_to_log( $cm->course, "bim", "manage marking",
@@ -41,8 +40,7 @@ function bim_manage_marking( $bim, $userid, $cm )
 
   $help = helpbutton( 'manageMarking', 'manageMarking', 'bim',
                           true, false, '', true );
-  print_heading( get_string('bim_marking_heading', 'bim' ).$help,
-                     'left', 1 );
+  echo $OUTPUT->heading( get_string('bim_marking_heading', 'bim' ).$help, 1 );
 
   if ( empty( $questions ) ) {
       print_string( 'bim_marking_no_questions', 'bim' );

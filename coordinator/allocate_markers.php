@@ -15,7 +15,7 @@ require_once($CFG->dirroot.'/mod/bim/coordinator/marker_allocation_form.php' );
 
 function bim_allocate_markers( $bim, $cm, $userid )
 {
-  global $CFG;
+  global $CFG, $OUTPUT;
 
   // **** SET UP THE DATA
   // get all the groups for the course
@@ -29,8 +29,7 @@ function bim_allocate_markers( $bim, $cm, $userid )
 
   // error if no markers
   if ( empty( $markers )) {
-        print_heading( get_string( 'bim_allocate_marker_nomarkers_heading','bim'),
-                     'left', 2 );
+        echo $OUTPUT->heading( get_string( 'bim_allocate_marker_nomarkers_heading','bim'), 2 );
         print_string( 'bim_allocate_marker_nomarkers_description', 'bim' );
         return;
   }
@@ -51,8 +50,7 @@ function bim_allocate_markers( $bim, $cm, $userid )
   // If there are no groups, display error and no form
   if ( empty( $groups ))
   {
-    print_heading( get_string( 'bim_allocate_marker_nogroups_heading','bim'),
-                     'left', 2 );
+    echo $OUTPUT->heading( get_string( 'bim_allocate_marker_nogroups_heading','bim'), 2 );
     print_string( 'bim_allocate_marker_nogroups_description', 'bim' );
     return;
   }
@@ -71,7 +69,7 @@ function bim_allocate_markers( $bim, $cm, $userid )
                 "List all", $cm->id );
 
     $heading = get_string('bim_allocate_marker_heading', 'bim' );
-    print_heading( $heading, "left", 2 );
+    echo $OUTPUT->heading( $heading, 2 );
     print_string('bim_allocate_marker_description', 'bim' );
 
     $toform = new StdClass;
@@ -110,11 +108,11 @@ function bim_allocate_markers( $bim, $cm, $userid )
 
 function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
 {
-    global $DB;
+  global $DB, $OUTPUT;
 
-    print_box_start( "noticebox boxwidthnormal" );
+  echo $OUTPUT->box_start( "noticebox boxwidthnormal" );
   $heading = get_string( "bim_group_allocations_heading", "bim" );
-  print_heading( $heading, "left", 1 );
+  echo $OUTPUT->heading( $heading, 1 );
 //  print "<h1>Updating group allocations</h1>";
 
   $change = false;
@@ -208,7 +206,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
                 "Change in allocation", $cm->id );
   }
 
-    print_box_end();
+  echo $OUTPUT->box_end();
 }
 
 
