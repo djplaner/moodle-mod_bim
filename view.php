@@ -26,7 +26,7 @@ require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 //require_once('lib.php');
 //require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
-//require_once($CFG->dirroot.'/mod/bim/student/view.php');
+require_once($CFG->dirroot.'/mod/bim/student/view.php');
 require_once($CFG->dirroot.'/mod/bim/marker/view.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/view.php');
 //require_once($CFG->dirroot.'/mod/bim/lib/bim_rss.php');
@@ -95,20 +95,18 @@ if ( empty($USER->id)) {
 // figure out what to show for each "type of user"
 
 //echo "<h2> hello testing </h1>";
-//if ( has_capability( 'mod/bim:coordinator', $context)) {
+if ( has_capability( 'mod/bim:coordinator', $context)) {
     // administrator can the configure stuff
-//    show_coordinator( $bim, $userid, $cm, $course );
-//}
-
-
-/*else if (has_capability('mod/bim:student', $context)) {
+    show_coordinator( $bim, $userid, $cm, $course );
+}
+else if (has_capability('mod/bim:student', $context)) {
     // student can see details of their registered blog
-    show_student($bim, $userid, $cm, $course );
-} else if ( has_capability( 'mod/bim:marker', $context )) {  */
-    show_marker( $bim, $userid, $cm, $course );  /*
+    show_student($bim, $userid, $cm, $course ); 
+} else if ( has_capability( 'mod/bim:marker', $context )) {  
+    show_marker( $bim, $userid, $cm, $course );   
 } else {
-  error( "No capability to access this page" );
-}*/
+  print_error( "No capability to access this page" );
+}
 
 echo $OUTPUT->footer();
 
