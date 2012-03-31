@@ -252,6 +252,7 @@ $string['bim_post_heading'] = 'Mark posts';
 $string['bim_post_no_questions'] = '<p>There are no questions currently defined for this activity. Use the "Manage Questions" tab above to add questions.</p>';
 // show_marker_student_details
 $string['bim_details_unregistered_description'] = '<p>These students have not yet registered their feeds</p>';
+$string['bim_details_no_regs'] = '<p>None of your students have registered feeds.</p>';
 $string['bim_details_unreg_email_list'] = 'Unregistered students\' email addresses: ';
 $string['bim_details_registered_heading'] = 'Registered student details';
 $string['bim_student_details_heading'] = 'Your students';
@@ -364,6 +365,7 @@ $string['student_details_nofeed_description'] = '<p>There is currently no regist
 $string['student_details_header'] = 'Details about this activity';
 $string['student_details_questions_description'] = '<p>You are expected to use your blog to post answers to {$a}.</p>';
 $string['student_details_show_qs'] = 'a range of questions';
+$string['student_details_show_qs_title'] = 'Show questions';
 $string['student_details_description'] = '<p>Below you will find details about what the system knows about you and your posts.</p>';
 $string['student_details_noposts_heading'] = '<p>No posts yet.</p>';         
 $string['student_details_noposts_description'] = '<p>There appear to be no posts from you feed stored here.</p>';         
