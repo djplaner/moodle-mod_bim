@@ -23,7 +23,8 @@ require_once($CFG->dirroot.'/mod/bim/lib/bim_rss.php');
 
 function bim_feed_exists( $bim, $userid ) {
   global $DB;
-  return $DB->record_exists( 'bim_student_feeds', 'bim', $bim, 'userid', $userid );
+  return $DB->record_exists( 'bim_student_feeds', Array( 'bim' =>$bim, 
+                                    'userid' => $userid) );
 }
 
 /**
@@ -120,13 +121,15 @@ function bim_get_feed_details( $bim, $user_ids )
 function bim_get_marking_details( $bim, $user_ids )
 {
     global $DB;
-//    $ids_string = implode( ",", $user_ids );
     // make sure it was valid
-    if ( $ids_string == "" ) return Array();
-
+//    if ( $ids_string == "" ) return Array();
+    list( $usql, $params ) = $DB->get_in_or_equal( $user_ids );
+    array_unshift( $params, $bim );
+    $usql = "bim=? and userid $usql";
     $marking_details = $DB->get_records_select( "bim_marking",
-                       "bim=? and userid in ( ? )",
-                       array( $bim, $ids_string ) );
+                       $usql, $params);
+//                       "bim=? and userid in ( ? )",
+//                       array( $bim, $ids_string ) );
 //                       "bim=$bim and userid in ( $ids_string )" );
 
     return $marking_details;
@@ -600,7 +603,7 @@ function bim_show_student_details( $student, $marking_details,
     if ( empty( $questions ) )  {
         $num_questions = 0;
     }
-    $student_details = $DB->get_record( "user", "id", $student ) ;
+    $student_details = $DB->get_record( "user", Array("id" => $student) ) ;
 
     print_heading( get_string('bim_find_student_details_heading','bim'),
                       'left', 2 );
