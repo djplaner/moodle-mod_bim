@@ -95,12 +95,12 @@ function bim_get_feed_details( $bim, $user_ids )
 
     if ( empty( $user_ids )) return $student_feeds;
 
-    $ids_string = implode( ",", $user_ids );
-//    list( $usql, $params ) = $DB->get_in_or_equal( $user_ids );
+    list( $usql, $params ) = $DB->get_in_or_equal( $user_ids );
+    array_unshift( $params, $bim );
+    $usql = "bim=? and userid $usql";
 
     $feed_details = $DB->get_records_select( "bim_student_feeds",
-                       "bim=? and userid in ( ? ) ",
-                       array( $bim, $ids_string ) );
+                                             $usql, $params );
   
     if ( $feed_details )
     {
@@ -122,15 +122,13 @@ function bim_get_marking_details( $bim, $user_ids )
 {
     global $DB;
     // make sure it was valid
-//    if ( $ids_string == "" ) return Array();
+    if ( empty( $user_ids )) return Array();
+
     list( $usql, $params ) = $DB->get_in_or_equal( $user_ids );
     array_unshift( $params, $bim );
     $usql = "bim=? and userid $usql";
     $marking_details = $DB->get_records_select( "bim_marking",
                        $usql, $params);
-//                       "bim=? and userid in ( ? )",
-//                       array( $bim, $ids_string ) );
-//                       "bim=$bim and userid in ( $ids_string )" );
 
     return $marking_details;
 }
@@ -401,26 +399,31 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim )
     return $markers_students;
   }
 
-  $question_ids = implode( ",", array_keys( $questions ));
+//  $question_ids = implode( ",", array_keys( $questions ));
   
   $num_questions = count( $questions );
 
   foreach ( $markers_students as $marker )
   {
     // calculate the markers students (only want them)
-    $students = implode( ",", array_keys( $marker->students ) );
+//    $students = implode( ",", array_keys( $marker->students ) );
     if ( ! empty( $marker->students ))
     {
       $num_students = count( $marker->students );
 
       // get the data
       // - have to use recordset_sql because no unique id
+      list( $qsql, $q_params ) = $DB->get_in_or_equal( $questions );
+      list( $ssql, $s_params ) = $DB->get_in_or_equal( $students );
+      $params = array_merge( $s_params, $q_params );
+
       $sql = "select question,status,count(id) as x from " .
              "bim_marking where " .
-             "userid in ( $students ) and " .
-             "question in ( $question_ids ) and bim=$bim->id " .
+             "userid $ssql and " .
+             "question $qsql and bim=$bim->id " .
              "group by question,status";
-      $rs = $DB->get_recordset_sql( $sql );
+      $rs = $DB->get_recordset_sql( $sql, $params );
+
       $stats = array();
       $total = new StdClass;
       while ( $rec = $DB->rs_fetch_next_record( $rs )) 
