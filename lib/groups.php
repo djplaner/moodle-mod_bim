@@ -27,11 +27,9 @@ function bim_get_markers_students( $bim, $marker )
     // get list of students
 //    $students = get_records_select( "bim_markers_students",
  //                  "course=$course and marker=$marker" );
-
     // get the groups belonging to the marker
     $groups = $DB->get_records_select( "bim_group_allocation",
                      "bim=$bim->id and userid=$marker" );
-
     // if no groups allocated, no students
     if ( empty( $groups ) ) return $student_details;
     
