@@ -166,15 +166,13 @@ $string['bim_qform_delete'] = 'Delete question?';
 $string['bim_process_feed_error'] = 'bim_process_feed: inserting bim_marking {$a}';
 // bim_is_item_allocated
 $string['bim_item_allocated_not'] = 'Not allocated to a question';
-$string['bim_item_allocated_not_help'] = 'Normally, a BIM activity requires you to post to your blog answers to a set of questions designed by the course teachers. When BIM sees a new post on your blog, it tries to allocate it to one of the questions. "Not allocated" means that BIM saw your post and made a copy of it (mirrored it) locally. However, it could not match your post with one of the questions.
-Eventually, one of the teachers will manually allocate your post to a question, though this may take a little while.  To make sure BIM automatically allocates your posts, make sure you use the title of the question in the title or body of your blog post.  For example, if you are answering a question with the title "Week 12 - Reflection", make sure that "Week 12 - Reflection" is part of (or all of) the title of your post.';
+//$string['bim_item_allocated_not_help'] = 'Normally, a BIM activity requires you to post to your blog answers to a set of questions designed by the course teachers. When BIM sees a new post on your blog, it tries to allocate it to one of the questions. "Not allocated" means that BIM saw your post and made a copy of it (mirrored it) locally. However, it could not match your post with one of the questions.  Eventually, one of the teachers will manually allocate your post to a question, though this may take a little while.  To make sure BIM automatically allocates your posts, make sure you use the title of the question in the title or body of your blog post.  For example, if you are answering a question with the title "Week 12 - Reflection", make sure that "Week 12 - Reflection" is part of (or all of) the title of your post.';
 $string['bim_item_allocated_released'] = 'Allocated to the question <strong>{$a->title}</strong><br />Marked: {$a->mark} out of {$a->max}';
 
 $string['bim_item_allocated_allocated'] = 'Allocated to the question <strong>{$a}</strong><br />(not marked yet)';
-$string['bim_item_allocated_allocated'] = '>When BIM finds a new post to your blog, it tries to see if it matches one of the questions created by the teachers of your course. When it finds a match, it allocates your post to that question.
-Initially the newly allocated post will be "not marked". It is waiting for one of the teachers to mark the post. Once a post is marked, you will not be able to see any marks or comments on your post from the teachers, until your post is released. This delay is so that the marks/comments can be checked and compared with others.';
+//$string['bim_item_allocated_allocated'] = 'When BIM finds a new post to your blog, it tries to see if it matches one of the questions created by the teachers of your course. When it finds a match, it allocates your post to that question.  Initially the newly allocated post will be "not marked". It is waiting for one of the teachers to mark the post. Once a post is marked, you will not be able to see any marks or comments on your post from the teachers, until your post is released. This delay is so that the marks/comments can be checked and compared with others.';
 $string['bim_item_allocated_marked'] = 'Allocated to the question <strong>{$a}</strong><br />(marked but not released)';
-$string['bim_item_allocated_marked'] = 'A teacher has given your post a mark and perhaps added some comments. You will not be able to see these marks/comments until your post is released.';
+//$string['bim_item_allocated_marked'] = 'A teacher has given your post a mark and perhaps added some comments. You will not be able to see these marks/comments until your post is released.';
 
 // bim_display_error
 // bim_display_error
@@ -363,7 +361,7 @@ $string['student_details_user_error'] = 'Error: cannot get user details for user
 $string['student_details_nofeed_heading'] = 'No registered feed';
 $string['student_details_nofeed_description'] = '<p>There is currently no registered feed for student <strong>{$a}</strong>.</p>';
 $string['student_details_header'] = 'Details about this activity';
-$string['student_details_questions_description'] = '<p>You are expected to use your blog to post answers to {$a}.</p>';
+$string['student_details_questions_description'] = '<p>You are expected to use your blog to post answers to <a href="{$a}">a range of questions</a>.</p>';
 $string['student_details_show_qs'] = 'a range of questions';
 $string['student_details_show_qs_title'] = 'Show questions';
 $string['student_details_description'] = '<p>Below you will find details about what the system knows about you and your posts.</p>';
@@ -404,5 +402,28 @@ $string['bim_wrong_url_notfinished'] = '<p>The blog URL you provided (<strong>{$
 $string['bim_wrong_feed_notfinished'] = '<p>The feed URL generated for your blog url turns out to be <strong>{$a}</strong>. This cannot the feed URL for your blog. It is the feed URL for the Wordpress.com site.</p><p>This normally suggests you have copied a URL part-way through the blog creation process on Wordpress.com.  The simple fix is usually to carefully complete the blog creation process.</p>';
 $string['bim_register_timeout_heading'] = 'Timed out trying to retrieve URL';
 $string['bim_register_timeout_description'] = '<p>The system ran out of time while trying to retrieve the URL you entered (<strong>{$a->url}</strong>). The error reported was<blockquote><strong>{$a->error}</strong></blockquote>This normally suggests that there was a problem with either the system hosting your URL or with the network connection between here and your URL.</p><p>Try copying the URL into a web browser window and see if you can see the URL.  If this works, try to register again.</p><p>If the registration process continues to fail, ask for help.</p>';
+
+//*************************************
+// HELP Popups??
+$string['numMirrored' ] = 'Number of posts mirrored';
+$string['numMirrored_help'] = 'How many of the posts from your blog/feed BIM has copied to Moodle.';
+
+$string['numAnswers' ] = 'Actual and required answers';
+$string['numAnswers_help'] = 'Actual answers is the number posts from your blog/feed that has been recognised as answers. Required answers is the number of answers you are expected to provide.';
+
+$string['numReleased'] = 'Marking progress';
+$string['numReleased_help'] = 'Your answers are first marked (# Marked), moderated and then released for you to see (# released)';
+
+$string['progressResult'] = 'Your current result';
+$string['progressResult_help'] = 'Shows the total marks awarded to your released answers. Results for marked answers are not included in this, they must be moderated first.';
+
+$string['unallocatedPostStudent'] = 'Not allocated?';
+$string['unallocatedPostStudent_help'] = 'Often your posts may be responses to questions posed by teaching staff. "Not allocated" means that bim could not automatically match your post to a question. Teaching staff may need to manually allocate.';
+
+$string['allocatedPostStudent'] = 'Allocated';
+$string['allocatedPostStudent_help'] = 'Either BIM or a member of the teaching staff have allocated this post as an answer to one of the set questions.';
+
+$string['markedPostStudent'] = 'Marked post';
+$string['markedPostStudent_help'] = 'Someone has marked your post, however, it must be moderated before the result can be released to you.';
 
 ?>
