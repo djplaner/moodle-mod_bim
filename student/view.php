@@ -16,9 +16,9 @@ require_once($CFG->dirroot.'/mod/bim/student/register_form.php');
  */
 
 function show_student( $bim, $userid, $cm, $course) {
-    bim_print_header( $cm, $bim, $course, "student");
-
     $bimid = $bim->id;
+
+    bim_print_header( $cm, $bim, $course, $screen);
     // if there isn't a feed registered, show the register form
     if ( ! bim_feed_exists( $bimid, $userid ) ) {
         // need to check for passing in of parameters
@@ -34,8 +34,6 @@ function show_student( $bim, $userid, $cm, $course) {
             show_student_details( $bim, $userid, $cm );
         }
     }
-
-    print_footer( $course );
 }
 
 /*
@@ -82,7 +80,6 @@ function show_student_details( $bim, $userid, $cm ) {
     $markSelect = "( bim= " . $bimid . " AND userid=" . $userid . ")";
     $markDetails = $DB->get_records_select( "bim_marking", $markSelect );
 
-
     //**** Start calculating some data
 
     // Total number of questions for bim
@@ -102,10 +99,8 @@ function show_student_details( $bim, $userid, $cm ) {
     // Details
     print_heading( get_string('student_details_header','bim'),'left', 1 );
     if ( ! empty( $question_hash )) {
-        $link = link_to_popup_window( $base_url, 'showquestions', 
-                         get_string( 'student_details_show_qs','bim'),
-                          700, 600, 'Show questions', null, true );
-        print_string( 'student_details_questions_description','bim', $link);
+        print_string( 'student_details_questions_description','bim',  
+                           $base_url);
     }
   print_string( 'student_details_description', 'bim' );
   
@@ -181,17 +176,16 @@ function show_student_details( $bim, $userid, $cm ) {
 
 function show_register_feed( $bim, $userid, $cm) {
 
-   global $CFG, $DB;
+   global $CFG, $DB, $OUTPUT;
    $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
 
    // don't let registration proceed if register_feed off
    if ( $bim->register_feed == 0 )
    {
-     print_heading( get_string('register_cannot_heading','bim' ), "left", 1 );
+     echo $OUTPUT->heading( get_string('register_cannot_heading','bim' ), 1 );
      print_string( 'register_cannot_description','bim' );
      return;
    }
-
    $mform = new mod_bim_register_form( "view.php?id=$cm->id" );
   
    if ( $mform->is_cancelled() ) {
