@@ -694,7 +694,7 @@ function bim_get_marked( $bim ) {
 
 function bim_show_student_posts( $markDetails, $questions ) {
 
-    echo '<a name="allposts"</a>';
+    echo '<a name="allposts"></a>';
     print_heading( get_string('student_details_allposts_heading','bim'),
                 'left',2 );
 
