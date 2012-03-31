@@ -249,7 +249,7 @@ $string['marker_allocate'] = '<p>This <a href="{$a->link}">student post</a> has 
 $string['bim_post_heading'] = 'Mark posts';
 $string['bim_post_no_questions'] = '<p>There are no questions currently defined for this activity. Use the "Manage Questions" tab above to add questions.</p>';
 // show_marker_student_details
-$string['bim_details_unregistered_description'] = '<p>These students have not yet registered their feeds</p>';
+$string['bim_details_unregistered_description'] = '<p>{$a} These students have not yet registered their feeds</p>';
 $string['bim_details_no_regs'] = '<p>None of your students have registered feeds.</p>';
 $string['bim_details_unreg_email_list'] = 'Unregistered students\' email addresses: ';
 $string['bim_details_registered_heading'] = 'Registered student details';
@@ -405,6 +405,9 @@ $string['bim_register_timeout_description'] = '<p>The system ran out of time whi
 
 //*************************************
 // HELP Popups??
+
+//*****
+// For the student view
 $string['numMirrored' ] = 'Number of posts mirrored';
 $string['numMirrored_help'] = 'How many of the posts from your blog/feed BIM has copied to Moodle.';
 
@@ -425,5 +428,14 @@ $string['allocatedPostStudent_help'] = 'Either BIM or a member of the teaching s
 
 $string['markedPostStudent'] = 'Marked post';
 $string['markedPostStudent_help'] = 'Someone has marked your post, however, it must be moderated before the result can be released to you.';
+
+//*****
+// For the marker
+$string['opml'] = 'What is an OPML file';
+$string['opml_help'] = 'An OPML file can be imported into many RSS/News readers (e.g. Google Reader. It is an easy way to track posts from all students outside of BIM.';
+
+$string['unregisteredDetails'] = 'Unregistered students';
+$string['unregisteredDetails_help'] = 'The students in the following table have not yet succeeded in registering their blogs/feeds with BIM. You can email all unregistered students to remind them, email individual students, and register a blog for a student.';
+
 
 ?>
