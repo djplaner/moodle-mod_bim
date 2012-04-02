@@ -21,6 +21,8 @@ require_once($CFG->dirroot.'/mod/bim/marker/generateOpml.php');
 function show_marker( $bim, $userid, $cm, $course )
 {
     global $CFG;
+    global $OUTPUT;
+
     // find out which screen is required
     $screen = optional_param('screen', 0, PARAM_ALPHA);
     if ( $screen == "" ) $screen = "ShowDetails";
@@ -51,12 +53,12 @@ function show_marker( $bim, $userid, $cm, $course )
     } else if ( $screen == "showQuestions" ) {
         bim_show_questions( $cm, $bim );
     } else if ( $screen == "generateOpml" ) {
-        bim_generate_opml( $cm, $bim );
+        bim_generate_opml( $bim, $cm, $userid );
     }
 
-//    if ( $screen != "generateOpml" ) {
-//        //print_footer( $course );
-//    }
+    if ( $screen != "generateOpml" ) {
+      echo $OUTPUT->footer();
+    }
 }
 
 /****
@@ -461,16 +463,20 @@ function show_marker_student_details( $bim, $userid, $cm )
       print_string( 'bim_details_opml', 'bim',Array(help=>$help, url=>$url ) );
     //********* View data
     // uncregistred students
-    if ( isset( $unregistered ))
+    if ( isset( $unregistered ) && count( $unregistered)!= 0)
     {
 //      $help = helpbutton( 'unregisteredDetails', 'unregdetails', 'bim',
 //                          true, false, '', true );
       echo '<a name="unreg"></a>';
 
       $helpString = $OUTPUT->help_icon( "unregisteredDetails", "bim" );
-      print_heading(get_string('bim_release_manage_unregistered_heading','bim'), 2 );
-      $helpString = $helpString . get_string( 'bim_details_unregistered_description', 'bim' );
+
+      print_heading(get_string('bim_release_manage_unregistered_heading',
+                       'bim'), 2 );
+      $helpString = get_string( 'bim_details_unregistered_description', 
+                                'bim', $helpString );
       echo $helpString;
+
       $unreg_data = bim_create_details_display( $unregistered, $feed_details, 
                                 $cm );
       // show the "email merge" form for 
@@ -490,8 +496,8 @@ function show_marker_student_details( $bim, $userid, $cm )
 //    $help = helpbutton( 'registeredDetails', 'regdetails', 'bim',
  //                         true, false, '', true );
     echo '<a name="reg"></a>';
-    $helpString = $OUTPUT->help_icon( "registeredDetails", 'bim' );
-    echo $OUTPUT->heading( $helpString.get_string('bim_details_registered_heading', 'bim' ).$helpString, 2 );
+//    $helpString = $OUTPUT->help_icon( "registeredDetails", 'bim' );
+    echo $OUTPUT->heading( get_string('bim_details_registered_heading', 'bim' ), 2 );
 
     $table = bim_setup_details_table( $cm, $bim->id, $userid, 'registered' );
     $reg_data = bim_create_details_display( $registered, $feed_details,
@@ -502,9 +508,13 @@ function show_marker_student_details( $bim, $userid, $cm )
     } else {
         foreach ( $reg_data as $row )
         {
-          $table->add_data_keyed( $row );
+          //$table->add_data_keyed( $row );
+          $table->data[] = array( $row['username'], $row['name'], $row['email'],
+                                  $row['num_entries'],
+                                  $row['last_post'], $row['blog_url'] );
         }
-        $table->print_html();
+//        $table->print_html();
+        echo html_writer::table( $table );
     }
     echo $OUTPUT->box_end();
 }
