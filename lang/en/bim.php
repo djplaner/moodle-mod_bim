@@ -351,6 +351,7 @@ This is provided in case there is some problem with the student post (e.g. possi
 $string['marking_form_mark'] = 'Mark:';
 $string['marking_form_status'] = 'Status: {$a}';
 $string['marking_form_student_post'] = '<strong>Student post <small>(<a href="{$a}">original post</a>)</small></strong>';
+$string['marking_form_marker_comments'] = '<strong>Marker comments</strong> {$a}';
 $string['marking_form_min'] = 'min: ';
 $string['marking_form_max'] = 'max: ';
 
@@ -446,5 +447,8 @@ $string['mark_help'] = '<p>The numeric result you think this post is worth.</p><
 $string['suspend'] = 'Suspend';
 $string['suspend_help'] = '<p>A suspended post cannot be returned to the student.</p><p>Typically used if you suspect plagiarism or similar problem that requires the lead teacher to make a decision prior to releasing results to students. </p>';
 $string['markAllocation'] = 'Change allocation';
-$string['markAllocation_help'] = '<p>Student posts can be allocated to one of the questions set by the leader teacher. This indicates that the student post is an answer to the question.</p><p>BIM does try to do this automatically, but you can also do it manually by selecting a question from the drop down menu. </p><p>If you select the option "..Choose one.." then the student post becomes unallocated. It will still appear in BIM, but will not be allocated to a question.</p>'
+$string['markAllocation_help'] = '<p>Student posts can be allocated to one of the questions set by the leader teacher. This indicates that the student post is an answer to the question.</p><p>BIM does try to do this automatically, but you can also do it manually by selecting a question from the drop down menu. </p><p>If you select the option "..Choose one.." then the student post becomes unallocated. It will still appear in BIM, but will not be allocated to a question.</p>';
+$string['markerComments'] = 'Comments';
+$string['markerComments_help'] = '<p>These are your comments on the post. They will, after the post is released, be visible to the student.</p>';
+
 ?>
