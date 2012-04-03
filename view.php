@@ -108,7 +108,7 @@ else if (has_capability('mod/bim:student', $context)) {
   print_error( "No capability to access this page" );
 }
 
-echo $OUTPUT->footer();
+//echo $OUTPUT->footer();
 
 ?>
 
