@@ -92,19 +92,23 @@ class marking_form extends moodleform {
          $mform->addElement( 'select', 'Reallocate'.$row->id, '',
                              $allocate_array, $attributes );
 
+        $markerCommentsHelp= helpbutton( "markerComments", 'markerComments', 'bim',
+                               true, false, '', true );
         $mform->addElement( 'html', '</td></tr>'.
                '<tr><td valign="top" colspan="2" width="50%">'.
                get_string('marking_form_student_post','bim', $row->link ).
-               '</td><td valign="top" colspan="2" width="50%"></td></tr>' );
+               '</td><td valign="top" colspan="2" width="50%"> ' .
+               get_string('marking_form_marker_comments','bim',
+                           $markerCommentsHelp)  .  '</td></tr>' );
 
          $mform->addElement( 'html', '<tr><td valign="top" colspan="2">'.
-                 $row->post.'</td><td valign="top" colspan="2" align="left">' );
+                 $row->post.'</td><td valign="top" colspan="2">' );
 
          // the HTML editor
          $editor_settings = array( 'canUseHtmlEditor'=>'detect',
                    'rows' => 20, 'cols' => 40, 'width' => 0,
                    'height' => 0, 'course' => 0 );
-         $mform->addElement( 'htmleditor', 'comments', '', $editor_settings );
+         $mform->addElement( 'editor', 'comments', '', $editor_settings );
          $mform->setType( 'comments', PARAM_RAW );
          //$mform->addRule( 'comments', null, 'required', null, 'client' );
 
