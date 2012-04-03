@@ -14,7 +14,8 @@
 
 /*require_once($CFG->dirrott.'/mod/bim/lib.php');
 require_once('lib.php');*/
-require_once($CFG->dirroot.'/mod/bim/lib/simplepie/simplepie.inc');
+//require_once($CFG->dirroot.'/mod/bim/lib/simplepie/simplepie.inc');
+require_once( $CFG->libdir.'/simplepie/moodle_simplepie.php' );
 
 /** define some error ids **/
 
@@ -48,10 +49,11 @@ function bim_process_feed( $bim, $student_feed, $questions )
     }
 
     // get the RSS file 
-    $feed = new SimplePie();
+//    $feed = new SimplePie();
+    $feed = new moodle_simplepie();
     $feed->set_feed_url( $student_feed->feedurl );
-    $feed->enable_cache( true );
-    $feed->set_cache_location( $dir );
+    $feed->set_timeout( 20 );
+    $feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_ALL);
     $feed->init();
 
     if ( $feed->error() ) {
@@ -62,7 +64,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
     // get the users marking details
     // - create an array keyed on link element of marking details
     $marking_details = bim_get_marking_details( $bim->id, 
-                   Array( $student_feed->userid => $student_feed->userid ) );
+                   Array( $student_feed->userid ) );
     $details_link = Array();
  
     if ( ! empty( $marking_details )) {
@@ -70,10 +72,9 @@ function bim_process_feed( $bim, $student_feed, $questions )
             $details_link[$detail->link] = $detail;
         }
     }
-
   $unanswered_qs = bim_get_unanswered( $marking_details, $questions );
-
   foreach ( $feed->get_items() as $item ) {
+
       // Only process this item, if it isn't already in bim_marking
       $link = $item->get_permalink();
 
@@ -83,20 +84,6 @@ function bim_process_feed( $bim, $student_feed, $questions )
           $raw_content = $item->get_content();
           $content = iconv( "ISO-8859-1", "UTF-8//IGNORE", $raw_content );
 
-# FOLLOWING is old KLUDGE, will need to be removed if the above works
-#          $content = normalize_special_characters( $item->get_content() );
-#          $content = bim_clean_content( $content );
-# KLUDGE: simple test to find out which special characters are
-#  causing problems
-#      $contenta = getCharArray2( $content );
-#
-#      foreach ( $contenta as $char )
-#      {
-#        if ( ord( $char ) > 128 ) echo "<h4>";
-#        echo "$char .. " . ord( $char ) . "<br />";
-#        if ( ord( $char ) > 128 ) echo "</h4>";
-#      }
-  
           // create most of a new entry
           $entry = new StdClass;
           $entry->id = NULL; 
@@ -133,8 +120,7 @@ function bim_process_feed( $bim, $student_feed, $questions )
           } // empty questions
  
           // insert the new entry
-//          $safe = addslashes_object( $entry );
-          if ( ! $DB->insert_record( "bim_marking", $safe ) ) {
+          if ( ! $DB->insert_record( "bim_marking", $entry ) ) {
               mtrace( get_string( 'bim_process_feed_error', 'bim', 
                             $entry->link ) );
           } else { 
