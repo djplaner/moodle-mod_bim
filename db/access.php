@@ -9,11 +9,13 @@ defined('MOODLE_INTERNAL') || die();
 $capabilities = array(
   // administrator can do lots of things
   'mod/bim:coordinator' => array(
-     'captype' => 'manage',
+     'captype' => 'write',
      'contextlevel' => CONTEXT_MODULE,
      'archetypes' => array(
          'editingteacher' => CAP_ALLOW,
          'coursecreator' => CAP_ALLOW,
+         'teacher' => CAP_ALLOW,
+         'manager' => CAP_ALLOW
      )
   ), 
 
@@ -22,7 +24,7 @@ $capabilities = array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
-           'teacher' => CAP_ALLOW,
+           'teacher' => CAP_ALLOW
         ),
     ),
 
@@ -32,7 +34,7 @@ $capabilities = array(
       'contextlevel' => CONTEXT_MODULE,
       'archetypes' => array(
           'guest' => CAP_PROHIBIT,
-          'student' => CAP_ALLOW,
+          'student' => CAP_ALLOW
 /*          'teacher' => CAP_PROHIBIT,
           'editingteacher' => CAP_PROHIBIT, */
       ),
