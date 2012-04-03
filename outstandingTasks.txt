@@ -4,9 +4,17 @@ during the bim2 conversion process
 lib.php
 - Get bim_cron working
 
+**** VIEW.PHP
+- need to figure out what to do with print_header, and where
+  to do it.  Needs to migrate down into the different views
 
+Marker 
+- pretty up box
+- revisit help icons
+- fix up how table for registered students is created
 
 All
+--- the INTRO stuff is getting displayed everywhere
 - replace print_heading print_box_start with
    echo $OUTPUT->
 - change get_records_sql
