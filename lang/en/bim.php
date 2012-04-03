@@ -211,7 +211,7 @@ $string['show_qs_body'] = 'Description';
 // bim_marker_allocate_posts
 $string['bim_marker_student_details'] = 'View student details';
 $string['bim_marker_post_details'] = 'Mark posts';
-$string['bim_marker_show_qs'] = '<p>This activity has set questions that the students must answer through their posts. You can {$a}.</p>';
+$string['bim_marker_show_qs'] = '<p>This activity has set questions that the students must answer through their posts. You can <a href="{$a->url}">view the questions here</a>. For help on marking posts try {$a->help}</p>';
 $string['bim_marker_show_qs_link'] = 'view the questions here';
 
 $string['marker_student_config_heading'] = 'Activity configuration information';
@@ -437,5 +437,6 @@ $string['opml_help'] = 'An OPML file can be imported into many RSS/News readers 
 $string['unregisteredDetails'] = 'Unregistered students';
 $string['unregisteredDetails_help'] = 'The students in the following table have not yet succeeded in registering their blogs/feeds with BIM. You can email all unregistered students to remind them, email individual students, and register a blog for a student.';
 
-
+$string['markPostsAll'] = 'Marking posts';
+$string['markPostsAll_help'] = '<p>Before marking questions, there must be some questions create for the BIM activity (only the coordinator can do this) and posts by the students need to be allocated to questions (you can do this). To allocate questions click on the link showing the number of posts the student has made (if they have some).</p><p>To mark or remark click on the link an answer that has been submitted or marked.</p>';
 ?>
