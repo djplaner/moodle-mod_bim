@@ -91,7 +91,8 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
 
     // the list of students the marker is supposed to mark
     $markers_students = bim_get_markers_students( $bim, $userid );
-
+           #                      'marking_details' => $marking_details,
+           #                      'questions' => $questions ,
     // make sure the student is one of the markers
     if ( ! isset( $markers_students[$student] ))
     {
@@ -101,75 +102,10 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
       return;
     }
 
-    // get student user details
-    $student_details = $DB->get_records_select( "user", "id=$student" );
 
-    // get student details from bim_student_feeds
-    // *** should be just for this student, not all students for the marker
-    $student_ids = array( $student );
-    $feed_details = bim_get_feed_details( $bim->id, $student_ids );
-    $marking_details = bim_get_marking_details( $bim->id, $student_ids);
-
-    // all of the questions for this bim
-    $questions = bim_get_question_hash( $bim->id );
-    $num_questions = count( $questions );
-
-    // calculate stats for student posts
-    $post_stats = bim_generate_marking_stats( $marking_details );
-
-    // Get progress result for the student
-    $progress = bim_generate_student_results( $marking_details, $questions, $cm );
-
-    //*********** Show the data
-
-    //*** the student details table first
-    
-    print_heading( get_string( 'bim_find_student_details_heading', 'bim' ),
-                        'left', 2 );
-
-    $details_table = new stdClass;
-    $details_table->class = 'generaltable';
-    $details_table->align = array( 'center', 'left' );
-    $details_table->size =  array( '30%', '60%' );
-    $details_table->width = "70%";
-   
-    $details_table->data = array();
-    $details_table->data[] = array( get_string('bim_marker_student','bim'), 
-           '<a href="mailto:'.$student_details[$student]->email.'">'.
-           $student_details[$student]->lastname.', '.
-           $student_details[$student]->firstname.' ('.
-           $student_details[$student]->username.')</a>' );
-
-      $answers = $post_stats["Released"]+$post_stats["Marked"]+
-                 $post_stats["Submitted"];
-      $marked = $post_stats["Released"]+$post_stats["Marked"];
-      $total_posts = count( $marking_details );
-
-      #-- hand the case when the form is being processed
-/*      $allocation_form = new allocation_form( 'view.php', array( 
-                                 'marking_details' => $marking_details,
-                                 'questions' => $questions ,
-                                 'id' => $cm->id,
-                                 'uid' => $student 
-                                 )
-                                ); */
-
-    // DETAILS TABLE
-    $details_table->data[] = array( get_string('bim_marker_blog','bim'),
-           '<a href="'.$feed_details[$student]->blogurl. '">'.
-           $feed_details[$student]->blogurl. '</a>' );
-    $details_table->data[] = array( 
-           get_string('bim_marker_posts','bim'), $total_posts );
-    $details_table->data[] = array( 
-           get_string('bim_marker_answers','bim'),"$answers of $num_questions" );
-    $details_table->data[] = array( 
-           get_string('bim_marker_m_r','bim'), 
-            $post_stats["Released"]." / $marked" );
-    $details_table->data[] = array( 
-           get_string('bim_marker_progress','bim'), $progress );
-
-    print_table( $details_table );
-
+    list( $student_details, $marking_details, $questions, $feed_details, 
+         $post_stats, $progress ) = 
+            marker_get_student_details_table( $student, $bim, $cm );
 
     // Start the form
     // at this stage the database has not been updated
@@ -183,13 +119,14 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
 
     if ( ! $allocation_form->is_submitted() || $allocation_form->is_cancelled() )
     {
+      marker_show_student_details_table( $student, $student_details,
+                                                 $marking_details, $feed_details,
+                                                 $post_stats, $progress );
       add_to_log( $cm->course, "bim", "posts allocate", 
                  "view.php?id=$cm->id&screen=AllocatePosts&uid=$student",
                 "List all $student", $cm->id );
-      print_heading( get_string('marker_allocation_heading','bim'), 'left', 2 );
+      print_heading( get_string('marker_allocation_heading','bim'), 2 );
       $allocation_form->display();
-/*      print_heading( "Student posts", 'left', 2 );
-      $allocation_form->display(); */
     }
     else if ( $fromform = $allocation_form->get_data() )
     {
@@ -198,7 +135,14 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
                 "Processing allocation", $cm->id );
       bim_process_allocate_form( $marking_details, $fromform, $questions );
 
-      print_heading( get_string('bim_marker_posts','bim'), 'left', 2 );
+      list( $student_details, $marking_details, $questions, $feed_details, 
+         $post_stats, $progress ) = 
+            marker_get_student_details_table( $student, $bim, $cm );
+      marker_show_student_details_table( $student, $student_details,
+                                                 $marking_details, $feed_details,
+                                                 $post_stats, $progress );
+
+      print_heading( get_string('marker_allocation_heading','bim'), 2 );
       $allocation_form = new allocation_form( 'view.php', array( 
                                  'marking_details' => $marking_details,
                                  'questions' => $questions ,
@@ -220,6 +164,78 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
     }
 }
     
+function marker_get_student_details_table( $student, $bim, $cm )
+{
+    global $DB;
+
+    // get student user details
+    $student_details = $DB->get_records_select( "user", "id=$student" );
+
+    // get student details from bim_student_feeds
+    // *** should be just for this student, not all students for the marker
+    $student_ids = array( $student );
+    $feed_details = bim_get_feed_details( $bim->id, $student_ids );
+    $marking_details = bim_get_marking_details( $bim->id, $student_ids);
+
+    // all of the questions for this bim
+    $questions = bim_get_question_hash( $bim->id );
+
+    // calculate stats for student posts
+    $post_stats = bim_generate_marking_stats( $marking_details );
+    $post_stats['NUM_QUESTIONS'] = count( $questions );
+
+    // Get progress result for the student
+    $progress = bim_generate_student_results( $marking_details, $questions, $cm );
+    //*** the student details table first
+
+    return Array( $student_details, $marking_details, $questions, $feed_details,
+                  $post_stats, $progress );
+}
+    
+function marker_show_student_details_table( $student, $student_details, 
+                $marking_details, $feed_details, $post_stats, $progress )
+{
+    print_heading( get_string( 'bim_find_student_details_heading', 'bim' ),
+                        'left', 2 );
+
+
+    $details_table = new stdClass;
+    $details_table->class = 'generaltable';
+    $details_table->align = array( 'center', 'left' );
+    $details_table->size =  array( '30%', '60%' );
+    $details_table->width = "70%";
+   
+    $details_table->data = array();
+    $details_table->data[] = array( get_string('bim_marker_student','bim'), 
+           '<a href="mailto:'.$student_details[$student]->email.'">'.
+           $student_details[$student]->lastname.', '.
+           $student_details[$student]->firstname.' ('.
+           $student_details[$student]->username.')</a>' );
+
+      $answers = $post_stats["Released"]+$post_stats["Marked"]+
+                 $post_stats["Submitted"];
+      $marked = $post_stats["Released"]+$post_stats["Marked"];
+      $num_questions = $post_stats["NUM_QUESTIONS"];
+      $total_posts = count( $marking_details );
+
+    // DETAILS TABLE
+    $details_table->data[] = array( get_string('bim_marker_blog','bim'),
+           '<a href="'.$feed_details[$student]->blogurl. '">'.
+           $feed_details[$student]->blogurl. '</a>' );
+    $details_table->data[] = array( 
+           get_string('bim_marker_posts','bim'), $total_posts );
+    $details_table->data[] = array( 
+           get_string('bim_marker_answers','bim'),"$answers of $num_questions" );
+    $details_table->data[] = array( 
+           get_string('bim_marker_m_r','bim'), 
+            $post_stats["Released"]." / $marked" );
+    $details_table->data[] = array( 
+           get_string('bim_marker_progress','bim'), $progress );
+
+    print_table( $details_table );
+
+}
+
 /**
  * bim_process_allocate_form
  * - take the form to allocate posts and process it (duh)
