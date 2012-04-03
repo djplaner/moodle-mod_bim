@@ -19,14 +19,16 @@ function  bim_get_next_prev_student( $question, $student,
 
     // get just the students with answers to $question
     $students = array_keys( $markers_students )  ;
-    $student_ids = implode( ',', $students );
+//    $student_ids = implode( ',', $students );
 
-    $sql = "select userid,id from bim_marking where " .
+    list( $stud_sql, $stud_params ) = $DB->get_in_or_equal( $students);
+
+    $sql = "select userid,id from {bim_marking} where " .
            "question=$question and " .
            "status in ('Submitted','Marked','Released','Suspended') ".
-           " and userid in ( $student_ids ) order by userid";
+           " and userid $stud_sql order by userid";
 
-    $details = $DB->get_records_sql( $sql );
+    $details = $DB->get_records_sql( $sql, $stud_params );
     if ( ! empty( $details ) ) {
         // find where $student is
         // - just get the array pointer to the right place
