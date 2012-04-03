@@ -21,14 +21,12 @@ function bim_generate_opml( $bim, $cm, $userid ) {
                  "view.php?id=$cm->id&screen=generateOpml",
                 "", $cm->id );
 
-
     //********* Get data
     // Get the student details
     $student_details = bim_get_markers_students( $bim, $userid );
     // get the student feeds
     $student_ids = array_keys( $student_details );
     $feed_details = bim_get_feed_details( $bim->id, $student_ids );
-
     // generate the structure for OPML generate
     $struct = Array(
                 "head" => Array(
@@ -54,12 +52,13 @@ function bim_generate_opml( $bim, $cm, $userid ) {
     }
 
   $string = bim_generate_opml_string( $struct );
-
   // generate the header necessary to force a download
   header( "Content-Type: application/download\n" );
   $opml_file = clean_filename( "the file.opml" );
   header( "Content-Disposition: attachment; filename=\"$opml_file\"" ); 
   echo $string;
+  echo "\n";
+  exit;
 }
 
 ?>
