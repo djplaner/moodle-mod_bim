@@ -12,6 +12,7 @@ require_once($CFG->dirroot.'/mod/bim/marker/marking_form.php');
 require_once($CFG->dirroot.'/mod/bim/marker/lib.php');
 require_once($CFG->dirroot.'/mod/bim/marker/change_blog_form.php');
 require_once($CFG->dirroot.'/mod/bim/marker/generateOpml.php');
+require_once($CFG->libdir.'/tablelib.php');
 
 /*************************************
  * show_marker( $bim, $userid, $cm )
@@ -365,17 +366,17 @@ function show_marker_post_details( $bim, $userid, $cm )
     // Show registered information
     $help = helpbutton( 'markPostsAll', 'markposts', 'bim',
                           true, false, '', true );
-    print_heading( get_string('bim_post_heading','bim').$help, "left", 2 );
+    print_heading( get_string('bim_post_heading','bim' ), "left", 2 );
 
     if ( empty( $questions ) ) {
-        print_string( 'bim_post_no_questions', 'bim' );
+        print_string( 'bim_post_no_questions', 'bim', $help );
     } else {
-        $link = link_to_popup_window( $show_qs_url, 'showquestions',
-                         get_string( 'bim_marker_show_qs_link','bim'),
-                          700, 600, 'Show questions', null, true );
-        print_string( 'bim_marker_show_qs', 'bim', $link );
+#        $link = link_to_popup_window( $show_qs_url, 'showquestions',
+#                         get_string( 'bim_marker_show_qs_link','bim'),
+#                          700, 600, 'Show questions', null, true );
+        print_string( 'bim_marker_show_qs', 'bim', 
+                       Array( url => $show_qs_url, help => $help) );
     } 
-
     $table = bim_setup_posts_table( $cm, $bim->id, $userid, $questions  );
     $reg_data = bim_create_posts_display( $cm, $registered, $feed_details,
                                 $marking_details, $questions );
@@ -529,7 +530,6 @@ function bim_setup_posts_table( $cm, $bim, $userid, $questions )
       global $CFG;
       $baseurl = $CFG->wwwroot.'/mod/bim/view.php?id='.$cm->id .
                         '&screen=ShowPostDetails';
-
       $table = new flexible_table( "BimShowPostDetails-".$cm->id.
                                             '-'.$bim.'-'.$userid );
       $table->course = $cm->course;
