@@ -82,7 +82,7 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
         '">' .  get_string( 'bim_marker_post_details', 'bim' ) .  '</a>',
            'noticebox boxaligncenter boxwidthnarrow centerpara highlight' );
 
-    $help = helpbutton( 'changeAllocations', 'changeAllocations', 'bim',
+    $help = helpbutton( 'markAllocation', 'changeAllocations', 'bim',
                           true, false, '', true );
     print_heading( get_string('bim_marker_allocate_heading', 'bim' ).$help, 
                      'left', 1 );
@@ -253,7 +253,6 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
             $detail->status = "Unallocated";
             $detail->question = 0;
             $post = $detail->post;
-            $detail->post = addslashes( $detail->post );
             if ( !isset( $detail->timereleased ) || $safe->timereleased == '') {
                 $detail->timereleased = 0;
             }
@@ -281,7 +280,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
                    $detail->status = "Submitted";
             // update database
             $post = $detail->post;
-            $detail->post = addslashes( $detail->post );
+//            $detail->post = addslashes( $detail->post );
             if ( !isset( $detail->timereleased ) || $safe->timereleased == '') {
                 $detail->timereleased = 0;
             }
@@ -865,7 +864,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
     //************ Get the necessary data
 
     // get the student for the entry
-    $student = $DB->get_field( 'bim_marking', 'userid', 'id', $marking );
+    $student = $DB->get_field( 'bim_marking', 'userid', Array( 'id' => $marking) );
 
     if ( ! $student )
     {
@@ -1084,7 +1083,8 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
         if (!isset($marking_details[$marking]->timereleased)) {
             $marking_details[$marking]->timereleased = 0;
         }
-        $safe = addslashes_object( $marking_details[$marking] );
+        //$safe = addslashes_object( $marking_details[$marking] );
+        $safe = $marking_details[$marking] ;
         if ( !isset( $safe->timereleased ) || $safe->timereleased == '') {
             $safe->timereleased = 0;
         }
