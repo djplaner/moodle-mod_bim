@@ -350,7 +350,7 @@ This is provided in case there is some problem with the student post (e.g. possi
 // marker/marking_form.php
 $string['marking_form_mark'] = 'Mark:';
 $string['marking_form_status'] = 'Status: {$a}';
-$string['marking_form_student_post'] = '<strong>Student post <small(<a href="{$a}">original post</a>)</small></strong>';
+$string['marking_form_student_post'] = '<strong>Student post <small>(<a href="{$a}">original post</a>)</small></strong>';
 $string['marking_form_min'] = 'min: ';
 $string['marking_form_max'] = 'max: ';
 
@@ -439,4 +439,12 @@ $string['unregisteredDetails_help'] = 'The students in the following table have 
 
 $string['markPostsAll'] = 'Marking posts';
 $string['markPostsAll_help'] = '<p>Before marking questions, there must be some questions create for the BIM activity (only the coordinator can do this) and posts by the students need to be allocated to questions (you can do this). To allocate questions click on the link showing the number of posts the student has made (if they have some).</p><p>To mark or remark click on the link an answer that has been submitted or marked.</p>';
+
+// marking an individual post
+$string['mark'] = 'Mark';
+$string['mark_help'] = '<p>The numeric result you think this post is worth.</p><p>The lead teacher may have specified an allowed range. You can record a mark outside that range.</p>';
+$string['suspend'] = 'Suspend';
+$string['suspend_help'] = '<p>A suspended post cannot be returned to the student.</p><p>Typically used if you suspect plagiarism or similar problem that requires the lead teacher to make a decision prior to releasing results to students. </p>';
+$string['markAllocation'] = 'Change allocation';
+$string['markAllocation_help'] = '<p>Student posts can be allocated to one of the questions set by the leader teacher. This indicates that the student post is an answer to the question.</p><p>BIM does try to do this automatically, but you can also do it manually by selecting a question from the drop down menu. </p><p>If you select the option "..Choose one.." then the student post becomes unallocated. It will still appear in BIM, but will not be allocated to a question.</p>'
 ?>
