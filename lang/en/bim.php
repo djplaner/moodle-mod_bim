@@ -126,11 +126,11 @@ $string['bim_release_no_students_description'] = '<p>You have not yet been alloc
 // bim_configuration_screen
 $string['bim_configuration_screen'] = '<p>The general configuration of BIM is done using the <a href="{$a->wwwroot}/course/modedit.php?update={$a->cmid}&return=1">standard activity configure interface</a></p><p>Some basic advice on the steps to configure a BIM activity are <a href="#steps">provided below</a>.</p>';
 $string['bim_configuration_details'] = 'Current configuration settings';
-$string['bim_configuration_name'] = 'BIM name:';
-$string['bim_configuration_intro'] = 'About:';
-$string['bim_configuration_registration'] = 'Can students register?:';
-$string['bim_configuration_mirror'] = 'Are posts being mirrored?:';
-$string['bim_configuration_grade'] = 'Are results added to gradebook?:';
+$string['bim_configuration_name'] = '{$a} BIM name:';
+$string['bim_configuration_intro'] = '{$a} About:';
+$string['bim_configuration_registration'] = '{$a} Can students register?:';
+$string['bim_configuration_mirror'] = '{$a} Are posts being mirrored?:';
+$string['bim_configuration_grade'] = '{$a} Are results added to gradebook?:';
 $string['bim_configuration_settings'] = 'Settings';
 $string['bim_configuration_values'] = 'Current Values';
 $string['bim_configuration_no_register'] = "<p><strong>Important:</strong> students cannot currently register their feed.</p>";
@@ -451,4 +451,22 @@ $string['markAllocation_help'] = '<p>Student posts can be allocated to one of th
 $string['markerComments'] = 'Comments';
 $string['markerComments_help'] = '<p>These are your comments on the post. They will, after the post is released, be visible to the student.</p>';
 
+//***************************
+// Coordinator
+
+// Configuration screen
+$string['config_bim_name'] = 'BIM name';
+$string['config_bim_name_help'] = '<p>This is the name that students and staff will click on to access this BIM activity.</p>';
+
+$string['config_student_reg'] = 'Can students register?';
+$string['config_student_reg_help'] = '<p>For BIM to know about a student\'s blog/feed, the student must register their blog/feed with BIM. This option must be "Yes" before students can register.</p><p>You may wish to turn off the ability to register before a certain date.</p>';
+
+$string['config_mirror'] = 'Is mirroring on?';
+$string['config_mirror_help'] = '<p>In order to track individual student posts, BIM will make a copy (a mirror) of each new student post. But only if posts are being mirrored.</p><p>You might wish to turn mirroring off at the end of the activity.</p>';
+
+$string['config_grade'] = 'Add to gradebook';
+$string['config_grade_help'] = '<p>If results are being added to the gradebook, there will be a new column in the gradebook for this BIM activity. As student posts are marked and then released the student results in the gradebook will be updated.</p><p>Note: only the marks of posts that have been released to the students will be added into the gradebook.</p>';
+
+$string['config_about'] = 'About';
+$string['config_about_help'] = '<p>The "about" field is meant to be a short description of the BIM activity that is shown to students when they access the BIM activity.</p>';
 ?>
