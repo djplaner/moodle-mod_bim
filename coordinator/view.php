@@ -70,9 +70,9 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
             bim_generate_opml( $bim, $cm, $userid );
         }
     }
-/*    if ( $screen != "generateOpml" ) {
-        print_footer( $course );
-    } */
+    if ( $screen != "generateOpml" ) {
+        echo $OUTPUT->footer();
+    } 
 }
 
 /*******
