@@ -50,7 +50,10 @@ class question_form extends moodleform {
         $mform->addElement( 'html', '</td></tr></table>' );
 
         // html editor with body
-        $mform->addElement( 'htmleditor', "body_new", '' );
+        $editor_settings = array( 'canUseHtmlEditor'=>'detect',
+                   'rows' => 10, 'cols' => 40, 'width' => 0,
+                   'height' => 0, 'course' => 0 );
+        $mform->addElement( 'editor', "body_new", '', $editor_settings );
         $mform->setType( "body_new", PARAM_RAW );
  
         $button_array = array();
@@ -111,7 +114,7 @@ class question_form extends moodleform {
           $editor_settings = array( 'canUseHtmlEditor'=>'detect',
                    'rows' => 10, 'cols' => 40, 'width' => 0,
                    'height' => 0, 'course' => 0 );
-          $mform->addElement( 'htmleditor', "body_$question->id", '',
+          $mform->addElement( 'editor', "body_$question->id", '',
                                 $editor_settings );
           $mform->setType( "body_$question->id", PARAM_RAW );
  
