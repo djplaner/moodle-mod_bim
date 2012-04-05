@@ -112,19 +112,30 @@ function bim_configuration_screen( $bim, $cm )
                           get_string('bim_configuration_values', 'bim' ));
 
   $details->data = array();
-  $details->data[] = array( get_string('bim_configuration_name','bim'),
+  $help = helpbutton( 'config_bim_name', 'bim_name', 'bim', true, false, 
+                               '', true );
+  $details->data[] = array( get_string('bim_configuration_name','bim', $help),
                 format_string( $bim->name ) );
 
   // simple array to get yes/no
   $yes = array( 0 => "<strong>No</strong>", 1 => "Yes" );
-  $details->data[] = array( get_string('bim_configuration_registration','bim'),
+  $help = helpbutton( 'config_student_reg', 'bim_name', 'bim', true, false, 
+                               '', true );
+  $details->data[] = array(
+                         get_string('bim_configuration_registration','bim',$help),
                           $yes[$bim->register_feed] );
-  $details->data[] = array( get_string('bim_configuration_mirror','bim'),
+  $help = helpbutton( 'config_mirror', 'bim_name', 'bim', true, false, 
+                               '', true );
+  $details->data[] = array( get_string('bim_configuration_mirror','bim',$help),
                           $yes[$bim->mirror_feed] );
-  $details->data[] = array( get_string('bim_configuration_grade','bim'),
+  $help = helpbutton( 'config_grade', 'bim_name', 'bim', true, false, 
+                               '', true );
+  $details->data[] = array( get_string('bim_configuration_grade','bim',$help),
                           $yes[$bim->grade_feed] );
 
-  $details->data[] = array( get_string('bim_configuration_intro','bim'),
+  $help = helpbutton( 'config_about', 'bim_name', 'bim', true, false, 
+                               '', true );
+  $details->data[] = array( get_string('bim_configuration_intro','bim',$help),
                 format_text( $bim->intro ) );
   print_table( $details );
 
