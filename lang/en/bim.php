@@ -124,7 +124,8 @@ $string['bim_release_no_students_description'] = '<p>You have not yet been alloc
 //************
 // coordinator/view.php
 // bim_configuration_screen
-$string['bim_configuration_screen'] = '<p>The general configuration of BIM is done using the <a href="{$a->wwwroot}/course/modedit.php?update={$a->cmid}&return=1">standard activity configure interface</a></p><p>Some basic advice on the steps to configure a BIM activity are <a href="#steps">provided below</a>.</p>';
+$string['bim_configuration_screen'] = '<p>The general configuration of BIM is done using the <a href="{$a->wwwroot}/course/modedit.php?update={$a->cmid}&return=1">standard activity configure interface</a></p><p>The "General Steps" section at the bottom of this page provides a basic introduction to using BIM.</p>';
+
 $string['bim_configuration_details'] = 'Current configuration settings';
 $string['bim_configuration_name'] = '{$a} BIM name:';
 $string['bim_configuration_intro'] = '{$a} About:';
@@ -138,7 +139,7 @@ $string['bim_configuration_no_mirror'] = "<p><strong>Important:</strong> BIM is 
 $string['bim_configuration_steps_heading'] = 'General steps for configuring a BIM activity';
 $string['bim_configuration_steps_description'] = '<p>Configuring a BIM activity would normally include these steps:</p><ol><li>Configure BIM;<br />Provide the title and descripton of the activity and set whether the activity is being graded, mirrored or students allowed to registere.</li><li>Manage questions;<br />Create a list of questions students are expected to answer. With mirroring on BIM will try to automatically allocate student posts to questions.</li><li>Allocate markers;<br />Specify which groups of students each marker is responsible for marking.</li></ol>';
 // bim_manage_questions
-$string['bim_questions_current'] = '<p>There are currently {$a} questions for this BIM activity. The following allows you to add a new question or modify existing questions.</p><p>When you add a new question, if students have already made posts, then BIM will attempt to allocate those existing posts to the new question when it runs its automated mirror process. Modifying questions to which students have already provided answers should work, but the advice is not to.</p>';
+$string['bim_questions_current'] = '<p>There are currently {$a} questions for this BIM activity. The following allows you to:</p><ul> <li> add a new question;<br /> If students have already posted, BIM will try to allocate these existing posts to the new quesiton when it next trys to mirror posts. </li> <li> delete an existing question; or, <br /> It is advised you do not do this if students have already made posts. Currently BIM does not deallocate student posts that have already been allocated to a deleted question. </li> <li> modify an existing questions.<br />You can change the title, mark range and the description. </li> </ul>';
 $string['bim_questions_none_heading'] = 'No current questions';
 $string['bim_questions_none_description'] = '<p>There are currently no questions for this activity. BIM will still operate, students can register blogs and staff can track student blogs.  However, there will be no question allocation or tracking of progress by question.</p><p>Use the "Add new question" form below to start adding questions. Once questions are added you will be able to modify and delete them.</p><p>BIM will automatically check any existing students posts within BIM against new questions. This usually takes an hour or so after you have added the question.</p>';
 $string['bim_questions_changes_heading'] = 'Changes being made include..';
@@ -153,11 +154,14 @@ $string['bim_questions_error_processing'] = 'Problem process the question form.'
 
 // coordinator/question_form.php
 $string['bim_qform_addnew'] = 'Add new question';
-$string['bim_qform_title'] = 'Title:';
-$string['bim_qform_min'] = 'Min mark:';
-$string['bim_qform_max'] = 'Max mark:';
+$string['bim_qform_title_help'] = 'Title {$a}:';
+$string['bim_qform_title'] = 'Title :';
+$string['bim_qform_min_help'] = 'Min mark {$a}:';
+$string['bim_qform_min'] = 'Min mark :';
+$string['bim_qform_max_help'] = 'Max mark {$a}:';
+$string['bim_qform_max'] = 'Max mark :';
 $string['bim_qform_question'] = 'Question: {$a}';
-$string['bim_qform_stats'] = '<p>Student answers: {$a}</p>';
+$string['bim_qform_stats'] = '<p>Student answers {$a->help}: {$a->stats}</p>';
 $string['bim_qform_delete'] = 'Delete question?';
 
 //**********
@@ -469,4 +473,17 @@ $string['config_grade_help'] = '<p>If results are being added to the gradebook, 
 
 $string['config_about'] = 'About';
 $string['config_about_help'] = '<p>The "about" field is meant to be a short description of the BIM activity that is shown to students when they access the BIM activity.</p>';
+
+// manage questions
+$string['qform_title'] = 'Question title';
+$string['qform_title_help'] = '<p>The question title - apart from identifying the question - is used by BIM when trying to automatically allocate (match) student posts to a question. </p><p>If the post of a student has a title that contains a question title, the post will be matched to that question.</p>';
+
+$string['qform_min'] = 'Minimum mark';
+$string['qform_min_help'] = '<p>This represents the smallest mark in the range shown to markers.</p><p><strong>Important:</strong> In the interests of flexibility, BIM does <strong>not</strong> police this minimum. i.e. it is possible for markers to set a mark lower than the minimum.</p>';
+
+$string['qform_max'] = 'Maximum mark';
+$string['qform_max_help'] = '<p>This represents the largest mark in the range shown to markers.</p><p><strong>Important:</strong> In the interests of flexibility, BIM does <strong>not</strong> police this maximum. i.e. it is possible for markers to set a mark greater than the maximum.</p>';
+
+$string['qform_stats'] = 'Current question statistics';
+$string['qform_stats_help'] = '<p>Shows the current number of student posts that have been allocated to the question, including what status they are currently in (submitted - student has submitted; Marked - the marker has marked; Released - returned to the student)</p>';
 ?>
