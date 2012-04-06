@@ -30,20 +30,26 @@ class question_form extends moodleform {
         $mform->addElement('header', "new_question", 
               get_string( 'bim_qform_addnew', 'bim' ) );
 
+        $titleHelp = helpbutton( "qform_title", 'qform', 'bim', true, 
+                                    false, '', true );
+        $minHelp = helpbutton( "qform_min", 'qform', 'bim', true,false,'', true );
+        $maxHelp = helpbutton( "qform_max", 'qform', 'bim', true, false,'',true );
+        $statsHelp = helpbutton( "qform_stats", 'qform', 'bim', true, false,'',true );
+
         // row with title, min and max mark ?? delete
         $mform->addElement( 'html', 
                     '<table cellpadding="2"><tr><th>' .
-                    get_string( 'bim_qform_title', 'bim' ) . '</th><td>' );
+                    get_string( 'bim_qform_title_help', 'bim', $titleHelp ) . '</th><td>' );
         $mform->addElement( 'text', "title_new", '', 'size="20"' );
         $mform->setType( "title_new", PARAM_TEXT );
         $mform->addElement( 'html', '</td><th>' .
-                    get_string( 'bim_qform_min', 'bim' ) . '</th><td>' );
+                    get_string( 'bim_qform_min_help', 'bim', $minHelp ) . '</th><td>' );
         $mform->addElement( 'text', "min_new", '', 'size="5"' );
         $mform->setType( "min_new", PARAM_NUMBER );
         $mform->addRule('min_new', null, 'numeric', null, 'client' );
 
         $mform->addElement( 'html', '</td><th>' .
-                    get_string( 'bim_qform_max', 'bim' ) . '</th><td>' );
+                    get_string( 'bim_qform_max_help', 'bim', $maxHelp ) . '</th><td>' );
         $mform->addElement( 'text', "max_new", '', 'size="5"' );
         $mform->setType( "max_new", PARAM_NUMBER );
         $mform->addRule('max_new', null, 'numeric', null, 'client' );
@@ -82,7 +88,7 @@ class question_form extends moodleform {
             }
           } 
           $mform->addElement( 'html', get_string( 'bim_qform_stats', 'bim', 
-                                           $stats ) );
+                                Array( 'stats' =>$stats, 'help' => $statsHelp )) );
 
           // row with title, min and max mark ?? delete
           $mform->addElement( 'html', 
@@ -114,7 +120,7 @@ class question_form extends moodleform {
           $editor_settings = array( 'canUseHtmlEditor'=>'detect',
                    'rows' => 10, 'cols' => 40, 'width' => 0,
                    'height' => 0, 'course' => 0 );
-          $mform->addElement( 'editor', "body_$question->id", '',
+          $mform->addElement( 'editor', "body_$question->id", $question->body,
                                 $editor_settings );
           $mform->setType( "body_$question->id", PARAM_RAW );
  
