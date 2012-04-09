@@ -149,7 +149,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
         }
       }
     }
-    // Now, what about currently dbase allocations that aren't
+    // Now, what about current dbase allocations that aren't
     // in the form for the marker. i.e. we need to delete them
 
     // loop through each group allocated to marker in database
@@ -180,7 +180,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm )
           $flip = array_flip( $fromform->$id );
           if ( ! isset( $flip[$group] ))
           {
-            if ( $BD->delete_records( "bim_group_allocation", 
+            if ( $DB->delete_records( "bim_group_allocation", 
                     array("bim"=> $bim->id, "groupid"=> $group, 
                           "userid"=>$marker->id)))
             {
