@@ -55,10 +55,7 @@ $string['bim_register'] = 'Register your blog';
 // bim_allocate_markers
 $string['bim_allocate_marker_heading'] = "Allocate markers to groups";
 $string['bim_allocate_marker_description'] = 
-       '<p>Allocate each staff member responsibility for 0 or more groups. '.
-          'The staff member will only be able to view progress and mark ' .
-          'those students who belong to these groups.</p>' .
-  '<p>To add groups or staff, user the normal Moodle processes for assigning roles and managing groups for this course.</p>';
+'<p>Teaching staff can be allocated to mark posts from different groups of students. The following lists:</p> <ul> <li> All of the teaching staff currently allocated to this course.<br /> To add or remove staff to/from this list use the normal Moodle methods for adding teaching staff to the course. </li> <li> A list of all the groups associated with this course.<br /> Again, use the normal Moodle methods for adding/removing groups or to find out which students belong to groups. </li> <li> Groups allocated to each staff member.<br />If a group name is highlighted, then the staff member is allocated to that group. </li> </ul>';
 $string['bim_allocate_marker_nomarkers_heading'] = 'Can not allocate markers';
 $string['bim_allocate_marker_nomarkers_description'] = '<p>Unable to find any markers for this course.  You will need to allocate some people to this course in teaching roles using the Moodle role facility.</p>';
 $string['bim_allocate_marker_nogroups_heading'] = 'Can not allocate markers';
