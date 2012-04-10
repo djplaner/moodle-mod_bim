@@ -82,9 +82,9 @@ $string['bim_find_text'] = 'Search for student:';
 $string['bim_find_none_heading'] = 'No matches found';
 $string['bim_find_none_description'] = '<p>Unable to find any students with a name, username or email address that contained <blockquote><strong>{$a}</strong></blockquote>Please try another search. </p>';
 $string['bim_find_one_heading'] = 'One student found';
-$string['bim_find_one_description'] = '<p>Your search for<blockquote><strong>{$a}</strong></blockquote>matched one student.  That student\'s details follow after the search form.</p>';
-$string['bim_find_x_heading'] = '$a students found';
-$string['bim_find_x_description'] = '<p>Your search for<blockquote><strong>{$a->search}</strong></blockquote>matched {$a->count} students.  A list of matching students is shown below. Click on the "details" column to view more detail about that student.</p>';
+$string['bim_find_one_description'] = '<p>Your search matched one student.  What that student sees when they login to BIM is shown after the search form. </p>';
+$string['bim_find_x_heading'] = '{$a} students found';
+$string['bim_find_x_description'] = '<p>Your search for<blockquote><strong>{$a->search}</strong></blockquote>matched {$a->count} students.  A list of matching students is shown below. </p><p>You searched for:</p>';
 $string['bim_find_student_details_heading'] = 'Student details';
 $string['bim_find_too_many'] = '<p>Your search for <blockquote><strong>{$a->search}</strong></blockquote>matched {$a->count} students.  This is too many (from a system resources perspective) to display.  Please refine your search and try again.</p>';
 
