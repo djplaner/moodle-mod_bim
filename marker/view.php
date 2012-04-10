@@ -847,7 +847,7 @@ function bim_create_details_display( $user_details, $feed_details=NULL,
             $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id" .
                         "&screen=changeBlogRegistration" .
                         "&student=$user->id";
-            
+           
             $display[$user->id]["register"] =
                   '<a href="'. $base_url . '">' .
                    get_string('bim_table_register_blog','bim').'</a>';
