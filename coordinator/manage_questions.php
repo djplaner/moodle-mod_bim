@@ -29,12 +29,10 @@ function bim_manage_questions( $bim, $cm )
     if ( empty($questions)) $num_questions=0;
 
     $questions = bim_get_question_response_stats( $questions );
-
     if ( $num_questions > 0 ) {
         print_string( 'bim_questions_current', 'bim', $num_questions );
     } else {
-        print_heading( get_string( 'bim_questions_none_heading', 'bim' ),
-                         'left', 2 );
+        print_heading( get_string( 'bim_questions_none_heading', 'bim' ), 2 );
         print_string( 'bim_questions_none_description', 'bim' );
     }
 
@@ -57,15 +55,11 @@ function bim_manage_questions( $bim, $cm )
       $deletions = false;
 
       print_box_start( 'noticebox boxwidthnormal' );
-      print_heading( get_string( 'bim_questions_changes_heading', 'bim' ),
-                      "left", 2 );
+      print_heading( get_string( 'bim_questions_changes_heading', 'bim' ), 2 );
       // check the new/add question
-#print '<xmp>';
-#print_r( $fromform->body_new );
-#print '</xmp>';
 
       $fromform->body_new = $fromform->body_new['text'];
-//die;
+      // process any new question that has been added
       if ( $fromform->title_new != "" || $fromform->max_new != 0 ||
            $fromform->min_new != 0 || $fromform->body_new != "" )
       {
@@ -74,8 +68,6 @@ function bim_manage_questions( $bim, $cm )
         $new_question->min_mark = $fromform->min_new;
         $new_question->max_mark = $fromform->max_new;
         $new_question->body = $fromform->body_new;
-//        $new_question->body = addslashes(
-//               preg_replace( '/^ /', '', $fromform->body_new ) );
         $new_question->bim = $bim->id;
         $new_question->id = '';
 
@@ -95,85 +87,76 @@ function bim_manage_questions( $bim, $cm )
       // if any change in the form content, update the database
       $changed = array();
 
-      if ( ! empty( $questions ) )
-      {
-        foreach ( $questions as $question )
-        {
-          $qid = $question->id;
-          $title = "title_".$qid;
-          $min = "min_".$qid;
-          $max = "max_".$qid;
-          $body = "body_".$qid;
-          $delete = "delete_".$qid;
+      if ( ! empty( $questions ) ) {
+          foreach ( $questions as $question ) {
+              $qid = $question->id;
+              $title = "title_".$qid;
+              $min = "min_".$qid;
+              $max = "max_".$qid;
+              $body = "body_".$qid;
+              $delete = "delete_".$qid;
 
-          if ( isset( $fromform->$delete ) )
-          {
+              // are we deleting this current question?
+              if ( isset( $fromform->$delete ) ) {
+                  if ( ! $DB->delete_records( "bim_questions", 
+                            array("id"=>$qid)) ) {
+                      print_string( 'bim_questions_error_delete', 'bim',
+                                     $question->title );
+                  }
+                  else {
+                      print_string( 'bim_questions_deleting', 'bim',
+                                     $question->title );
+                     $deletions = true;
+                  }
+              }
+              // KLUDGE: for some reason body has a space at the start
+              // after being passed back from the form.  Don't want that.
+#              $fromform->body = preg_replace( '/^ /', '', 
+#                                      $fromform->$body['text'] );
+              $text = $fromform->$body;
+              $fromform->$body = $text['text'];
 
-            if ( ! $DB->delete_records( "bim_questions", array("id"=>$qid)) )
-            {
-              print_string( 'bim_questions_error_delete', 'bim',
-                               $question->title );
-            }
-            else
-            {
-              print_string( 'bim_questions_deleting', 'bim',
-                               $question->title );
-              $deletions = true;
-            }
+              if ( $fromform->$title != $question->title  ||
+                   $fromform->$min != $question->min_mark ||
+                   $fromform->$max != $question->max_mark ||
+                   $fromform->$body != $question->body ) {
+                $question->title = $fromform->$title;
+                $question->min_mark = $fromform->$min;
+                $question->max_mark = $fromform->$max;
+                $question->body = $fromform->$body;
+    
+                // get a copy so the unsert won't cause problems
+                $changed[$qid] = clone $question;
+                unset( $changed[$qid]->status );
+              }
           }
-          // KLUDGE: for some reason body has a space at the start
-          // after being passed back from the form.  Don't want that.
-          $fromform->$body = preg_replace( '/^ /', '', $fromform->$body );
-
-          if ( $fromform->$title != $question->title  ||
-               $fromform->$min != $question->min_mark ||
-               $fromform->$max != $question->max_mark ||
-               $fromform->$body != $question->body )
-          {
-            $question->title = $fromform->$title;
-            $question->min_mark = $fromform->$min;
-            $question->max_mark = $fromform->$max;
-            $question->body = $fromform->$body;
-
-            // get a copy so the unsert won't cause problems
-            $changed[$qid] = clone $question;
-            unset( $changed[$qid]->status );
-          }
-        }
       }
       $changes = count( $changed );
-      if ( $changes )
-      {
-        print_string( 'bim_questions_changing', 'bim', $changes );
-        // loop through each change and update the database
-      foreach ( $changed as $change )
-        {
-          echo "<li> $change->title </li> ";
-          if ( ! $DB->update_record( 'bim_questions', $change ) )
-          {
-            error( get_string( 'bim_questions_error_changing_title','bim' ) );
-          }
-        }
-        echo "</ul>";
+      if ( $changes ) {
+          print_string( 'bim_questions_changing', 'bim', $changes );
+          // loop through each change and update the database
+          foreach ( $changed as $change ) {
+              echo "<li> $change->title </li> ";
+              if ( ! $DB->update_record( 'bim_questions', $change ) ) {
+                error( get_string( 'bim_questions_error_changing_title','bim' ) );
+              }
+           }
+           echo "</ul>";
       }
-      if ( $changes || $deletions )
-      {
-        add_to_log( $cm->course, "bim", "Questions manage",
-                 "view.php?id=$cm->id&tab=questions",
-                "Modified question(s)", $cm->id );
+      if ( $changes || $deletions ) {
+          add_to_log( $cm->course, "bim", "Questions manage",
+                    "view.php?id=$cm->id&tab=questions",
+                    "Modified question(s)", $cm->id );
       }
-      if ( ! $additions && ! $deletions && $changes == 0 )
-      {
-        print_string( 'bim_questions_nochanges', 'bim' );
+      if ( ! $additions && ! $deletions && $changes == 0 ) {
+          print_string( 'bim_questions_nochanges', 'bim' );
       }
       print_box_end();
-die;
       redirect( "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&" .
                 "tab=questions", 15 );
     }
-    else
-    {
-      error( get_string( 'bim_questions_error_processing', 'bim' ) );
+    else {
+        error( get_string( 'bim_questions_error_processing', 'bim' ) );
     }
 }
 
@@ -198,7 +181,9 @@ function bim_get_question_form( $questions, $cm )
       $toform["title_$question->id"] = $question->title ;
       $toform["min_$question->id"] = $question->min_mark;
       $toform["max_$question->id"] = $question->max_mark;
-      $toform["body_$question->id"] = $question->body;
+      #$toform["body_$question->id"] = $question->body;
+      $toform["body_$question->id"] = 
+            array( 'text' => $question->body );
     }
 
     $question_form->set_data( $toform );
