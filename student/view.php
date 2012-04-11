@@ -64,9 +64,9 @@ function show_student_details( $bim, $userid, $cm ) {
 
     // report error if no feed found
     if ( empty( $feed_details )) {
-        print_heading( get_string( 'student_details_nofeed_description', 'bim' ),
-                         "left", 1 ); 
         $a = $user->firstname . ' ' . $user->lastname;
+        print_heading( 
+            get_string( 'student_details_nofeed_heading', 'bim' ),  1 ); 
         print_string( 'student_details_nofeed_description','bim',$a ); 
         return;
     }
