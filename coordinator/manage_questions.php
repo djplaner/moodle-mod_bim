@@ -60,6 +60,12 @@ function bim_manage_questions( $bim, $cm )
       print_heading( get_string( 'bim_questions_changes_heading', 'bim' ),
                       "left", 2 );
       // check the new/add question
+#print '<xmp>';
+#print_r( $fromform->body_new );
+#print '</xmp>';
+
+      $fromform->body_new = $fromform->body_new['text'];
+//die;
       if ( $fromform->title_new != "" || $fromform->max_new != 0 ||
            $fromform->min_new != 0 || $fromform->body_new != "" )
       {
@@ -67,6 +73,7 @@ function bim_manage_questions( $bim, $cm )
         $new_question->title = $fromform->title_new;
         $new_question->min_mark = $fromform->min_new;
         $new_question->max_mark = $fromform->max_new;
+        $new_question->body = $fromform->body_new;
 //        $new_question->body = addslashes(
 //               preg_replace( '/^ /', '', $fromform->body_new ) );
         $new_question->bim = $bim->id;
@@ -160,8 +167,9 @@ function bim_manage_questions( $bim, $cm )
         print_string( 'bim_questions_nochanges', 'bim' );
       }
       print_box_end();
+die;
       redirect( "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&" .
-                "tab=questions" );
+                "tab=questions", 15 );
     }
     else
     {
