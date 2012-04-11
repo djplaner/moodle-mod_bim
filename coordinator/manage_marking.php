@@ -56,7 +56,6 @@ function bim_manage_marking( $bim, $userid, $cm )
   {
     $question_titles[$question->id] = $question->title;
   }
-
   // markers details and the makers student information
   // - Get all the students so we can add the stats
   $markers_students = bim_get_all_markers_students( $bim );
