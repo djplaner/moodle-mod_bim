@@ -938,7 +938,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
       // make sure the comments from the dbase appear in the editor
       if ( $marking_details[$marking]->comments == "NULL" )
         $marking_details[$marking]->comments = "";
-      $toform->comments = $marking_details[$marking]->comments;
+      $toform->comments['text'] = $marking_details[$marking]->comments;
       $toform->mark = $marking_details[$marking]->mark;
       if ( $marking_details[$marking]->status == "Suspended" ) {
           $toform->suspend = 1;
@@ -967,12 +967,12 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
       print_heading( get_string('bim_mark_cancel_heading','bim'), 'left', 1);
       print_string( 'bim_mark_cancel_description','bim');
       redirect( "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&" .
-                "screen=ShowPostDetails" );
+                "screen=ShowPostDetails", 15 );
     }
     else if ( $fromform = $marking_form->get_data() )
     {
       // Process the form content
-      $comments_change = $fromform->comments != 
+      $comments_change = $fromform->comments['text'] != 
                          $marking_details[$marking]->comments;
       // Assume we are changing mark, and subsequent do stuff below
       $mark_change = true; 
@@ -1049,7 +1049,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking )
 
       if ( $comments_change )
       { 
-        $marking_details[$marking]->comments = $fromform->comments;
+        $marking_details[$marking]->comments = $fromform->comments['text'];
         print_string('bim_mark_comments_updated','bim' );
       }
       if ( $mark_change )
