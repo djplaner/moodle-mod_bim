@@ -402,7 +402,7 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim )
 //  $question_ids = implode( ",", array_keys( $questions ));
   
   $num_questions = count( $questions );
-
+print "<h1> One </h1>";
   foreach ( $markers_students as $marker )
   {
     // calculate the markers students (only want them)
@@ -410,11 +410,15 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim )
     if ( ! empty( $marker->students ))
     {
       $num_students = count( $marker->students );
-
       // get the data
       // - have to use recordset_sql because no unique id
-      list( $qsql, $q_params ) = $DB->get_in_or_equal( $questions );
+print "....1<br />";
+print_r( array_keys( $questions ) );
+      list( $qsql, $q_params ) = $DB->get_in_or_equal( array_keys($questions) );
+print "....2<br />";
+print_r( $q_params );
       list( $ssql, $s_params ) = $DB->get_in_or_equal( $students );
+print "....3<br />";
       $params = array_merge( $s_params, $q_params );
 
       $sql = "select question,status,count(id) as x from " .
@@ -422,7 +426,9 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim )
              "userid $ssql and " .
              "question $qsql and bim=$bim->id " .
              "group by question,status";
+print "<H1> before here </h1>";
       $rs = $DB->get_recordset_sql( $sql, $params );
+print "<H1> afte here </h1>";
 
       $stats = array();
       $total = new StdClass;
