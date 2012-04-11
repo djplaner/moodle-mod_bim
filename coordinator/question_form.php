@@ -25,7 +25,6 @@ class question_form extends moodleform {
         $mform->setType( 'id', PARAM_INT );
         $mform->addElement( 'hidden', 'tab', 'questions' );
         $mform->setType( 'tab', PARAM_ALPHA );
-
         // Add new question
         $mform->addElement('header', "new_question", 
               get_string( 'bim_qform_addnew', 'bim' ) );
@@ -120,7 +119,7 @@ class question_form extends moodleform {
           $editor_settings = array( 'canUseHtmlEditor'=>'detect',
                    'rows' => 10, 'cols' => 40, 'width' => 0,
                    'height' => 0, 'course' => 0 );
-          $mform->addElement( 'editor', "body_$question->id", $question->body,
+          $mform->addElement( 'editor', "body_$question->id", NULL,
                                 $editor_settings );
           $mform->setType( "body_$question->id", PARAM_RAW );
  
