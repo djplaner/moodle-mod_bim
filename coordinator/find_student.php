@@ -87,7 +87,8 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
   $sql = "id in ( $ids_string ) and ";
 
   // any only those that match search
-  $concat = " firstname || lastname like '%$search%'";
+ // *** Changed this during conversion fo bim2
+//  $concat = " firstname || lastname like '%$search%'";
 //  if ( $CFG->dbfamily == "mysql" ) {
 //    $concat = "concat(firstname,lastname) like '%$search%'";
 //  } else if ( $CFG->dbfamily == "mssql" ) {
@@ -95,10 +96,10 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
 //  }
 
   $sql .= "( username like '%$search%' or email like '%$search%' or " .
-               $concat . ")";
+           " firstname like '%$search%' or lastname like '%$search%' ) ";
   $match_count = 0;
-
-  if ( $matches = $DB->get_records_select( "user", $sql, 'lastname', 'id', 0, 200 ) )
+  #if ( $matches = $DB->get_records_select( "user", $sql, 'lastname', 'id', 0, 200 ) )
+  if ( $matches = $DB->get_records_select( "user", $sql, Array(), 'lastname', 'id', 0, 200 ) )
   {
     $match_count = count( $matches );
   }
@@ -140,20 +141,22 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
 
     $find_form->display();
 
-    print_heading( get_string('bim_find_student_details_heading', 'bim' ),
-                       'left', 3 );
+    print_heading( get_string('bim_find_student_details_heading', 'bim' ), 3 );
 
     $match_ids = array_keys( $matches );
     // get matching student details
-    $student_ids_string = implode( ",", $match_ids );
+//    $student_ids_string = implode( ",", $match_ids );
+    list( $ssql, $sparams ) = $DB->get_in_or_equal( $match_ids );
+
     // get the user details of all the students
-    $student_details = $DB->get_records_select( "user",
-                        "id in ( $student_ids_string ) " );
+    $student_details = $DB->get_records_select( "user", "id $ssql", $sparams );
+#                        "id in ( $student_ids_string ) " );
     // details of who has registered 
     $feed_details = bim_get_feed_details( $bim->id, $match_ids ); 
  
     // Show table with link based on username
-    $data = bim_create_details_display( $student_details, NULL, $cm );
+#    $data = bim_create_details_display( $student_details, $feed_details, $cm );
+    $data = bim_create_details_display( $student_details, $feed_details, $cm );
     $table = bim_setup_details_table( $cm, $bim->id, 0, 'matching' );
     foreach ( $data as $row )
     {
@@ -162,17 +165,24 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form )
       {
         $row["details"] = "<a href=\"$CFG->wwwroot/mod/bim/view.php?id=$cm->id".
                           "&tab=find&details=yes&student=" . $row["id"] .
-                          '">Show details</a>';
+                          '">Show student details</a> ' .
+                          "<small>(" . $row['num_entries'] . 
+                            " posts.)<br />Last post " .  $row['last_post'];
       }
       else
       {
-        $row["details"] = "No feed registered";
+        $row["details"] = "No feed registered | " . $row["register"] ;
       }
-
-      $table->add_data_keyed( $row );
+      # remove some entries we don't want to display here
+      unset( $row["register"] );  unset( $row["id"] ); unset( $row["email"] );
+      unset( $row["blog_url"] );  unset( $row["last_post"] );
+      unset( $row["num_entries"] );
+      $table->data[] = $row;
+      //$table->add_data_keyed( $row );
     }
 #       $unreg_table->add_data_keyed( $unregistered );
-      $table->print_html();
+#      $table->print_html();
+    echo html_writer::table( $table );
 
     // show student details
     
