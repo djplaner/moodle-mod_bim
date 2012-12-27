@@ -391,7 +391,7 @@ function bim_get_question_response_stats( $questions )
 
 function bim_get_all_marker_stats( $markers_students, $questions, $bim )
 {
-  global $CFG;
+  global $DB;
 
   // don't do anything if array is empty
   if ( empty( $questions ) ) 
@@ -402,49 +402,42 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim )
 //  $question_ids = implode( ",", array_keys( $questions ));
   
   $num_questions = count( $questions );
-print "<h1> One </h1>";
   foreach ( $markers_students as $marker )
   {
     // calculate the markers students (only want them)
-//    $students = implode( ",", array_keys( $marker->students ) );
     if ( ! empty( $marker->students ))
     {
       $num_students = count( $marker->students );
-      // get the data
-      // - have to use recordset_sql because no unique id
-print "....1<br />";
-print_r( array_keys( $questions ) );
-      list( $qsql, $q_params ) = $DB->get_in_or_equal( array_keys($questions) );
-print "....2<br />";
-print_r( $q_params );
-      list( $ssql, $s_params ) = $DB->get_in_or_equal( $students );
-print "....3<br />";
-      $params = array_merge( $s_params, $q_params );
 
+      // prepare list of student ids for SQL
+      list( $ssql, $s_params ) = $DB->get_in_or_equal( array_keys($marker->students) );
+      // get the list of ids for each question for SQL query
+      list( $qsql, $q_params ) = $DB->get_in_or_equal( array_keys($questions) );
+      $params = array_merge( $s_params, $q_params );
       $sql = "select question,status,count(id) as x from " .
-             "bim_marking where " .
+             "{bim_marking} where " .
              "userid $ssql and " .
              "question $qsql and bim=$bim->id " .
              "group by question,status";
-print "<H1> before here </h1>";
-      $rs = $DB->get_recordset_sql( $sql, $params );
-print "<H1> afte here </h1>";
 
+      // get the set of records matching the query
+      $rs = $DB->get_recordset_sql( $sql, $params );
+
+      // populate the data structure with the number of questions for the marker
+      // in each status
       $stats = array();
       $total = new StdClass;
-      while ( $rec = $DB->rs_fetch_next_record( $rs )) 
-      {
+      foreach ( $rs as $rec ) {
         $status = $rec->status;
         $stats[$rec->question]->$status = $rec->x;
         $total->$status += $rec->x;
       }
-      $DB->rs_close( $rs );
+      $rs->close( $rs );
       $stats["Total"] = $total;
       $marker->statistics = $stats;
       $marker->total = $total;
     }
   }
-  
   return $markers_students;
 }
 
