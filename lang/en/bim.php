@@ -483,4 +483,7 @@ $string['qform_max_help'] = '<p>This represents the largest mark in the range sh
 
 $string['qform_stats'] = 'Current question statistics';
 $string['qform_stats_help'] = '<p>Shows the current number of student posts that have been allocated to the question, including what status they are currently in (submitted - student has submitted; Marked - the marker has marked; Released - returned to the student)</p>';
+
+$string['manageMarking'] = 'Manage marking';
+$string['manageMarking_help'] = '<p>Provides an overview of the submission and marking of blog posts across all markers. Overview also provides the ability to drill down to provide more information about specific groups of students or individual students. </p>';
 ?>
