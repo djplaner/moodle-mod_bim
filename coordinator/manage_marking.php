@@ -68,30 +68,32 @@ function bim_manage_marking( $bim, $userid, $cm )
   {
     $markers_students = bim_get_all_marker_stats( $markers_students, $questions,
                                                 $bim );
-
     // get the ids of all ther markers
     $markers = array_keys( $markers_students );
 
     //***********************
     // Start setting up the table
 
-    $table = new flexible_table( 'bim-manage-marking-'.$cm->course.'-'.
-                                   $cm->id.'-'.$userid );
-// get a page parameter??
-    $table->course = $cm->course;
-    $table->define_baseurl( $base_url );
+    $table = new html_table();
 
-    $table->set_attribute('cellpadding','5');
+//    $table->set_attribute('cellpadding','5');
     #$table->set_attribute('class', 'generaltable generalbox reporttable');
-    $table->set_attribute('class', 'generalbox reporttable');
+ //   $table->set_attribute('class', 'generalbox reporttable');
 
-    $columns = array( 'marker', 'studs' );
+/*    $columns = array( 'marker', 'studs' );
     $columns = array_merge( $columns, array_keys( $question_titles ) );
     $table->define_columns( $columns );
-    $headers = array( 'Marker', 'Studs' );
+    $headers = array( 'Marker', 'Studs' ); */
+
+
+
+    // **** TODO CHANGING OVER TO HTML_TABLE
+    // *** add in change to attributes, padding etc?
+    // *** replace this with internationalisation
 
     // set the column titles for the questions, including link to
     // release posts if there are any Marked posts for the question
+    $headers = array( 'Marker', 'Studs' );
     foreach ( $question_titles as $qid => $title )
     {
         $newTitle = $title;
@@ -102,11 +104,12 @@ function bim_manage_marking( $bim, $userid, $cm )
         }
         $headers[] = $newTitle;
     }
-    $table->define_headers( $headers );
-    $table->setup();
+    $table->head = $headers;
 
     //****
     // Start creating the data for the table, each row matches a marker
+    $table_data = array();
+
     foreach ( $markers_students as $marker )
     {
       // data
@@ -139,7 +142,11 @@ function bim_manage_marking( $bim, $userid, $cm )
                   '&question='.$qid.'">Marked:</a>';
           }
           #$entry[$title] = '<table border="0">';
-          $entry[$qid] = '<table border="0">';
+
+          $status_table = new html_table;
+          $status_table->attributes['class'] = 'status_stats';
+
+          $status_data = array();
      
           foreach ( array( "Submitted", "Marked", "Suspended", "Released", "Missing" ) as $status)
           {
@@ -152,29 +159,26 @@ function bim_manage_marking( $bim, $userid, $cm )
             }
 
             #$entry[$title] .= '<tr><th align="right"><small>'.$label.
-            $entry[$qid] .= '<tr><th align="right"><small>'.$label.
-                 '</small></th><td align="right"><small>'.
-                 $question_stats[$status].'</small></td></tr>';
+
+// ** TODO internationalisation ???
+            $status_data[] = array( "<small>".$label."</small>", 
+                                    "<small>".$question_stats[$status]."</small>" );
           }
 
            // add the release for this question/marker if any in marked state
            if ( $question_stats["Marked"] != 0 )
            {
-             #$entry[$title] .= 
-             $entry[$qid] .= 
-                 '<tr><td colspan="2" align="center"><small><a href="' .
+ // *** TODO need to make this a COLSPAN=2
+             $status_data[] = array( '<small><a href="' .
                  $base_url.'&op=release&marker='.$marker->marker.
-                   '&question='.$qid.'">release</a><small></td></tr></table>';
+                   '&question='.$qid.'">release</a></small>', '' );
            }
-           else
-           {
-             #$entry[$title] .= '</table>';
-             $entry[$qid] .= '</table>';
-           }
+          $status_table->data = $status_data;
+// **** TODO need to remove the border from this table
+          $entry[$qid] = html_writer::table( $status_table );
       }
-      $table->add_data_keyed( $entry );
+      $table_data[] = $entry;
     }
-    format_text( '<div align="center">' );
 
     $num_marked = bim_get_marked( $bim );
     if ( $num_marked > 0 )
@@ -183,19 +187,22 @@ function bim_manage_marking( $bim, $userid, $cm )
       print_string( 'bim_marking_release', 'bim', $num_marked );
       echo '</a></small>]</p>'; 
     }
-    $table->print_html();
-    echo "</div>" ;
+    $table->data = $table_data;
+    echo html_writer::table( $table );
   }
 
   // Show unregstered students
-
   $unreg_data = bim_create_details_display( $unregistered, NULL, $cm );
+  // need to remove id field in each entry in the array
+  $unreg_data_purge = array();
+  foreach ( $unreg_data as $unreg ) {
+    unset( $unreg['id'] );
+    $unreg_data_purge[] = $unreg;
+  }
 
   $table = bim_setup_details_table( $cm, $bim->id, $userid, 'unregistered' );
-  foreach ( $unreg_data as $row )
-  {
-    $table->add_data_keyed( $row );
-  }
+  $table->data = $unreg_data_purge;
+
   echo '<a name="unreg"></a>';
   print_heading( "Unregistered students", "left", 2 );
   print_container( "<p>The following " . count($unregistered) . 
@@ -206,7 +213,8 @@ function bim_manage_marking( $bim, $userid, $cm )
   bim_email_merge( $userids, $cm->course, $base_url, 
                    "Email unregistered students" );
   echo '<br />';
-  $table->print_html();
+ // $table->print_html();
+  echo html_writer::table( $table );
 }
 
 /******************
@@ -327,7 +335,7 @@ function bim_manage_view( $bim, $userid, $cm )
   $students = array();
 
   // get the students that match the critiera
-  $sql = "select distinct userid as userid from bim_marking " .
+  $sql = "select distinct userid as userid from {bim_marking} " .
          "where bim=$bim->id";
 
   if ( $marker != "" )
@@ -438,9 +446,11 @@ function bim_manage_view( $bim, $userid, $cm )
     $table = bim_setup_details_table( $cm, $bim->id, $userid, 'unregistered' );
     foreach ( $unreg_data as $row )
     {
-      $table->add_data_keyed( $row );
+      $table->data[] = array( $row['username'], $row['name'], $row['email'],
+                                  $row['register'] );
     }
-    $table->print_html();
+    echo html_writer::table( $table );
+//    $table->print_html();
   }
 }
 
