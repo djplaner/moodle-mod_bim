@@ -29,6 +29,18 @@ class backup_bim_activity_task extends backup_activity_task {
      * order to get transportable (encoded) links
      */
     static public function encode_content_links($content) {
+        global $CFG;
+
+        $base = preg_quote( $CFG->wwwroot, "/" );
+
+        // Link to the list of bims
+        $search = "/(".$base."\/mod\/bim\/index.php\?id\=)([0-9]+)/";
+        $content = preg_replace( $search, '$@CHOICEINDEX*$2@$', $content );
+
+        // link to bim view by module id
+        $search = "/(".$base."\/mod\/bim\/view.php\?id\=)([0-9]+)/";
+        $content= preg_replace($search, '$@BIMVIEWBYID*$2@$', $content);
+ 
         return $content;
     }
 }
