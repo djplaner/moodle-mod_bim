@@ -41,10 +41,36 @@ class backup_bim_activity_structure_step extends backup_activity_structure_step 
                              'timepublished', 'title', 'post', 'comments' )); 
  
         // Build the tree
+        $bim->add_child( $allocations);
+        $bim->add_child( $allocation);
+        $bim->add_child( $questions );
+        $bim->add_child( $question );
+        $bim->add_child( $feeds );
+        $bim->add_child( $feed );
+        $bim->add_child( $markings );
+        $bim->add_child( $marking );
  
         // Define sources
+        $bim->set_source_table( 'bim', array( 'id' => backup::VAR_ACTIVITYID));
+        if ( $userinfo ) {
+            $allocation->set_source_table( 'bim_group_allocation', 
+                          array( 'bim' => backup::VAR_ACTIVITYID ));
+        }
+        $question->set_source_table( 'bim_questions',
+                          array( 'bim' => backup::VAR_ACTIVITYID ));
+        if ( $userinfo ) {
+            $feed->set_source_table( 'bim_student_feeds',
+                          array( 'bim' => backup::VAR_ACTIVITYID ));
+            $marking->set_source_table( 'bim_marking',
+                          array( 'bim' => backup::VAR_ACTIVITYID ));
+        }
  
         // Define id annotations
+        $allocation->annotate_ids( 'user', 'userid' );
+        $allocation->annotate_ids( 'group', 'groupid' );
+        $feed->annotate_ids( 'user', 'userid' );
+        $marking->annotate_ids( 'user', 'userid' );
+        $marking->annotate_ids( 'user', 'marker' );
  
         // Define file annotations
  
