@@ -35,6 +35,8 @@ require_once($CFG->dirroot.'/mod/bim/lib/locallib.php'); */
 function bim_supports($feature) {
     switch($feature) {
         case FEATURE_MOD_INTRO:         return true;
+        case FEATURE_GRADE_HAS_GRADE:   return true;
+        case FEATURE_BACKUP_MOODLE2:    return true;
         default:                        return null;
     }
 }
@@ -299,18 +301,24 @@ function bim_scale_used_anywhere($scaleid) {
  * @param stdClass $newmodule instance object with extra cmidnumber and modname property
  * @return void
  */
-function bim_grade_item_update(stdClass $bim) {
+function bim_grade_item_update(stdClass $bim, $grades=NULL) {
     global $CFG;
-    require_once($CFG->libdir.'/gradelib.php');
 
+    if ( !function_exists('grade_update')) {
+        require_once($CFG->libdir.'/gradelib.php');
+    }
+
+#print "<h1> bim </h1>";
+#print_r( $bim );
     /** @example */
     $item = array();
     $item['itemname'] = clean_param($bim->name, PARAM_NOTAGS);
     $item['gradetype'] = GRADE_TYPE_VALUE;
-    $item['grademax']  = $bim->grade;
+    #$item['grademax']  = $bim->grade;
+    $item['grademax']  = 10;
     $item['grademin']  = 0;
 
-    grade_update('mod/bim', $bim->course, 'mod', 'bim', $bim->id, 0, null, $item);
+    grade_update('mod/bim', $bim->course, 'mod', 'bim', $bim->id, 0, $grades, $item);
 }
 
 /**
