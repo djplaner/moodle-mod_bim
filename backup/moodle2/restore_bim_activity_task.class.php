@@ -1,11 +1,13 @@
 <?php
 
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . '/mod/bim/backup/moodle2/restore_forum_stepslib.php');
+
+ 
 /**
  * bim restore task that provides all the settings and steps to perform one
  * complete restore of the activity
  */
- 
-require_once($CFG->dirroot . '/mod/bim/backup/moodle2/restore_bim_stepslib.php'); // Because it exists (must)
  
 class restore_bim_activity_task extends restore_activity_task {
  
@@ -20,7 +22,7 @@ class restore_bim_activity_task extends restore_activity_task {
      * Define (add) particular steps this activity can have
      */
     protected function define_my_steps() {
-        // Choice only has one structure step
+print "<h1> adding the step </h1>";
         $this->add_step(new restore_bim_activity_structure_step('bim_structure', 'bim.xml'));
     }
  
