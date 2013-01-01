@@ -118,19 +118,19 @@ function bim_delete_instance($id) {
     $result = true;
 
     // bim_group_allocation
-    if ( ! $DB->delete_records( 'bim_group_allocation', array('id'=>$bim->id))) {
+    if ( ! $DB->delete_records( 'bim_group_allocation', array('bim'=>$bim->id))) {
        $result = false;
     }
     // bim_questions
-    if ( ! $DB->delete_records( 'bim_questions', array('id'=>$bim->id))) {
+    if ( ! $DB->delete_records( 'bim_questions', array('bim'=>$bim->id))) {
        $result = false;
     }
     // bim_marking
-    if ( ! $DB->delete_records( 'bim_marking',array('id'=>$bim->id))) {
+    if ( ! $DB->delete_records( 'bim_marking',array('bim'=>$bim->id))) {
        $result = false;
     }
     // bim_student_feeds
-    if ( ! $DB->delete_records( 'bim_student_feeds',array('id'=>$bim->id))) {
+    if ( ! $DB->delete_records( 'bim_student_feeds',array('bim'=>$bim->id))) {
        $result = false;
     }
     // bim
