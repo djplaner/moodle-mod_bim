@@ -1,25 +1,26 @@
 <?php
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Structure step to restore one bim activity
  */
 class restore_bim_activity_structure_step extends restore_activity_structure_step {
  
     protected function define_structure() {
- 
         $paths = array();
         $userinfo = $this->get_setting_value('userinfo');
  
         $paths[] = new restore_path_element('bim', '/activity/bim');
         if ( $userinfo ) {
-            $paths[] = new restore_path_elements( 'bim_allocation',
-                               '/activity/bim/allocations/allocation'
+            $paths[] = new restore_path_element( 'bim_allocation',
+                               '/activity/bim/allocations/allocation' );
         }
         $paths[] = new restore_path_element('bim_question', 
                                '/activity/bim/questions/question');
         if ($userinfo) {
             $paths[] = new restore_path_element('bim_student_feed', 
-                               '/activity/bim/student_feeds/student_feed');
+                               '/activity/bim/feeds/feed');
             $paths[] = new restore_path_element('bim_marking', 
                                '/activity/bim/markings/marking');
         }
@@ -51,10 +52,9 @@ class restore_bim_activity_structure_step extends restore_activity_structure_ste
         $data = (object)$data;
         $oldid = $data->id;
  
-        $data->bimid = $this->get_new_parentid('bim');
+        $data->bim = $this->get_new_parentid('bim');
         $data->userid = $this->get_mappingid('user', $data->userid);
         $data->groupid = $this->get_mappingid('group', $data->groupid);
-        $data->timemodified = $this->apply_date_offset($data->timemodified);
  
         $newitemid = $DB->insert_record('bim_group_allocation', $data);
         $this->set_mapping('bim_allocation', $oldid, $newitemid);
@@ -64,10 +64,10 @@ class restore_bim_activity_structure_step extends restore_activity_structure_ste
         global $DB;
  
         $data = (object)$data;
+        $oldid = $data->id;
  
-        $data->bimid = $this->get_new_parentid('bim');
-        $data->timemodified = $this->apply_date_offset($data->timemodified);
- 
+        $data->bim = $this->get_new_parentid('bim');
+
         $newitemid = $DB->insert_record('bim_questions', $data);
         $this->set_mapping('bim_question', $oldid, $newitemid);
     }
@@ -76,11 +76,11 @@ class restore_bim_activity_structure_step extends restore_activity_structure_ste
         global $DB;
  
         $data = (object)$data;
+        $oldid = $data->id;
  
-        $data->bimid = $this->get_new_parentid('bim');
+        $data->bim = $this->get_new_parentid('bim');
         $data->userid = $this->get_mappingid('user', $data->userid);
-        $data->timemodified = $this->apply_date_offset($data->timemodified);
- 
+        $data->lastpost = $this->apply_date_offset( $data->lastpost );
         $newitemid = $DB->insert_record('bim_student_feeds', $data);
         $this->set_mapping('bim_student_feed', $oldid, $newitemid);
     }
@@ -89,10 +89,21 @@ class restore_bim_activity_structure_step extends restore_activity_structure_ste
         global $DB;
  
         $data = (object)$data;
+        $oldid = $data->id;
  
-        $data->bimid = $this->get_new_parentid('bim');
+        $data->bim = $this->get_new_parentid('bim');
+        $data->question = $this->get_mappingid( 'bim_question', $data->question );
+// $data->question needs to be the new id for question set above, how do we
+// get that?
+        //$data->question = $this->get_new_parentid( 'bim_question' );
+
         $data->userid = $this->get_mappingid('user', $data->userid);
+        $data->marker = $this->get_mappingid('user', $data->marker);
+
         $data->timemodified = $this->apply_date_offset($data->timemodified);
+        $data->timemarked = $this->apply_date_offset($data->timemarked);
+        $data->timereleased = $this->apply_date_offset($data->timereleased);
+        $data->timepublished = $this->apply_date_offset($data->timepublished);
  
         $newitemid = $DB->insert_record('bim_marking', $data);
         // No need to save this mapping as far as nothing depend on it

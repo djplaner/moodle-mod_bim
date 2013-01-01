@@ -439,12 +439,12 @@ function bim_extend_settings_navigation(settings_navigation $settingsnav, naviga
  * Delete the grade item for a given BIM
  */
 
-/*function bim_grade_item_delete( $bim ) {
+function bim_grade_item_delete( $bim ) {
     global $CFG;
     require_once( $CFG->libdir.'/gradelib.php' );
 
     return grade_update('mod/bim', $bim->course, 'mod', 'bim', $bim->id,
                          0, NULL, array('deleted'=>1) );
-}*/
+}
 
 ?>

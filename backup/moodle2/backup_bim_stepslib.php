@@ -42,13 +42,13 @@ class backup_bim_activity_structure_step extends backup_activity_structure_step 
  
         // Build the tree
         $bim->add_child( $allocations);
-        $bim->add_child( $allocation);
+        $allocations->add_child( $allocation);
         $bim->add_child( $questions );
-        $bim->add_child( $question );
+        $questions->add_child( $question );
         $bim->add_child( $feeds );
-        $bim->add_child( $feed );
+        $feeds->add_child( $feed );
         $bim->add_child( $markings );
-        $bim->add_child( $marking );
+        $markings->add_child( $marking );
  
         // Define sources
         $bim->set_source_table( 'bim', array( 'id' => backup::VAR_ACTIVITYID));
