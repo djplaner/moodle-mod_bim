@@ -11,7 +11,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$module->version  = 2011013116;  // The current module version (Date: YYYYMMDDXX)
+$module->version  = 2011013118;  // The current module version (Date: YYYYMMDDXX)
 $module->requires = 2010031900;
 $module->cron     = 3600;           // Period for cron to check this module (secs)
 $module->component = 'mod_bim';

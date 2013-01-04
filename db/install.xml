@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/bim/db" VERSION="20100502" COMMENT="XMLDB file for Moodle mod/bim.  At least the first version. Getting a bit further along."
+<XMLDB PATH="mod/bim/db" VERSION="20130104" COMMENT="XMLDB file for Moodle mod/bim.  At least the first version. Getting a bit further along."
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
     <TABLE NAME="bim" COMMENT="bim allows each activity to manage/mark/aggregate collections of feeds" NEXT="bim_student_feeds">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"  NEXT="course"/>
-        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"  COMMENT="Course bim activity belongs to" PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"  COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="intro"/>
-        <FIELD NAME="intro" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false"  COMMENT="General introduction of the bim activity" PREVIOUS="name" NEXT="introformat"/>
-        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"  COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timecreated"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"  PREVIOUS="introformat" NEXT="timemodified"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"  PREVIOUS="timecreated" NEXT="register_feed"/>
-        <FIELD NAME="register_feed" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"  COMMENT="Can the student register their feed" PREVIOUS="timemodified" NEXT="mirror_feed"/>
-        <FIELD NAME="mirror_feed" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"  COMMENT="Should we mirror the feeds of all the students" PREVIOUS="register_feed" NEXT="change_feed"/>
-        <FIELD NAME="change_feed" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"  COMMENT="Can the student's change their feed" PREVIOUS="mirror_feed" NEXT="grade_feed"/>
-        <FIELD NAME="grade_feed" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  COMMENT="If set to true, update the gradebook with marks for released answers." PREVIOUS="change_feed"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Course bim activity belongs to" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction of the bim activity" PREVIOUS="name" NEXT="introformat"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="introformat" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated" NEXT="register_feed"/>
+        <FIELD NAME="register_feed" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Can the student register their feed" PREVIOUS="timemodified" NEXT="mirror_feed"/>
+        <FIELD NAME="mirror_feed" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Should we mirror the feeds of all the students" PREVIOUS="register_feed" NEXT="change_feed"/>
+        <FIELD NAME="change_feed" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Can the student's change their feed" PREVIOUS="mirror_feed" NEXT="grade"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The max grade (or scale) to be used for this bim activity" PREVIOUS="change_feed"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -27,13 +27,13 @@
     </TABLE>
     <TABLE NAME="bim_student_feeds" COMMENT="Store information about the individual feeds that make up this BIM activity" PREVIOUS="bim" NEXT="bim_marking">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"  NEXT="bim"/>
-        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  COMMENT="ID of the bim table - find the id for the activity" PREVIOUS="id" NEXT="userid"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  COMMENT="Id of the user who registered the blog" PREVIOUS="bim" NEXT="numentries"/>
-        <FIELD NAME="numentries" TYPE="int" LENGTH="6" NOTNULL="false" UNSIGNED="false" SEQUENCE="false"  PREVIOUS="userid" NEXT="lastpost"/>
-        <FIELD NAME="lastpost" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="numentries" NEXT="blogurl"/>
-        <FIELD NAME="blogurl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"  PREVIOUS="lastpost" NEXT="feedurl"/>
-        <FIELD NAME="feedurl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"  PREVIOUS="blogurl"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="bim"/>
+        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="ID of the bim table - find the id for the activity" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Id of the user who registered the blog" PREVIOUS="bim" NEXT="numentries"/>
+        <FIELD NAME="numentries" TYPE="int" LENGTH="6" NOTNULL="false" SEQUENCE="false" PREVIOUS="userid" NEXT="lastpost"/>
+        <FIELD NAME="lastpost" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="numentries" NEXT="blogurl"/>
+        <FIELD NAME="blogurl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="lastpost" NEXT="feedurl"/>
+        <FIELD NAME="feedurl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="blogurl"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -41,20 +41,20 @@
     </TABLE>
     <TABLE NAME="bim_marking" COMMENT="Hold marking and other details about individual student blog posts that have been allocated to a particular question (i.e. the post is the student's answer)" PREVIOUS="bim_student_feeds" NEXT="bim_questions">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"  NEXT="bim"/>
-        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"  COMMENT="id bim activity" PREVIOUS="id" NEXT="userid"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"  COMMENT="ID for the author/student" PREVIOUS="bim" NEXT="marker"/>
-        <FIELD NAME="marker" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  COMMENT="Userid of the marker who has made comments (NULL if no marking)" PREVIOUS="userid" NEXT="question"/>
-        <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  COMMENT="ID for the question in the bim_question table. A question that is unallocated would have a null value" PREVIOUS="marker" NEXT="mark"/>
-        <FIELD NAME="mark" TYPE="number" LENGTH="4" NOTNULL="false" UNSIGNED="false" SEQUENCE="false"  DECIMALS="2" COMMENT="The mark assigned by the marker for the question" PREVIOUS="question" NEXT="status"/>
-        <FIELD NAME="status" TYPE="char" LENGTH="12" NOTNULL="false" DEFAULT="Unallocated" SEQUENCE="false"  COMMENT="What status is the marking/post in?" PREVIOUS="mark" NEXT="timemarked"/>
-        <FIELD NAME="timemarked" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  COMMENT="Time when post was marked" PREVIOUS="status" NEXT="timereleased"/>
-        <FIELD NAME="timereleased" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  COMMENT="date/time when post was most recently released" PREVIOUS="timemarked" NEXT="link"/>
-        <FIELD NAME="link" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"  COMMENT="The link to the post on the student's blog" PREVIOUS="timereleased" NEXT="timepublished"/>
-        <FIELD NAME="timepublished" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"  COMMENT="The time when student posted the blog post" PREVIOUS="link" NEXT="title"/>
-        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"  COMMENT="Title of feed item" PREVIOUS="timepublished" NEXT="post"/>
-        <FIELD NAME="post" TYPE="text" LENGTH="big" NOTNULL="true" SEQUENCE="false"  COMMENT="The student's blog post" PREVIOUS="title" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false"  COMMENT="Marker's comments on the post" PREVIOUS="post"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="bim"/>
+        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="id bim activity" PREVIOUS="id" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="ID for the author/student" PREVIOUS="bim" NEXT="marker"/>
+        <FIELD NAME="marker" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Userid of the marker who has made comments (NULL if no marking)" PREVIOUS="userid" NEXT="question"/>
+        <FIELD NAME="question" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="ID for the question in the bim_question table. A question that is unallocated would have a null value" PREVIOUS="marker" NEXT="mark"/>
+        <FIELD NAME="mark" TYPE="number" LENGTH="4" NOTNULL="false" SEQUENCE="false" DECIMALS="2" COMMENT="The mark assigned by the marker for the question" PREVIOUS="question" NEXT="status"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="12" NOTNULL="false" DEFAULT="Unallocated" SEQUENCE="false" COMMENT="What status is the marking/post in?" PREVIOUS="mark" NEXT="timemarked"/>
+        <FIELD NAME="timemarked" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Time when post was marked" PREVIOUS="status" NEXT="timereleased"/>
+        <FIELD NAME="timereleased" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="date/time when post was most recently released" PREVIOUS="timemarked" NEXT="link"/>
+        <FIELD NAME="link" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The link to the post on the student's blog" PREVIOUS="timereleased" NEXT="timepublished"/>
+        <FIELD NAME="timepublished" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The time when student posted the blog post" PREVIOUS="link" NEXT="title"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="Title of feed item" PREVIOUS="timepublished" NEXT="post"/>
+        <FIELD NAME="post" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="The student's blog post" PREVIOUS="title" NEXT="comments"/>
+        <FIELD NAME="comments" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Marker's comments on the post" PREVIOUS="post"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -65,12 +65,12 @@
     </TABLE>
     <TABLE NAME="bim_questions" COMMENT="The list of questions students are expected to respond to." PREVIOUS="bim_marking" NEXT="bim_group_allocation">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"  NEXT="bim"/>
-        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"  COMMENT="id for the bim table - tells us which course/bim instance/module the questions are for" PREVIOUS="id" NEXT="title"/>
-        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"  COMMENT="The header/title of the question" PREVIOUS="bim" NEXT="body"/>
-        <FIELD NAME="body" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false"  COMMENT="The text/description of the question BIM will attempt to match this with student post content for allocation purposes" PREVIOUS="title" NEXT="min_mark"/>
-        <FIELD NAME="min_mark" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false"  COMMENT="The minimum mark that can be assigned ?? not sure this will last" PREVIOUS="body" NEXT="max_mark"/>
-        <FIELD NAME="max_mark" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="false" DEFAULT="10" SEQUENCE="false"  COMMENT="Maximum mark that can be awarded" PREVIOUS="min_mark"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="bim"/>
+        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="id for the bim table - tells us which course/bim instance/module the questions are for" PREVIOUS="id" NEXT="title"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="The header/title of the question" PREVIOUS="bim" NEXT="body"/>
+        <FIELD NAME="body" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The text/description of the question BIM will attempt to match this with student post content for allocation purposes" PREVIOUS="title" NEXT="min_mark"/>
+        <FIELD NAME="min_mark" TYPE="int" LENGTH="5" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="The minimum mark that can be assigned ?? not sure this will last" PREVIOUS="body" NEXT="max_mark"/>
+        <FIELD NAME="max_mark" TYPE="int" LENGTH="5" NOTNULL="false" DEFAULT="10" SEQUENCE="false" COMMENT="Maximum mark that can be awarded" PREVIOUS="min_mark"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -78,10 +78,10 @@
     </TABLE>
     <TABLE NAME="bim_group_allocation" COMMENT="Default comment for the table, please edit me" PREVIOUS="bim_questions">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true"  NEXT="bim"/>
-        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false"  PREVIOUS="id" NEXT="groupid"/>
-        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"  COMMENT="The group being allocated" PREVIOUS="bim" NEXT="userid"/>
-        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"  COMMENT="The marker being allocated" PREVIOUS="groupid"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" NEXT="bim"/>
+        <FIELD NAME="bim" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The group being allocated" PREVIOUS="bim" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The marker being allocated" PREVIOUS="groupid"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="group_marker"/>
