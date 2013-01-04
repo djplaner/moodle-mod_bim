@@ -134,6 +134,7 @@ function show_student_details( $bim, $userid, $cm ) {
 //        print_string( 'student_details_released_description','bim',
  //                         $post_stats["Released"] );
 
+        $answers = new html_table;
         $answers->head = array( 
                    get_string('student_details_question_heading','bim' ),
                    get_string('student_details_mark_heading','bim' ),
@@ -156,7 +157,7 @@ function show_student_details( $bim, $userid, $cm ) {
                 $post->comments );
           }                 
         }
-        print_table( $answers );
+        echo html_writer::table( $answers );
     }
   } // $num_marked - show marked answers
   

@@ -10,7 +10,7 @@ class marking_form extends moodleform {
 
     function definition() {
 
-        global $COURSE;
+        global $COURSE, $OUTPUT;
         $mform =& $this->_form;
 
         $marking_details = $this->_customdata['marking_details'];
@@ -47,11 +47,9 @@ class marking_form extends moodleform {
         $mform->addElement('header', 'Post '.$row->id, $heading );
 
         // get help buttons for headings
-        $markHelp = helpbutton( "mark", 'mark', 'bim', true, false, '', true );
-        $suspendHelp = helpbutton( "suspend", 'suspend', 'bim', true, 
-                          false, '', true );
-        $allocationHelp = helpbutton( "markAllocation", 'markAllocation', 'bim',
-                               true, false, '', true );
+        $markHelp = $OUTPUT->help_icon( 'mark', 'bim' );
+        $suspendHelp = $OUTPUT->help_icon( 'suspend', 'bim' );
+        $allocationHelp = $OUTPUT->help_icon( 'markAllocation', 'bim' );
         // add error box if suspended
         // posted and allocation
         $mform->addElement( 'html',
@@ -92,8 +90,7 @@ class marking_form extends moodleform {
          $mform->addElement( 'select', 'Reallocate'.$row->id, '',
                              $allocate_array, $attributes );
 
-        $markerCommentsHelp= helpbutton( "markerComments", 'markerComments', 'bim',
-                               true, false, '', true );
+        $markerCommentsHelp = $OUTPUT->help_icon( 'markerComments', 'bim' );
         $mform->addElement( 'html', '</td></tr>'.
                '<tr><td valign="top" colspan="2" width="50%">'.
                get_string('marking_form_student_post','bim', $row->link ).

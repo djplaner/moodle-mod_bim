@@ -595,7 +595,7 @@ function bim_get_unanswered( $marking_details, $questions )
 function bim_show_student_details( $student, $marking_details,
                                    $questions, $feed_details, $cm )
 {
-    global $DB;
+    global $DB, $OUTPUT;
     // calculate stats for student posts
     $post_stats = bim_generate_marking_stats( $marking_details );
 
@@ -609,6 +609,8 @@ function bim_show_student_details( $student, $marking_details,
 
     print_heading( get_string('bim_find_student_details_heading','bim'),
                       'left', 2 );
+
+    $details_table = new html_table;
 
     $details_table->class = 'generaltable';
 //    $details_table->head = array( 'Label', 'Value' );
@@ -633,32 +635,28 @@ function bim_show_student_details( $student, $marking_details,
            $feed_details[$student]->blogurl. '">'.
            $feed_details[$student]->blogurl. '</a>' );
     // # posts mirrored
-    $help = helpbutton( 'numMirrored', 'num mirrored',
-                            'bim', true, false, '', true );
+    $help = $OUTPUT->help_icon( 'numMirrored', 'bim' );
     $details_table->data[] = array(
                  get_string('bim_marker_posts','bim') . $help, $total_posts );
 
     // num actual and required answers
-    $help = helpbutton( 'numAnswers', 'num answers',
-                            'bim', true, false, '', true );
+    $help = $OUTPUT->help_icon( 'numAnswers', 'bim');
     $details_table->data[] = array(
                  get_string('bim_marker_answers','bim') . $help,
                             "$answers / $num_questions" );
 
     // released and marked
-    $help = helpbutton( 'numReleased', 'num answers',
-                            'bim', true, false, '', true );
+    $help = $OUTPUT->help_icon( 'numReleased', 'bim' );
     $details_table->data[] = array(
                  get_string('bim_marker_m_r','bim') . $help,
             $post_stats["Released"]." / $marked" );
 
     // progress result
-    $help = helpbutton( 'progressResult', 'num answers',
-                            'bim', true, false, '', true );
+    $help = $OUTPUT->help_icon( 'progressResult', 'bim' );
     $details_table->data[] = array(
                  get_string('bim_marker_progress','bim').$help, $progress );
 
-    print_table( $details_table );
+    echo html_writer::table( $details_table );
     echo '<p>&nbsp;</p>';
 }
 
@@ -703,6 +701,7 @@ function bim_show_student_posts( $markDetails, $questions ) {
     $total_posts = count( $markDetails );
     print_string( 'student_details_allposts_description','bim',$total_posts );
 
+    $posts = new html_table;
     $posts->head = array( get_string('bim_mark_post','bim'),
                         get_string('student_details_status_heading','bim'));
     $posts->tablealign = "center";
@@ -716,7 +715,7 @@ function bim_show_student_posts( $markDetails, $questions ) {
       $description = bim_is_item_allocated( $detail, $questions );
       $posts->data[] = array( $url, $description );
     }
-    print_table( $posts );
+    echo html_writer::table( $posts );
 }
 
 /*
@@ -729,10 +728,14 @@ function bim_show_student_posts( $markDetails, $questions ) {
 
 function bim_is_item_allocated( $detail, $questions )
 {
+    global $OUTPUT;
+
     if ( $detail->status == "Unallocated" ) {
-        $help = helpbutton( 'unallocatedPostStudent', 
+/*        $help = helpbutton( 'unallocatedPostStudent', 
                             'What does not allocated mean',
-                            'bim', true, false, '', true );
+                            'bim', true, false, '', true ); */
+        $help = $OUTPUT->help_icon( 'unallocatedPostStudent', 'bim' );
+
         return get_string( 'bim_item_allocated_not', 'bim' ) . $help;
     } if ( $detail->status == "Released" ) {
         $qid = $detail->question;
@@ -746,9 +749,10 @@ function bim_is_item_allocated( $detail, $questions )
         $qid = $detail->question;
         if ( isset( $questions[$qid] ) ) {
             $questionTitle = $questions["$qid"]->title ;
-            $help = helpbutton( 'allocatedPostStudent', 
+/*            $help = helpbutton( 'allocatedPostStudent', 
                             'What does not allocated mean',
-                            'bim', true, false, '', true );
+                            'bim', true, false, '', true ); */
+            $help = $OUTPUT->help_icon( 'allocatedPostStudent', 'bim' );
             return get_string( 'bim_item_allocated_allocated', 'bim',
                   $questionTitle ) . $help;
         }
@@ -757,9 +761,10 @@ function bim_is_item_allocated( $detail, $questions )
         $qid = $detail->question;
         if ( isset( $questions[$qid] ) ) {
             $questionTitle = $questions["$qid"]->title ;
-            $help = helpbutton( 'markedPostStudent', 
+/*            $help = helpbutton( 'markedPostStudent', 
                             'What does marked mean',
-                            'bim', true, false, '', true );
+                            'bim', true, false, '', true );*/
+            $help = $OUTPUT->help_icon( 'markedPostStudent', 'bim' );
             return( get_string('bim_item_allocated_marked','bim',
                                $questionTitle) . $help);
         }
@@ -788,6 +793,7 @@ function bim_show_questions( $cm, $bim ) {
 
     // create the table of questions
 
+    $question_table = new html_table;
     $question_table->head = array(
             get_string( 'show_qs_title', 'bim' ),
             get_string( 'show_qs_body', 'bim' ) ); 
@@ -799,7 +805,7 @@ function bim_show_questions( $cm, $bim ) {
         $question_table->data[] = array( $question->title, $question->body );
     }
 
-    print_table( $question_table );
+    echo html_writer::table( $question_table );
 }
 
 /**********

@@ -57,6 +57,8 @@ $strname  = get_string('name');
 $strweek  = get_string('week');
 $strtopic = get_string('topic');
 
+$table = new html_table;
+
 if ($course->format == 'weeks') {
     $table->head  = array ($strweek, $strname);
     $table->align = array ('center', 'left');
@@ -85,7 +87,7 @@ foreach ($bims as $bim) {
 }
 
 echo $OUTPUT->heading( get_string('modulenameplural', 'bim'), 2);
-print_table($table);
+echo html_writer::table( $table );
 
 /// Finish the page
 

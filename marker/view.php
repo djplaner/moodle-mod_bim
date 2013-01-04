@@ -70,8 +70,7 @@ function show_marker( $bim, $userid, $cm, $course )
 
 function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
 {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
 
     print_box( '<a href="'.
         "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
@@ -82,9 +81,8 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student )
         '">' .  get_string( 'bim_marker_post_details', 'bim' ) .  '</a>',
            'noticebox boxaligncenter boxwidthnarrow centerpara highlight' );
 
-    $help = helpbutton( 'markAllocation', 'changeAllocations', 'bim',
-                          true, false, '', true );
-    print_heading( get_string('bim_marker_allocate_heading', 'bim' ).$help, 
+    $help = $OUTPUT->help_icon( 'markAllocation', 'bim' );
+    print_heading(get_string('bim_marker_allocate_heading', 'bim').'&nbsp;'.$help, 
                      'left', 1 );
 
     //************ Get the necessary data
@@ -198,8 +196,7 @@ function marker_show_student_details_table( $student, $student_details,
     print_heading( get_string( 'bim_find_student_details_heading', 'bim' ),
                         'left', 2 );
 
-
-    $details_table = new stdClass;
+    $details_table = new html_table;
     $details_table->class = 'generaltable';
     $details_table->align = array( 'center', 'left' );
     $details_table->size =  array( '30%', '60%' );
@@ -232,7 +229,7 @@ function marker_show_student_details_table( $student, $student_details,
     $details_table->data[] = array( 
            get_string('bim_marker_progress','bim'), $progress );
 
-    print_table( $details_table );
+    echo html_writer::table( $details_table );
 
 }
 
@@ -341,8 +338,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions )/*
 
 function show_marker_post_details( $bim, $userid, $cm )
 {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
 
     $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails";
     $show_qs_url = $CFG->wwwroot.'/mod/bim/view.php?id='.$cm->id.
@@ -379,9 +375,8 @@ function show_marker_post_details( $bim, $userid, $cm )
     $questions = bim_get_question_hash( $bim->id );
 
     // Show registered information
-    $help = helpbutton( 'markPostsAll', 'markposts', 'bim',
-                          true, false, '', true );
-    print_heading( get_string('bim_post_heading','bim' ), "left", 2 );
+    $help = $OUTPUT->help_icon( 'markPostsAll', 'bim' );
+    print_heading( get_string('bim_post_heading','bim').'&nbsp;'.$help,"left",2);
 
     if ( empty( $questions ) ) {
         print_string( 'bim_post_no_questions', 'bim', $help );
@@ -416,7 +411,6 @@ function show_marker_student_details( $bim, $userid, $cm )
      add_to_log( $cm->course, "bim", "students details", 
                  "view.php?id=$cm->id&screen=ShowDetails",
                 "", $cm->id );
-
     //********* Get data
     // Array of all student information
     $student_details = bim_get_markers_students( $bim, $userid );
@@ -466,11 +460,9 @@ function show_marker_student_details( $bim, $userid, $cm )
            get_string( 'bim_marker_post_details', 'bim' ) .  '</a>',
            'noticebox boxaligncenter boxwidthnarrow centerpara highlight ' );
       echo $OUTPUT->box_start();
-
-//    $help = helpbutton( 'yourStudents', 'yourStudents', 'bim',
- //                         true, false, '', true );
-    //echo $OUTPUT->heading(get_string('bim_student_details_heading','bim').$help, 2);
-    echo $OUTPUT->heading(get_string('bim_student_details_heading','bim'), 2);
+    $help = $OUTPUT->help_icon( 'bim_student_details_heading', 'bim' );
+    echo $OUTPUT->heading(get_string('bim_student_details_heading','bim').'&nbsp;'.
+                             $help, 2);
     print_string( 'bim_details_count', 'bim', $a );
     
       $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=generateOpml";
@@ -481,17 +473,14 @@ function show_marker_student_details( $bim, $userid, $cm )
     // uncregistred students
     if ( isset( $unregistered ) && count( $unregistered)!= 0)
     {
-//      $help = helpbutton( 'unregisteredDetails', 'unregdetails', 'bim',
-//                          true, false, '', true );
+        $help = $OUTPUT->help_icon( 'unregisteredDetails', 'bim' );
+
       echo '<a name="unreg"></a>';
 
-      $helpString = $OUTPUT->help_icon( "unregisteredDetails", "bim" );
-
       print_heading(get_string('bim_release_manage_unregistered_heading',
-                       'bim'), 2 );
-      $helpString = get_string( 'bim_details_unregistered_description', 
-                                'bim', $helpString );
-      echo $helpString;
+                       'bim').'&nbsp;'.$help, 2 );
+      echo get_string( 'bim_details_unregistered_description', 
+                                'bim' );
 
       $unreg_data = bim_create_details_display( $unregistered, $feed_details, 
                                 $cm );
@@ -509,11 +498,10 @@ function show_marker_student_details( $bim, $userid, $cm )
     }
 
     // Show registered information
-//    $help = helpbutton( 'registeredDetails', 'regdetails', 'bim',
- //                         true, false, '', true );
+      $help = $OUTPUT->help_icon( 'bim_details_registered_heading', 'bim' );
     echo '<a name="reg"></a>';
-//    $helpString = $OUTPUT->help_icon( "registeredDetails", 'bim' );
-    echo $OUTPUT->heading( get_string('bim_details_registered_heading', 'bim' ), 2 );
+    echo $OUTPUT->heading( get_string('bim_details_registered_heading', 'bim' ).
+                            '&nbsp;'.$help, 2 );
 
     $table = bim_setup_details_table( $cm, $bim->id, $userid, 'registered' );
     $reg_data = bim_create_details_display( $registered, $feed_details,
@@ -524,12 +512,10 @@ function show_marker_student_details( $bim, $userid, $cm )
     } else {
         foreach ( $reg_data as $row )
         {
-          //$table->add_data_keyed( $row );
           $table->data[] = array( $row['username'], $row['name'], $row['email'],
                                   $row['num_entries'],
                                   $row['last_post'], $row['blog_url'] );
         }
-//        $table->print_html();
         echo html_writer::table( $table );
     }
     echo $OUTPUT->box_end();

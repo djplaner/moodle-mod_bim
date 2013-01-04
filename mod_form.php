@@ -70,8 +70,8 @@ class mod_bim_mod_form extends moodleform_mod {
                     get_string('change_feed', 'bim'), '' ); */
         $mform->addElement('advcheckbox', 'mirror_feed', 
                     get_string('bim_mirror_feed', 'bim'), '' );
-        $mform->addElement('advcheckbox', 'grade_feed', 
-                    get_string('bim_grade_feed', 'bim'), '' );
+/*        $mform->addElement('advcheckbox', 'grade_feed', 
+                    get_string('bim_grade_feed', 'bim'), '' ); */
 
         $mform->addHelpButton( 'register_feed', 'bim_register_feed', 'bim' );
         $mform->addHelpButton( 'mirror_feed', 'bim_mirror_feed', 'bim' );

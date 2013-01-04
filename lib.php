@@ -51,7 +51,7 @@ function bim_supports($feature) {
  * @return int The id of the newly inserted bim record
  */
 //function bim_add_instance($bim) {
-function bim_add_instance(stdClass $bim, mod_bim_mod_form $mform = null) {
+function bim_add_instance($bim, $mform = null) {
     global $DB;
 
     $bim->timecreated = time();
@@ -62,9 +62,7 @@ function bim_add_instance(stdClass $bim, mod_bim_mod_form $mform = null) {
         return false;
     }
 
-    if ( $bim->grade_feed == 1 ) {
         bim_grade_item_update( $bim );
-    }
 
     return $bim->id;
 }
@@ -78,7 +76,7 @@ function bim_add_instance(stdClass $bim, mod_bim_mod_form $mform = null) {
  * @param object $bim An object from the form in mod_form.php
  * @return boolean Success/Fail
  */
-function bim_update_instance(stdClass $bim, mod_bim_mod_form $mform = null) {
+function bim_update_instance($bim, $mform = null) {
     global $DB;
 
     $bim->timemodified = time();
@@ -89,9 +87,7 @@ function bim_update_instance(stdClass $bim, mod_bim_mod_form $mform = null) {
         error( 'Cannot update bim' );
     }
 
-    if ( $bim->grade_feed == 1 ) {
         bim_grade_item_update( $bim );
-    } 
     // What if grading is turned off and grade was set,
     // should we delete the item?  Or leave that to the
     // user, using the gradebook?
@@ -286,7 +282,7 @@ function bim_scale_used($bimid, $scaleid) {
 function bim_scale_used_anywhere($scaleid) {
     global $DB;
 
-    if ($scaleid and $DB->record_exists('bim', 'grade', -$scaleid)) {
+    if ($scaleid and $DB->record_exists('bim', array( 'grade'=> -$scaleid))) {
         return true;
     } else {
         return false;
@@ -308,17 +304,18 @@ function bim_grade_item_update(stdClass $bim, $grades=NULL) {
         require_once($CFG->libdir.'/gradelib.php');
     }
 
-#print "<h1> bim </h1>";
-#print_r( $bim );
-    /** @example */
-    $item = array();
-    $item['itemname'] = clean_param($bim->name, PARAM_NOTAGS);
-    $item['gradetype'] = GRADE_TYPE_VALUE;
-    #$item['grademax']  = $bim->grade;
-    $item['grademax']  = 10;
-    $item['grademin']  = 0;
+    $item = array('itemname'=>$bim->name, 'idnumber'=>$bim->cmidnumber);
+//    $item['itemname'] = clean_param($bim->name, PARAM_NOTAGS);
 
-    grade_update('mod/bim', $bim->course, 'mod', 'bim', $bim->id, 0, $grades, $item);
+    if ( $bim->grade == 0 ) {
+        $item['gradetype'] = GRADE_TYPE_NONE;
+    } else if ( $bim->grade > 0 ) {
+        $item['gradetype'] = GRADE_TYPE_VALUE;
+        $item['grademax']  = $bim->grade;
+        $item['grademin']  = 0;
+    }
+
+    return grade_update('mod/bim', $bim->course, 'mod', 'bim', $bim->id, 0, $grades, $item);
 }
 
 /**
