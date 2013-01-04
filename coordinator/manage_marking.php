@@ -38,9 +38,8 @@ function bim_manage_marking( $bim, $userid, $cm )
   // add  the stats for the questions
   $questions = bim_get_question_response_stats( $questions);
 
-  $help = helpbutton( 'manageMarking', 'manageMarking', 'bim',
-                          true, false, '', true );
-  echo $OUTPUT->heading( get_string('bim_marking_heading', 'bim' ).$help, 1 );
+  $titleHelp = $OUTPUT->help_icon( 'manageMarking', 'bim' );
+  echo $OUTPUT->heading( get_string('bim_marking_heading', 'bim' ).'&nbsp;'.$titleHelp, 1 );
 
   if ( empty( $questions ) ) {
       print_string( 'bim_marking_no_questions', 'bim' );
@@ -276,9 +275,11 @@ function bim_manage_release( $bim, $userid, $cm )
   // update the gradebook entry if it makes sense
   if ( $bim->grade_feed == 1 )
   {
-    $raw_sql = "bim=$bim->id and status='Released' group by userid";
-    $grades = $DB->get_records_select( 'bim_marking', $raw_sql, '',
-                                'userid,sum(mark) as rawgrade' );
+#    $raw_sql = "SELECT userid,sum(mark) as rawgrade from {bim} where bim=$bim->id and status='Released' group by userid";
+    $raw_sql = "SELECT userid,sum(mark) as rawgrade from {bim_marking} where bim= ? and status='Released' group by userid";
+    $grades = $DB->get_records_sql( $raw_sql, array( $bim->id ) );
+
+#                                'userid,sum(mark) as rawgrade' );
     bim_grade_item_update( $bim, $grades );
     // get results for all students_changing
     // use $marking_details to create an array of entries for 

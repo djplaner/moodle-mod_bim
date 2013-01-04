@@ -14,7 +14,7 @@ class question_form extends moodleform {
 
     function definition() {
 
-        global $COURSE;
+        global $COURSE, $OUTPUT;
         $mform =& $this->_form;
 
         $questions = $this->_customdata['questions'];
@@ -29,11 +29,10 @@ class question_form extends moodleform {
         $mform->addElement('header', "new_question", 
               get_string( 'bim_qform_addnew', 'bim' ) );
 
-        $titleHelp = helpbutton( "qform_title", 'qform', 'bim', true, 
-                                    false, '', true );
-        $minHelp = helpbutton( "qform_min", 'qform', 'bim', true,false,'', true );
-        $maxHelp = helpbutton( "qform_max", 'qform', 'bim', true, false,'',true );
-        $statsHelp = helpbutton( "qform_stats", 'qform', 'bim', true, false,'',true );
+        $titleHelp = $OUTPUT->help_icon( 'qform_title', 'bim' );
+        $minHelp = $OUTPUT->help_icon( 'qform_min', 'bim' );
+        $maxHelp = $OUTPUT->help_icon( 'qform_max', 'bim' );
+        $statsHelp = $OUTPUT->help_icon( 'qform_stats', 'bim' );
 
         // row with title, min and max mark ?? delete
         $mform->addElement( 'html', 
