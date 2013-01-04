@@ -77,6 +77,9 @@ class mod_bim_mod_form extends moodleform_mod {
         $mform->addHelpButton( 'mirror_feed', 'bim_mirror_feed', 'bim' );
         $mform->addHelpButton( 'grade_feed', 'bim_grade_feed', 'bim' );
 
+
+        $this->standard_grading_coursemodule_elements();
+
 //-------------------------------------------------------------------------------
         // add standard elements, common to all modules
         $features = new stdClass;
