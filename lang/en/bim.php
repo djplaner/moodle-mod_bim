@@ -250,11 +250,14 @@ $string['marker_allocate'] = '<p>This <a href="{$a->link}">student post</a> has 
 $string['bim_post_heading'] = 'Mark posts';
 $string['bim_post_no_questions'] = '<p>There are no questions currently defined for this activity. Use the "Manage Questions" tab above to add questions.</p>';
 // show_marker_student_details
-$string['bim_details_unregistered_description'] = '<p>{$a} These students have not yet registered their feeds</p>';
+$string['bim_details_unregistered_description'] = '<p>These students have not yet registered their feeds</p>';
 $string['bim_details_no_regs'] = '<p>None of your students have registered feeds.</p>';
 $string['bim_details_unreg_email_list'] = 'Unregistered students\' email addresses: ';
 $string['bim_details_registered_heading'] = 'Registered student details';
+$string['bim_details_registered_heading_help'] = '<p>Details of students allocated to you who have successfully registered their feed with BIM.</p>';
 $string['bim_student_details_heading'] = 'Your students';
+$string['bim_student_details_heading_help'] = '<p>The lead teacher has allocated you a group of students. The following provides details about those students and their use of this activity. </p>';
+
 $string['bim_details_count'] = '<p><strong>You have:</strong> {$a->unregistered} <a href="#unreg">unregistered students</a>, and {$a->registered} <a href="#reg">registered students.</a></p><p><strong>You can:</strong> View the students\' details below, or <a href="{$a->mark}">mark their posts</a>. (see the green navigation box up and to the right.)</p>';
 $string['bim_details_opml'] = '<p>{$a->help} Download OPML file: <a href="{$a->url}">your students</a></p>';
 $string['bim_details_unavailable'] = 'unavailable';
@@ -433,22 +436,22 @@ $string['markedPostStudent_help'] = 'Someone has marked your post, however, it m
 
 //*****
 // For the marker
-$string['opml'] = 'What is an OPML file';
-$string['opml_help'] = 'An OPML file can be imported into many RSS/News readers (e.g. Google Reader. It is an easy way to track posts from all students outside of BIM.';
+$string['opml'] = 'OPML file';
+$string['opml_help'] = '<p>An OPML file is a way for you to read all of the posts from your students without having to go through BIM.</p><p>A Google search for "using an opml file" will reveal how to do this. </p><p>If appropriate, it may be an advantage to share the OPML file with your students to enable them to read each other\'s posts.</p>';
 
 $string['unregisteredDetails'] = 'Unregistered students';
 $string['unregisteredDetails_help'] = 'The students in the following table have not yet succeeded in registering their blogs/feeds with BIM. You can email all unregistered students to remind them, email individual students, and register a blog for a student.';
 
 $string['markPostsAll'] = 'Marking posts';
-$string['markPostsAll_help'] = '<p>Before marking questions, there must be some questions create for the BIM activity (only the coordinator can do this) and posts by the students need to be allocated to questions (you can do this). To allocate questions click on the link showing the number of posts the student has made (if they have some).</p><p>To mark or remark click on the link an answer that has been submitted or marked.</p>';
+$string['markPostsAll_help'] = '<p>Allows you to evaluate, comment and individual students\' posts.</p><p> Before you can mark questions<ul><li>The activity must have some; </li> <li> Student posts need to be mirrored by BIM; and, <li> Some student posts need to be allocated to questions;<br />To allocate questions click on the link in the Questions colum. </li></ul> <p>To mark or remark click on the link an answer that has been submitted or marked.</p>';
 
 // marking an individual post
 $string['mark'] = 'Mark';
-$string['mark_help'] = '<p>The numeric result you think this post is worth.</p><p>The lead teacher may have specified an allowed range. You can record a mark outside that range.</p>';
+$string['mark_help'] = '<p>The numeric result you think this post is worth.</p><p>The lead teacher may have specified an allowed range. You can record a mark outside that range, but it\'s probably not advisable.</p>';
 $string['suspend'] = 'Suspend';
 $string['suspend_help'] = '<p>A suspended post cannot be returned to the student.</p><p>Typically used if you suspect plagiarism or similar problem that requires the lead teacher to make a decision prior to releasing results to students. </p>';
 $string['markAllocation'] = 'Change allocation';
-$string['markAllocation_help'] = '<p>Student posts can be allocated to one of the questions set by the leader teacher. This indicates that the student post is an answer to the question.</p><p>BIM does try to do this automatically, but you can also do it manually by selecting a question from the drop down menu. </p><p>If you select the option "..Choose one.." then the student post becomes unallocated. It will still appear in BIM, but will not be allocated to a question.</p>';
+$string['markAllocation_help'] = '<p>Student posts can be allocated as answers to one of the questions set by the lead teacher. </p><p>BIM does try to do this automatically, but you can also do it manually by selecting a question title from the drop down menu. </p><p>If you select the option "..Choose one.." then the student post becomes unallocated. It will still appear in BIM, but will not be allocated to a question.</p>';
 $string['markerComments'] = 'Comments';
 $string['markerComments_help'] = '<p>These are your comments on the post. They will, after the post is released, be visible to the student.</p>';
 
@@ -465,8 +468,10 @@ $string['config_student_reg_help'] = '<p>For BIM to know about a student\'s blog
 $string['config_mirror'] = 'Is mirroring on?';
 $string['config_mirror_help'] = '<p>In order to track individual student posts, BIM will make a copy (a mirror) of each new student post. But only if posts are being mirrored.</p><p>You might wish to turn mirroring off at the end of the activity.</p>';
 
-$string['config_grade'] = 'Add to gradebook';
-$string['config_grade_help'] = '<p>If results are being added to the gradebook, there will be a new column in the gradebook for this BIM activity. As student posts are marked and then released the student results in the gradebook will be updated.</p><p>Note: only the marks of posts that have been released to the students will be added into the gradebook.</p>';
+$string['config_grade'] = 'Gradebook integration';
+$string['config_grade_help'] = '<p>If turned on results for individual student posts will be added to the course gradebook when they are released (and only when they are released). </p><p>Currently, the individual marks for each student post is simply added together. The gradebook will not allow the total to exceed the chosen maximum grade.</p><p>The use of scales and other advanced marking schemes is currently not supported.</p>';
+$string['config_grade_max'] = 'Maximum grade: {$a}';
+$string['config_no_grade'] = 'Not on';
 
 $string['config_about'] = 'About';
 $string['config_about_help'] = '<p>The "about" field is meant to be a short description of the BIM activity that is shown to students when they access the BIM activity.</p>';
@@ -485,5 +490,5 @@ $string['qform_stats'] = 'Current question statistics';
 $string['qform_stats_help'] = '<p>Shows the current number of student posts that have been allocated to the question, including what status they are currently in (submitted - student has submitted; Marked - the marker has marked; Released - returned to the student)</p>';
 
 $string['manageMarking'] = 'Manage marking';
-$string['manageMarking_help'] = '<p>Provides an overview of the submission and marking of blog posts across all markers. Overview also provides the ability to drill down to provide more information about specific groups of students or individual students. </p>';
+$string['manageMarking_help'] = '<p>Provides the coordinating teacher an overview of all student submissions and marking progress. For each marker shows the status of their students\' posts. Allows coordinator to release marked posts and to drill down to see more detail.</p>';
 ?>
