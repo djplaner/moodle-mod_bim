@@ -1,15 +1,35 @@
-<?php  // $Id: lib.php,v 1.7.2.5 2009/04/22 21:30:57 skodak Exp $
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 defined('MOODLE_INTERNAL') || die();
 
 // NOT SURE IF THIS SHOULD BE commented out DJ
 /*require_once($CFG->libdir.'/filelib.php');
-  ** the following (locallib.php) should never be here **
-require_once($CFG->dirroot.'/mod/bim/lib/locallib.php'); */
+ ** the following (locallib.php) should never be here **
+ require_once($CFG->dirroot.'/mod/bim/lib/locallib.php'); */
 
 /**
  * Library of functions and constants for module bim
- * 
+ *
  *    **** CORE FUNCTIONS ****
  * bim_add_instance
  * bim_update_instance
@@ -50,19 +70,16 @@ function bim_supports($feature) {
  * @param object $bim An object from the form in mod_form.php
  * @return int The id of the newly inserted bim record
  */
-//function bim_add_instance($bim) {
 function bim_add_instance($bim, $mform = null) {
     global $DB;
 
     $bim->timecreated = time();
 
-    # You may have to add extra stuff in here #
-
     if ( ! $bim->id = $DB->insert_record('bim', $bim) ) {
         return false;
     }
 
-        bim_grade_item_update( $bim );
+    bim_grade_item_update( $bim );
 
     return $bim->id;
 }
@@ -87,7 +104,7 @@ function bim_update_instance($bim, $mform = null) {
         error( 'Cannot update bim' );
     }
 
-        bim_grade_item_update( $bim );
+    bim_grade_item_update( $bim );
     // What if grading is turned off and grade was set,
     // should we delete the item?  Or leave that to the
     // user, using the gradebook?
@@ -115,23 +132,23 @@ function bim_delete_instance($id) {
 
     // bim_group_allocation
     if ( ! $DB->delete_records( 'bim_group_allocation', array('bim'=>$bim->id))) {
-       $result = false;
+        $result = false;
     }
     // bim_questions
     if ( ! $DB->delete_records( 'bim_questions', array('bim'=>$bim->id))) {
-       $result = false;
+        $result = false;
     }
     // bim_marking
-    if ( ! $DB->delete_records( 'bim_marking',array('bim'=>$bim->id))) {
-       $result = false;
+    if ( ! $DB->delete_records( 'bim_marking', array('bim'=>$bim->id))) {
+        $result = false;
     }
     // bim_student_feeds
-    if ( ! $DB->delete_records( 'bim_student_feeds',array('bim'=>$bim->id))) {
-       $result = false;
+    if ( ! $DB->delete_records( 'bim_student_feeds', array('bim'=>$bim->id))) {
+        $result = false;
     }
     // bim
-    if ( !$DB->delete_records('bim',array('id'=>$bim->id))) {
-       $result = false;
+    if ( !$DB->delete_records('bim', array('id'=>$bim->id))) {
+        $result = false;
     }
 
     // gradebook
@@ -183,7 +200,8 @@ function bim_print_recent_activity($course, $isteacher, $timestart) {
     return false;  //  True if anything was printed, otherwise false
 }
 
-function bim_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid=0, $groupid=0) {}
+function bim_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid=0, $groupid=0) {
+}
 
 
 
@@ -196,7 +214,7 @@ function bim_get_recent_mod_activity(&$activities, &$index, $timestart, $coursei
  * @todo Finish documenting this function
  **/
 function bim_cron () {
- /*   global $CFG;
+    /*   global $CFG;
 
     // get list of bims currently being mirrored
     $mirrored = bim_get_mirrored();
@@ -204,27 +222,27 @@ function bim_cron () {
     // loop through each one
     foreach ( $mirrored as $bim )
     {
-      // make sure directory exists for caching of file
-      $dir = $CFG->dataroot . "/" . $bim->course . "/moddata/" . $bim->id;
-      if ( ! check_dir_exists( $dir, true, true ) ) {
-          mtrace( "Unable to create directory $dir" );
-          return false;
-      }
+    // make sure directory exists for caching of file
+    $dir = $CFG->dataroot . "/" . $bim->course . "/moddata/" . $bim->id;
+    if ( ! check_dir_exists( $dir, true, true ) ) {
+    mtrace( "Unable to create directory $dir" );
+    return false;
+    }
 
-      // get list of student feeds for the bim
-      $students_feeds = bim_get_student_feeds( $bim->id );
-      $questions = bim_get_question_hash( $bim->id );
+    // get list of student feeds for the bim
+    $students_feeds = bim_get_student_feeds( $bim->id );
+    $questions = bim_get_question_hash( $bim->id );
 
-      if ( ! empty( $students_feeds ) )  {
-          foreach ( $students_feeds as $student_feed )
-          {
-              bim_process_feed( $bim, $student_feed, $questions );
-              // *** do a check on unallocated questions to see if
-              // new questions or other changes can allocate them
-              bim_process_unallocated( $bim, $student_feed, $questions );
-          }
-      } // empty $student_feeds
-  //    }
+    if ( ! empty( $students_feeds ) )  {
+    foreach ( $students_feeds as $student_feed )
+    {
+    bim_process_feed( $bim, $student_feed, $questions );
+    // *** do a check on unallocated questions to see if
+    // new questions or other changes can allocate them
+    bim_process_unallocated( $bim, $student_feed, $questions );
+    }
+    } // empty $student_feeds
+    //    }
     }*/
     return true;
 }
@@ -261,11 +279,11 @@ function bim_get_extra_capabilities() {
 function bim_scale_used($bimid, $scaleid) {
     $return = false;
 
-    //$rec = get_record("bim","id","$bimid","scale","-$scaleid");
+    // $rec = get_record("bim","id","$bimid","scale","-$scaleid");
     //
-    //if (!empty($rec) && !empty($scaleid)) {
+    // if (!empty($rec) && !empty($scaleid)) {
     //    $return = true;
-    //}
+    // }
 
     return $return;
 }
@@ -297,7 +315,7 @@ function bim_scale_used_anywhere($scaleid) {
  * @param stdClass $newmodule instance object with extra cmidnumber and modname property
  * @return void
  */
-function bim_grade_item_update(stdClass $bim, $grades=NULL) {
+function bim_grade_item_update(stdClass $bim, $grades=null) {
     global $CFG;
 
     if ( !function_exists('grade_update')) {
@@ -305,7 +323,7 @@ function bim_grade_item_update(stdClass $bim, $grades=NULL) {
     }
 
     $item = array('itemname'=>$bim->name, 'idnumber'=>$bim->cmidnumber);
-//    $item['itemname'] = clean_param($bim->name, PARAM_NOTAGS);
+    //    $item['itemname'] = clean_param($bim->name, PARAM_NOTAGS);
 
     if ( $bim->grade == 0 ) {
         $item['gradetype'] = GRADE_TYPE_NONE;
@@ -323,8 +341,7 @@ function bim_grade_item_update(stdClass $bim, $grades=NULL) {
  *
  * Needed by grade_update_mod_grades() in lib/gradelib.php
  *
- * @param stdClass $newmodule instance object with extra cmidnumber and modname p
-roperty
+ * @param stdClass $newmodule instance object with extra cmidnumber and modname property
  * @param int $userid update grade of specific user only, 0 means all participants
  * @return void
  */
@@ -332,7 +349,6 @@ function bim_update_grades(stdClass $bim, $userid = 0) {
     global $CFG, $DB;
     require_once($CFG->libdir.'/gradelib.php');
 
-    /** @example */
     $grades = array(); // populate array of grade objects indexed by userid
 
     grade_update('mod/bim', $bim->course, 'mod', 'bim', $bim->id, 0, $grades);
@@ -360,9 +376,7 @@ function bim_uninstall() {
     return true;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// File API                                                                   //
-////////////////////////////////////////////////////////////////////////////////
+// File API
 
 /**
  * Returns the lists of all browsable file areas within the given module context
@@ -402,9 +416,7 @@ function bim_pluginfile($course, $cm, $context, $filearea, array $args, $forcedo
     send_file_not_found();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Navigation API                                                             //
-////////////////////////////////////////////////////////////////////////////////
+// Navigation API
 
 /**
  * Extends the global navigation tree by adding newmodule nodes if there is a relevant content
@@ -441,7 +453,6 @@ function bim_grade_item_delete( $bim ) {
     require_once( $CFG->libdir.'/gradelib.php' );
 
     return grade_update('mod/bim', $bim->course, 'mod', 'bim', $bim->id,
-                         0, NULL, array('deleted'=>1) );
+            0, null, array('deleted'=>1) );
 }
 
-?>

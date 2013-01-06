@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -14,13 +13,15 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 /**
- * @package bim
- * @copyright 2012 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
- // This activity has not particular settings but the inherited from the generic
- // backup_activity_task so here there isn't any class definition, like the ones
- // existing in /backup/moodle2/backup_settingslib.php (activities section)
+
+ /* This activity has not particular settings but the inherited from the generic
+  * backup_activity_task so here there isn't any class definition, like the ones
+  * existing in /backup/moodle2/backup_settingslib.php (activities section).
+  */
+

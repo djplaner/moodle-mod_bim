@@ -1,4 +1,24 @@
-<?php  // $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 /**
  * This page prints a particular instance of bim
@@ -20,24 +40,18 @@
  * @package mod/bim
  */
 
-/// (Replace bim with the name of your module and remove this line)
-
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
-//require_once('lib.php');
-//require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
 require_once($CFG->dirroot.'/mod/bim/student/view.php');
 require_once($CFG->dirroot.'/mod/bim/marker/view.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/view.php');
-//require_once($CFG->dirroot.'/mod/bim/lib/bim_rss.php');
-//require_once($CFG->dirroot.'/lib/tablelib.php' );
 
 global $USER;
 global $DB;
 
 // course_module id ($cm) entry from course_modules table
 // - is the unique combination of course and module/activity
-$id = optional_param('id', 0, PARAM_INT); 
+$id = optional_param('id', 0, PARAM_INT);
 $n = optional_param('n', 0, PARAM_INT);
 
 // Given the course module id, get the other information
@@ -49,7 +63,7 @@ if ($id) {
     $cm = get_coursemodule_from_id('bim', $id, 0, false, MUST_EXIST);
     $course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST );
     $bim = $DB->get_record('bim', array('id'=>$cm->instance), '*', MUST_EXIST );
-} elseif ($n) {
+} else if ($n) {
     $bim = $DB->get_record('bim', array('id'=>$n), '*', MUST_EXIST );
     $course = $DB->get_record('course', array('id'=>$bim->course), '*', MUST_EXIST );
     $cm = get_coursemodule_from_instance('bim', $bim->id, $course->id, false, MUST_EXIST);
@@ -62,26 +76,12 @@ $context = get_context_instance( CONTEXT_MODULE, $cm->id );
 
 add_to_log($course->id, "bim", "view", "view.php?id={$cm->id}", $bim->id, $cm->id);
 
-/// Print the page header
+// Print the page header
 
 $PAGE->set_url('/mod/bim/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($bim->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
-
-//echo $OUTPUT->header();
-
-// No intro stuff here
-/*if ( $bim->intro) {
-    echo $OUTPUT->box( format_module_intro('bim', $bim, $cm->id),   
-                       'generalbox mod_introbox', 'bimintro' );
-}*/
-
-//echo $OUTPUT->heading( "YAY it works");
-
-//echo $OUTPUT->footer();
-
-// Who is the user
 
 if ( empty($USER->id)) {
     $userid = 0;
@@ -89,26 +89,19 @@ if ( empty($USER->id)) {
     $userid = $USER->id;
 }
 
-//show_student( $bim, $userid, $cm, $course );
-//*****************************
 // Time to handle over to the different functions that
 // figure out what to show for each "type of user"
 
-//echo "<h2> hello testing </h1>";
 if ( has_capability( 'mod/bim:coordinator', $context)) {
     // administrator can the configure stuff
     show_coordinator( $bim, $userid, $cm, $course );
-}
-else if (has_capability('mod/bim:student', $context)) {
+} else if (has_capability('mod/bim:student', $context)) {
     // student can see details of their registered blog
-    show_student($bim, $userid, $cm, $course ); 
-} else if ( has_capability( 'mod/bim:marker', $context )) {  
-    show_marker( $bim, $userid, $cm, $course );   
+    show_student($bim, $userid, $cm, $course );
+} else if ( has_capability( 'mod/bim:marker', $context )) {
+    show_marker( $bim, $userid, $cm, $course );
 } else {
-  print_error( "No capability to access this page" );
+    print_error( "No capability to access this page" );
 }
 
-//echo $OUTPUT->footer();
-
-?>
 

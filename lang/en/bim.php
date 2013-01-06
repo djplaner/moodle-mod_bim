@@ -1,4 +1,25 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 
 $string['bim'] = 'BIM';
 
@@ -47,7 +68,7 @@ $string['bim_mirror_feed_help'] = 'BIM creates a mirror of the feed for each stu
 $string['bim_grade_feed'] = 'Enable grading?';
 $string['bim_grade_feed_help'] = 'If this option is selected then a new field will appear in the gradebook for this course.  The name of the field will match the name of this BIM activity. When you release students\' marked posts the mark will appear in that field in the gradebook. The final result for each student in the gradebook will be the total of all the student\'s released posts added together.';
 // change not implemented at the moment
-//$string['bim_change_feed'] = 'Enable change of feed?';
+// $string['bim_change_feed'] = 'Enable change of feed?';
 
 // capabilities
 
@@ -61,11 +82,10 @@ $string['bim_please_register_heading'] = 'Please register your blog';
 $string['bim_please_register_description'] = '<p>Copy the URL of your blog/feed into the box below and hit the "Register your blog" button. At this stage BIM will:</p><ol><li>Check your URL for any problems.<p>If there are any problems it will tell you what they are and ask you to register the correct URL.</p></li><li>Make a copy (mirror) any existing posts on your blog into this system.<p><strong>Warning:</strong> This may take a little while, please be patient.</p></li><li>Display details of what it found.<p>This is how you can check what BIM knows about your blog. Once you register your blog, BIM will only ever show  you the details.</p></li></ol>';
 
 $string['bim_register'] = 'Register your blog';
-//*****************
 // used in coordinator/allocate_markers.php
 // bim_allocate_markers
 $string['bim_allocate_marker_heading'] = "Allocate markers to groups";
-$string['bim_allocate_marker_description'] = 
+$string['bim_allocate_marker_description'] =
 '<p>Teaching staff can be allocated to mark posts from different groups of students. The following lists:</p> <ul> <li> All of the teaching staff currently allocated to this course.<br /> To add or remove staff to/from this list use the normal Moodle methods for adding teaching staff to the course. </li> <li> A list of all the groups associated with this course.<br /> Again, use the normal Moodle methods for adding/removing groups or to find out which students belong to groups. </li> <li> Groups allocated to each staff member.<br />If a group name is highlighted, then the staff member is allocated to that group. </li> </ul>';
 $string['bim_allocate_marker_nomarkers_heading'] = 'Can not allocate markers';
 $string['bim_allocate_marker_nomarkers_description'] = '<p>Unable to find any markers for this course.  You will need to allocate some people to this course in teaching roles using the Moodle role facility.</p>';
@@ -73,14 +93,13 @@ $string['bim_allocate_marker_nogroups_heading'] = 'Can not allocate markers';
 $string['bim_allocate_marker_nogroups_description'] = '<p>Unable to find any groups for this course.  Marker allocation is only possible with existing course groups.</p><p>Course groups need to be created using Moodle\'s groups facility.</p>';
 // process_markers_form
 $string['bim_group_allocations_heading'] = "Updating group allocations";
-$string['bim_group_allocations_added'] = 
+$string['bim_group_allocations_added'] =
        '<li>Added group {$a->group} for {$a->marker} </li>';
-$string['bim_group_allocations_removed'] = 
+$string['bim_group_allocations_removed'] =
        '<li>Removed group {$a->group} for {$a->marker} </li>';
-$string['bim_group_allocations_none'] = 
+$string['bim_group_allocations_none'] =
        '<p>Unable to find or make any change to marker allocations.</p>';
 
-//*****************
 // used in coordinator/find_student.php
 // bim_find_students
 $string['bim_find_again_heading'] = "Search again?";
@@ -99,7 +118,6 @@ $string['bim_find_x_description'] = '<p>Your search for<blockquote><strong>{$a->
 $string['bim_find_student_details_heading'] = 'Student details';
 $string['bim_find_too_many'] = '<p>Your search for <blockquote><strong>{$a->search}</strong></blockquote>matched {$a->count} students.  This is too many (from a system resources perspective) to display.  Please refine your search and try again.</p>';
 
-//*****************
 // coordinator/manage_marking.php
 // bim_manaage_marking
 $string['bim_marking_no_markers_heading'] = 'No markers allocated';
@@ -129,7 +147,6 @@ $string['bim_release_manage_unregistered_heading'] = 'Unregistered student detai
 $string['bim_release_manage_unregistered_description'] = '<p>{$a} student(s) who have <strong>not</strong> registered with BIM, match the criteria.</p>';
 $string['bim_release_no_students_heading'] = 'No students allocated to you';
 $string['bim_release_no_students_description'] = '<p>You have not yet been allocated any groups of students to mark for this activity.</p><p>Only the coordinator can allocate groups for you to mark.</p>';
-//************
 // coordinator/view.php
 // bim_configuration_screen
 $string['bim_configuration_screen'] = '<p>The general configuration of BIM is done using the <a href="{$a->wwwroot}/course/modedit.php?update={$a->cmid}&return=1">standard activity configure interface</a></p><p>The "General Steps" section at the bottom of this page provides a basic introduction to using BIM.</p>';
@@ -172,19 +189,18 @@ $string['bim_qform_question'] = 'Question: {$a}';
 $string['bim_qform_stats'] = '<p>Student answers {$a->help}: {$a->stats}</p>';
 $string['bim_qform_delete'] = 'Delete question?';
 
-//**********
 // lib/bim_rss.php
 // bim_process_feed
 $string['bim_process_feed_error'] = 'bim_process_feed: inserting bim_marking {$a}';
 // bim_is_item_allocated
 $string['bim_item_allocated_not'] = 'Not allocated to a question';
-//$string['bim_item_allocated_not_help'] = 'Normally, a BIM activity requires you to post to your blog answers to a set of questions designed by the course teachers. When BIM sees a new post on your blog, it tries to allocate it to one of the questions. "Not allocated" means that BIM saw your post and made a copy of it (mirrored it) locally. However, it could not match your post with one of the questions.  Eventually, one of the teachers will manually allocate your post to a question, though this may take a little while.  To make sure BIM automatically allocates your posts, make sure you use the title of the question in the title or body of your blog post.  For example, if you are answering a question with the title "Week 12 - Reflection", make sure that "Week 12 - Reflection" is part of (or all of) the title of your post.';
+// $string['bim_item_allocated_not_help'] = 'Normally, a BIM activity requires you to post to your blog answers to a set of questions designed by the course teachers. When BIM sees a new post on your blog, it tries to allocate it to one of the questions. "Not allocated" means that BIM saw your post and made a copy of it (mirrored it) locally. However, it could not match your post with one of the questions.  Eventually, one of the teachers will manually allocate your post to a question, though this may take a little while.  To make sure BIM automatically allocates your posts, make sure you use the title of the question in the title or body of your blog post.  For example, if you are answering a question with the title "Week 12 - Reflection", make sure that "Week 12 - Reflection" is part of (or all of) the title of your post.';
 $string['bim_item_allocated_released'] = 'Allocated to the question <strong>{$a->title}</strong><br />Marked: {$a->mark} out of {$a->max}';
 
 $string['bim_item_allocated_allocated'] = 'Allocated to the question <strong>{$a}</strong><br />(not marked yet)';
-//$string['bim_item_allocated_allocated'] = 'When BIM finds a new post to your blog, it tries to see if it matches one of the questions created by the teachers of your course. When it finds a match, it allocates your post to that question.  Initially the newly allocated post will be "not marked". It is waiting for one of the teachers to mark the post. Once a post is marked, you will not be able to see any marks or comments on your post from the teachers, until your post is released. This delay is so that the marks/comments can be checked and compared with others.';
+// $string['bim_item_allocated_allocated'] = 'When BIM finds a new post to your blog, it tries to see if it matches one of the questions created by the teachers of your course. When it finds a match, it allocates your post to that question.  Initially the newly allocated post will be "not marked". It is waiting for one of the teachers to mark the post. Once a post is marked, you will not be able to see any marks or comments on your post from the teachers, until your post is released. This delay is so that the marks/comments can be checked and compared with others.';
 $string['bim_item_allocated_marked'] = 'Allocated to the question <strong>{$a}</strong><br />(marked but not released)';
-//$string['bim_item_allocated_marked'] = 'A teacher has given your post a mark and perhaps added some comments. You will not be able to see these marks/comments until your post is released.';
+// $string['bim_item_allocated_marked'] = 'A teacher has given your post a mark and perhaps added some comments. You will not be able to see these marks/comments until your post is released.';
 
 // bim_display_error
 // bim_display_error
@@ -195,7 +211,6 @@ $string['bim_register_no_retrieve_description'] = '<p>Unable to access the URL y
 $string['bim_register_nolinks_heading'] = 'Could not find any feeds';
 $string['bim_register_nolinks_description'] = '<p>Unable to find any feeds from the URL you provided via auto-discovery.  Would appear that there are no feeds. </p><p>If you know the URL for the feed, please try registering it.</p><p>For more information about feeds (aka Web feed) see the <a href="http://en.wikipedia.org/wiki/Web_feed">wikipedia page</a>. Normally a blog home page will include a link to a feed.  This error suggests BIM cannot find the feed.</p>';
 
-//***********
 // lib/locallib.php
 // bim_print_header
 $string['bim_header_details'] = 'Your details for ';
@@ -218,7 +233,6 @@ $string['show_qs_description'] = '<p>This activity currently has {$a} questions 
 $string['show_qs_title'] = 'Title';
 $string['show_qs_body'] = 'Description';
 
-//**************
 // marker/view.php
 // bim_marker_allocate_posts
 $string['bim_marker_student_details'] = 'View student details';
@@ -238,7 +252,7 @@ $string['bim_marker_notstudent_heading'] = 'Error, not your student';
 $string['bim_marker_notstudent_description'] = '<p>The student <strong>{$a}</strong> is not currently allocated to you. This means you cannot view or make changes to their details.</p>';
 $string['bim_marker_student'] = 'Student';
 $string['bim_marker_blog'] = 'Your blog';
-//$string['bim_marker_posts'] = 'Num. of Posts';
+// $string['bim_marker_posts'] = 'Num. of Posts';
 $string['bim_marker_answers'] = '# actual answers / # required answers';
 $string['bim_marker_answers_help'] = 'Normally BIM expects you to respond to a range of questions set by the teacher. "Required answers" is the total number of questions you need to respond to. "Actual answers" is the number of posts BIM has automatically allocated as an answer to one of these questions.';
 $string['bim_marker_m_r'] = '# Released / # Marked';
@@ -254,7 +268,7 @@ $string['bim_marker_error_description'] = '<p>No changes made.</p>';
 $string['marker_unallocating_heading'] = 'Unallocating the post';
 $string['marker_unallocating_description'] = '<p>This <a href="{$a}">student post</a> has been unallocated as an answer to a question.</p>';
 $string['marker_change_alloc_heading'] = 'Changing question allocation';
-$string['marker_change_alloc_description'] = 
+$string['marker_change_alloc_description'] =
          '<p>This <a href="{$a->link}">student post</a> has been reallocated from question <strong>{$a->old}</strong> to question <strong>{$a->new}</strong>.</p>';
 $string['marker_allocate'] = '<p>This <a href="{$a->link}">student post</a> has been allocated to question </strong>{$a->title}</strong>.</p>';
 // show_marker_post_details
@@ -281,7 +295,6 @@ $string['bim_change_again'] = '<p>Please try to <a href="{$a}">change the studen
 $string['bim_change_success_heading'] = 'Student feed changed';
 $string['bim_change_success_description'] = '<p>The student blog has been successfully changed. The details of the new feed are shown below.</p>';
 
-///*********
 // marker/change_blog.form.php
 $string['bim_change_form_heading'] = 'Change student feed';
 $string['bim_change_form_description'] = '<p>You should copy and paste the complete URL (e.g. <strong>http://davidtjones.wordpress.com</strong>) of the home page for a blog. BIM will attempt to describe any errors.</p>';
@@ -345,7 +358,6 @@ $string['bim_mark_min_exceeded_description'] = '<p>The mark you have awarded thi
 $string['bim_mark_continue'] = 'Make more changes?';
 
 
-//********************
 // marker/allocation_form.php
 $string['allocation_form_description'] = '<p>The following is a list of all the posts this student has made. Some may have been allocated to questions. Some may not.</p><p>Use the "Change allocation to:" menu to change the allocation of any student posts.</p>';
 $string['allocation_form_status'] = '<span class="{$a->class}">Status: {$a->status}</span>';
@@ -370,7 +382,6 @@ $string['marking_form_marker_comments'] = '<strong>Marker comments</strong> {$a}
 $string['marking_form_min'] = 'min: ';
 $string['marking_form_max'] = 'max: ';
 
-//********************
 // student/view.php
 // show_student_details
 $string['student_details_user_error'] = 'Error: cannot get user details for user with id <strong>{$a}</strong>';
@@ -381,15 +392,15 @@ $string['student_details_questions_description'] = '<p>You are expected to use y
 $string['student_details_show_qs'] = 'a range of questions';
 $string['student_details_show_qs_title'] = 'Show questions';
 $string['student_details_description'] = '<p>Below you will find details about what the system knows about you and your posts.</p>';
-$string['student_details_noposts_heading'] = '<p>No posts yet.</p>';         
-$string['student_details_noposts_description'] = '<p>There appear to be no posts from you feed stored here.</p>';         
+$string['student_details_noposts_heading'] = '<p>No posts yet.</p>';
+$string['student_details_noposts_description'] = '<p>There appear to be no posts from you feed stored here.</p>';
 $string['student_details_not_mirrored'] = '<p>This is because student feeds are not yet being mirrored for this activity.</p>';
 $string['student_details_reasons'] = '<p>Possible reasons for this include:</p><ul><li> you have posted anything yet; </li><li> your feed could not be mirrored due to error; </li><li> your feed has not yet been mirrored (it should happen within a few hours) </li></ul>';
-$string['student_details_details'] = '<p>Number of recorded posts: <strong>{$a->total_posts}</strong> (A summary of all posts appears in the <a href="#allposts">All posts</a> table below.) </p><p>Number of answers required: <strong>{$a->total_questions}</strong></p><p>Number answers identified: <strong>{$a->num_answered}</strong> (if this is incorrect please contact your teacher).</p>' ;
+$string['student_details_details'] = '<p>Number of recorded posts: <strong>{$a->total_posts}</strong> (A summary of all posts appears in the <a href="#allposts">All posts</a> table below.) </p><p>Number of answers required: <strong>{$a->total_questions}</strong></p><p>Number answers identified: <strong>{$a->num_answered}</strong> (if this is incorrect please contact your teacher).</p>';
 $string['student_details_none_marked'] = '<p>None of your posts have yet been marked.</p>';
 $string['student_details_num_marked'] = '<p>Of these posts {$a} have been marked, but the marks/comments are not yet available to you.</p>';
 $string['student_details_released_heading'] = 'Marks and comments for released posts';
-//$string['student_details_released_description'] = '<p>You can see marks and comments for $a posts in the following table.</p>';
+// $string['student_details_released_description'] = '<p>You can see marks and comments for $a posts in the following table.</p>';
 
 $string['student_details_question_heading'] = 'Question';
 $string['student_details_mark_heading'] = 'Mark';
@@ -397,7 +408,7 @@ $string['student_details_markers_comment_heading'] = 'Marker\'s comment';
 $string['student_details_your_answer'] = 'your answer';
 
 $string['student_details_allposts_heading'] = 'All posts';
-$string['student_details_allposts_description'] = 
+$string['student_details_allposts_description'] =
         '<p>The following table gives an overview of the {$a} of your posts the system knows about. If there is something missing, please contact your teacher.</p><p>The name for each posts is a link to your original post. The status describes how (or if) your post has been allocated as an answer, marked or released.</p>';
 
 $string['student_details_status_heading'] = 'Status';
@@ -419,10 +430,8 @@ $string['bim_wrong_feed_notfinished'] = '<p>The feed URL generated for your blog
 $string['bim_register_timeout_heading'] = 'Timed out trying to retrieve URL';
 $string['bim_register_timeout_description'] = '<p>The system ran out of time while trying to retrieve the URL you entered (<strong>{$a->url}</strong>). The error reported was<blockquote><strong>{$a->error}</strong></blockquote>This normally suggests that there was a problem with either the system hosting your URL or with the network connection between here and your URL.</p><p>Try copying the URL into a web browser window and see if you can see the URL.  If this works, try to register again.</p><p>If the registration process continues to fail, ask for help.</p>';
 
-//*************************************
 // HELP Popups??
 
-//*****
 // For the student view
 $string['numMirrored' ] = 'Number of posts mirrored';
 $string['numMirrored_help'] = 'How many of the posts from your blog/feed BIM has copied to Moodle.';
@@ -445,7 +454,6 @@ $string['allocatedPostStudent_help'] = 'Either BIM or a member of the teaching s
 $string['markedPostStudent'] = 'Marked post';
 $string['markedPostStudent_help'] = 'Someone has marked your post, however, it must be moderated before the result can be released to you.';
 
-//*****
 // For the marker
 $string['opml'] = 'OPML file';
 $string['opml_help'] = '<p>An OPML file is a way for you to read all of the posts from your students without having to go through BIM.</p><p>A Google search for "using an opml file" will reveal how to do this. </p><p>If appropriate, it may be an advantage to share the OPML file with your students to enable them to read each other\'s posts.</p>';
@@ -466,7 +474,6 @@ $string['markAllocation_help'] = '<p>Student posts can be allocated as answers t
 $string['markerComments'] = 'Comments';
 $string['markerComments_help'] = '<p>These are your comments on the post. They will, after the post is released, be visible to the student.</p>';
 
-//***************************
 // Coordinator
 
 // Configuration screen
@@ -502,4 +509,5 @@ $string['qform_stats_help'] = '<p>Shows the current number of student posts that
 
 $string['manageMarking'] = 'Manage marking';
 $string['manageMarking_help'] = '<p>Provides the coordinating teacher an overview of all student submissions and marking progress. For each marker shows the status of their students\' posts. Allows coordinator to release marked posts and to drill down to see more detail.</p>';
-?>
+
+

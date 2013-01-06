@@ -118,7 +118,7 @@ function bim_process_feed( $bim, $student_feed, $questions ) {
             $entry->link = $link;
             $entry->title = $title;
             $entry->post = $content;
-            $entry->comments = null ;
+            $entry->comments = null;
 
             if ( ! empty( $questions ) ) {
                 // loop through each of the unallocated questions

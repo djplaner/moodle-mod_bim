@@ -1,4 +1,25 @@
-<?php // $Id: index.php,v 1.7.2.2 2009/03/31 13:07:21 mudrd8mz Exp $
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 
 /**
  * This page lists all the instances of bim in a particular course
@@ -23,25 +44,25 @@ $context = get_context_instance( CONTEXT_COURSE, $course->id );
 
 add_to_log($course->id, 'bim', 'view all', "index.php?id=$course->id", '');
 
-/// Get all required stringsbim
+// Get all required stringsbim
 
-//$strbims = get_string('modulenameplural', 'bim');
-//$strbim  = get_string('modulename', 'bim');
+// $strbims = get_string('modulenameplural', 'bim');
+// $strbim  = get_string('modulename', 'bim');
 
-/// Print the header
+// Print the header
 $PAGE->set_url( '/mod/bim/index.php', array( 'id' => $id) );
 $PAGE->set_title( format_string($course->fullname));
 $PAGE->set_heading( format_string($course->fullname));
 $PAGE->set_context( $context);
 
 // ?? not sure whether this is needed
-//$navlinks = array();
-//$navlinks[] = array('name' => $strbims, 'link' => '', 'type' => 'activity');
-//$navigation = build_navigation($navlinks);
+// $navlinks = array();
+// $navlinks[] = array('name' => $strbims, 'link' => '', 'type' => 'activity');
+// $navigation = build_navigation($navlinks);
 
 echo $OUTPUT->header();
 
-/// Get all the appropriate data
+// Get all the appropriate data
 
 if (! $bims = get_all_instances_in_course('bim', $course)) {
     echo $OUTPUT->heading(get_string('nonewbims', 'bim'), 2);
@@ -50,7 +71,7 @@ if (! $bims = get_all_instances_in_course('bim', $course)) {
     die();
 }
 
-/// Print the list of instances (your module will probably extend this)
+// Print the list of instances (your module will probably extend this)
 
 $timenow  = time();
 $strname  = get_string('name');
@@ -72,10 +93,10 @@ if ($course->format == 'weeks') {
 
 foreach ($bims as $bim) {
     if (!$bim->visible) {
-        //Show dimmed if the mod is hidden
+        // Show dimmed if the mod is hidden
         $link = "<a class=\"dimmed\" href=\"view.php?id=$bim->coursemodule\">$bim->name</a>";
     } else {
-        //Show normal if the mod is visible
+        // Show normal if the mod is visible
         $link = "<a href=\"view.php?id=$bim->coursemodule\">$bim->name</a>";
     }
 
@@ -89,7 +110,7 @@ foreach ($bims as $bim) {
 echo $OUTPUT->heading( get_string('modulenameplural', 'bim'), 2);
 echo html_writer::table( $table );
 
-/// Finish the page
+// Finish the page
 
 echo $OUTPUT->footer();
-?>
+
