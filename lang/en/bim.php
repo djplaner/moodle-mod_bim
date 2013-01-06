@@ -8,6 +8,17 @@ $string['pluginadministration' ] = 'BIM Administration';
 $string['modulename'] = 'BIM';
 $string['modulenameplural'] = 'BIMs';
 
+$string['modulename_help'] = 'The BIM activity module supports the management (and optional marking) of individual student feeds. The most common use of this is for each student to use their own, externally-hosted blog for reflective purposes.
+
+BIM will
+* Allow students to register their feeds
+* Keep copies of all entries in student feeds within the Moodle database
+* Support the manual and automatic allocation of entries as responses to pre-defined questions (optional)
+* Help support and manage the marking of student feeds by marking staff
+* Integrate marking into the Moodle gradebook
+
+';
+
 $string['group_allocation'] = 'Marker Allocations';
 $string['marking'] = 'Marking data';
 $string['student_feeds'] = 'Student feeds';
