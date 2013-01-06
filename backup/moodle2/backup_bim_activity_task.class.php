@@ -15,6 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Defines something to do with backups - I should know what
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

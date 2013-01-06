@@ -15,17 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Provide the form used to allocate markers to groups of students
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-
-
-/**
- * This form defines the interface used to assign users with
- * bim/marker and bim/coordinator capabilities to groups of students
- * for which they will be and probably responsible for marking
  */
 
 require_once("$CFG->libdir/formslib.php" );

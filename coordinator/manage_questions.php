@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Allow the coordinator to add, modify and delete questions
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 /*
  * manage_questions.php

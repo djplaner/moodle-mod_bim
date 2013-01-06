@@ -15,25 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Allows the coordinator to search for student(s)
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-
-/****
- * find_student.php
- * - allow coordinator to search for student details
- */
-
-/***
- * bim_allocate_markers( $bim, $cm )
- * - handle the form for allocating markers
- */
-
 require_once($CFG->dirroot.'/lib/grouplib.php' );
 require_once($CFG->dirroot.'/mod/bim/coordinator/find_student_form.php' );
+
+/***
+ * - handle the form for allocating markers
+ */
 
 function bim_find_student( $bim, $cm ) {
     global $CFG;

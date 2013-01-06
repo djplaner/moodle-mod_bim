@@ -15,14 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package mod_bim
- * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * This page prints a particular instance of bim
- *
+ * Figure out what an individual bim activity will show when viewed
  * What is shown depends on the role the user is performing. The
  * different roles recognised are
  * - mod/bim:administrator (the coordinator usually)
@@ -35,9 +28,9 @@
  *   - Can see/mark their students posts
  *   - Implemented in show_teacher
  *
- * @author  David Jones <davidthomjones@gmail.com>
- * @version $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
- * @package mod/bim
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');

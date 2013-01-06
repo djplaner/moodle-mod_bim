@@ -15,15 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Allow the coordinator to get an overview of how the marking for all students is going
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-
-/*** mange_marking.php
- * - provide the functions that implement the ManageMarking
- *   view functions
  */
 
 require_once($CFG->dirroot.'/mod/bim/lib.php');

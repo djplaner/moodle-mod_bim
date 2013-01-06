@@ -15,19 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Provide the form for managing and displaying the questions
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-
-
-/**
- * question_form.php
- * - define the form used by the coordiantor to modify, add
- *   and delete questions for a BIM activity
- * - Show a "Add a new question" collection of title, min, max and questions
- * - Show a list of similar collections for all existing questions
  */
 
 require_once("$CFG->libdir/formslib.php" );

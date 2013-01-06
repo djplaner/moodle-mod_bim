@@ -15,13 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * The form for coordinator to specify what students they are looking for
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * Allow coordinator to search for a specific student
  */
 
 require_once("$CFG->libdir/formslib.php" );

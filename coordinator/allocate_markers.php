@@ -15,25 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Allows coordinator to allocate markers to groups of students
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-
-/****
- * allocate_markers.php
- * - alow coordiantor to allocate markers
- */
-
-/***
- * bim_allocate_markers( $bim, $cm )
- * - handle the form for allocating markers
- */
-
 require_once($CFG->dirroot.'/lib/grouplib.php' );
 require_once($CFG->dirroot.'/mod/bim/coordinator/marker_allocation_form.php' );
+
+/**
+ * Process/display the form for allocating markers
+ */
 
 function bim_allocate_markers( $bim, $cm, $userid ) {
     global $CFG, $OUTPUT;

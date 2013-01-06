@@ -15,18 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * This page lists all the instances of bim in a particular course
+ *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-
-/**
- * This page lists all the instances of bim in a particular course
- *
- * @author  David Jones <davidthomjones@gmail.com>
- * @version $Id$ 
- * @package mod/bim
  */
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
