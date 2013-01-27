@@ -54,7 +54,7 @@ function bim_feed_exists( $bim, $userid ) {
 
 function bim_get_mirrored() {
     global $DB;
-    $mirrored = $DB->get_records_select( "bim", "mirror_feed=1" );
+    $mirrored = $DB->get_records_select( "bim", "mirror_feed = ?", array( 1 ) );
 
     $bims = array();
 
@@ -77,7 +77,7 @@ function bim_get_mirrored() {
 function bim_get_student_feeds( $bim ) {
     global $DB;
     $students = $DB->get_records_select( "bim_student_feeds",
-            "bim=$bim", "id" );
+            "bim = ?", array( $bim ) );
     return $students;
 }
 

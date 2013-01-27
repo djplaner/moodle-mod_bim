@@ -22,6 +22,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
+
 // NOT SURE IF THIS SHOULD BE commented out DJ
 /*require_once($CFG->libdir.'/filelib.php');
  ** the following (locallib.php) should never be here **
@@ -214,36 +216,26 @@ function bim_get_recent_mod_activity(&$activities, &$index, $timestart, $coursei
  * @todo Finish documenting this function
  **/
 function bim_cron () {
-    /*   global $CFG;
+       global $CFG;
 
     // get list of bims currently being mirrored
     $mirrored = bim_get_mirrored();
 
     // loop through each one
-    foreach ( $mirrored as $bim )
-    {
-    // make sure directory exists for caching of file
-    $dir = $CFG->dataroot . "/" . $bim->course . "/moddata/" . $bim->id;
-    if ( ! check_dir_exists( $dir, true, true ) ) {
-    mtrace( "Unable to create directory $dir" );
-    return false;
-    }
+    foreach ( $mirrored as $bim ) {
+        // get list of student feeds for the bim
+        $students_feeds = bim_get_student_feeds( $bim->id );
+        $questions = bim_get_question_hash( $bim->id );
 
-    // get list of student feeds for the bim
-    $students_feeds = bim_get_student_feeds( $bim->id );
-    $questions = bim_get_question_hash( $bim->id );
-
-    if ( ! empty( $students_feeds ) )  {
-    foreach ( $students_feeds as $student_feed )
-    {
-    bim_process_feed( $bim, $student_feed, $questions );
-    // *** do a check on unallocated questions to see if
-    // new questions or other changes can allocate them
-    bim_process_unallocated( $bim, $student_feed, $questions );
+        if ( ! empty( $students_feeds ) )  {
+        foreach ( $students_feeds as $student_feed ) {
+            bim_process_feed( $bim, $student_feed, $questions );
+            // *** do a check on unallocated questions to see if
+            // new questions or other changes can allocate them
+            bim_process_unallocated( $bim, $student_feed, $questions );
+        }
+    } 
     }
-    } // empty $student_feeds
-    //    }
-    }*/
     return true;
 }
 
