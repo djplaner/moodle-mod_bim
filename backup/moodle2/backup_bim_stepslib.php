@@ -39,7 +39,7 @@ class backup_bim_activity_structure_step extends backup_activity_structure_step 
         $bim = new backup_nested_element( 'bim', array('id' ),
                       array( 'name', 'intro', 'introformat', 'timecreated',
                              'timemodified', 'register_feed', 'mirror_feed',
-                             'change_feed', 'grade_feed' ) );
+                             'change_feed', 'grade' ) );
 
         $allocations = new backup_nested_element( 'allocations' );
         $allocation = new backup_nested_element( 'allocation', array('id'),

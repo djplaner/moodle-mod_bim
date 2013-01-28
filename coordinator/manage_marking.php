@@ -266,7 +266,7 @@ function bim_manage_release( $bim, $userid, $cm ) {
     }
 
     // update the gradebook entry if it makes sense
-    if ( $bim->grade_feed == 1 ) {
+    if ( $bim->grade > 0 ) {
         $raw_sql = "SELECT userid,sum(mark) as rawgrade from {bim_marking} where bim= ? and status='Released' group by userid";
         $grades = $DB->get_records_sql( $raw_sql, array( $bim->id ) );
 
