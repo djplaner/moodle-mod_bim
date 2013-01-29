@@ -265,17 +265,7 @@ function bim_manage_release( $bim, $userid, $cm ) {
         print "ERROR with relased<br />";
     }
 
-    // update the gradebook entry if it makes sense
-    if ( $bim->grade > 0 ) {
-        $raw_sql = "SELECT userid,sum(mark) as rawgrade from {bim_marking} where bim= ? and status='Released' group by userid";
-        $grades = $DB->get_records_sql( $raw_sql, array( $bim->id ) );
-
-        bim_grade_item_update( $bim, $grades );
-        // get results for all students_changing
-        // use $marking_details to create an array of entries for
-        // each student released Form is
-        //     userid = $userid   rawgrade = ??
-    }
+    bim_update_gradebook( $bim );
 
     print_heading( get_string( 'bim_release_heading', 'bim' ), "left", 2);
 
@@ -286,6 +276,53 @@ function bim_manage_release( $bim, $userid, $cm ) {
         print '<p>Errors encountered while releasing results.</p>';
     }
     print_string( 'bim_release_return', 'bim', $base_url );
+}
+
+/******************
+ * bim_update_gradebook( $bim )
+ * - update the gradebook entries (if appropriate) for all students
+ * - Currently implements a single, simple gradebook calculation
+ *   - sum the marks on all student released posts 
+ *   - calculate what percentage that is of the total possible marks
+ *   - calculate the equivalent percentage of the maximum mark to go in gradebook
+ * - e.g.
+ *   - the maximum mark for the gradebook is 10 
+ *   - there are 5 posts in the activity, each worth a maximum of 10 marks
+ *   - that's a total possible mark of 50 marks
+ *   - a student has only one post released, that post was good, worth 10 marks
+ *   - So the student's total so far, is 10 marks. 
+ *   - 10 marks is 20% of 50 marks (the total possible mark)
+ *   - 20% of 10 (maximum gradebook mark) is 2
+ *   - So the student should get 2 marks in their gradebook entry
+ */
+
+function bim_update_gradebook( $bim ) {
+    global $DB;
+
+    // update the gradebook entry if configured to
+    if ( $bim->grade > 0 ) {
+        // get sum max marks for all this bim's questions
+        $max_sql = "SELECT bim,sum(max_mark) as max from {bim_questions} where bim= ? group by bim";
+        $max_results = $DB->get_records_sql($max_sql, array($bim->id));
+        $max_total = $max_results[$bim->id]->max;
+
+        // only do the update if max_total is greater than 0
+        if ( $max_total > 0 ) {
+            // get the list of students with released results and the sum of 
+            // their marks for released posts
+            $raw_sql = "SELECT userid,sum(mark) as mark from {bim_marking} where bim= ? and status='Released' group by userid";
+            $grades = $DB->get_records_sql( $raw_sql, array( $bim->id ) );
+
+            // calculate the grade/mark to stick in the gradebook
+            foreach ( $grades as $userid => $grade ) {
+                $grade->posts_percentage =  $grade->mark * (100/$max_total);
+
+                $grade->rawgrade = ($grade->posts_percentage/100) * $bim->grade;
+            } 
+            // update the gradebook for all the students
+            bim_grade_item_update( $bim, $grades );
+        } // max_total > 0 
+    } // bim->grade > 0
 }
 
 /******************
