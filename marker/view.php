@@ -925,8 +925,22 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
             $mark_change = $fromform->mark != $marking_details[$marking]->mark;
         }
 
-        // check and show error if mark is above max mark for question
-        if ( $fromform->mark >
+        // check the size of the mark that's been set againse
+        // a) the maximum that can go in the database, and - auto set to max_mark
+        // b) above max mark for question - allow the mark to stand
+        if ( $fromform->mark > 9999.99 ) {
+            print_box_start( 'noticebox boxwidthnormal' );
+            print_heading(get_string('bim_dbase_max_exceeded_heading','bim'), 'left', 2 );
+            $a = new stdClass;
+            $a->mark = $fromform->mark;
+            $a->max = 9999.99;
+            $a->allowedmax = $questions[$marking_details[$marking]->question]->max_mark;
+            print_string( 'bim_dbase_max_exceeded_description', 'bim', $a );
+            print_box_end();
+
+            $fromform->mark = $questions[$marking_details[$marking]->question]->max_mark;
+
+        } else if ( $fromform->mark >
                 $questions[$marking_details[$marking]->question]->max_mark ) {
             print_box_start( 'noticebox boxwidthnormal' );
             print_heading( get_string('bim_mark_max_exceeded_heading', 'bim'),
@@ -1052,7 +1066,6 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
         print_box_end();
 
         $marking_details = bim_get_marking_details( $bim->id, $student_ids);
-
         // the student details table first
         bim_show_student_details( $student, $marking_details,
                     $questions, $feed_details, $cm );
@@ -1071,7 +1084,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
                         'questions' => $questions ,
                         'id' => $cm->id,
                         'uid' => $student,
-                        'marking' => $marking
+                        'marking' => $marking,
                         )
                     );
         $marking_form->display();

@@ -356,6 +356,8 @@ $string['bim_mark_max_exceeded_description'] = '<p>The mark you have awarded thi
 $string['bim_mark_min_exceeded_heading'] = 'Mark falls below minimum mark';
 $string['bim_mark_min_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - falls below the minimum allowed mark for this question - <strong>{$a->max}</strong>.</p><p>This is allowed, however, it may not be what is intended.</p>';
 $string['bim_mark_continue'] = 'Make more changes?';
+$string['bim_dbase_max_exceeded_heading'] = 'Mark exceeds maximum database mark';
+$string['bim_dbase_max_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - exceeds the maximum mark that will fit in the database - <strong>{$a->max}</strong>.</p><p>The mark has been set to the maximum allowed for this question - <strong>{$a->allowedmax}</strong>.</p>';
 
 
 // marker/allocation_form.php

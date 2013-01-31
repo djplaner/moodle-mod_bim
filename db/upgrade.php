@@ -44,6 +44,34 @@ function xmldb_bim_upgrade($oldversion = 0) {
         }
     }
 
+    // the wrong change to mark type
+    if ($oldversion < 2011013119) {
+
+
+        // Changing type of field mark on table bim_marking to int
+        $table = new xmldb_table('bim_marking');
+        $field = new xmldb_field('mark', XMLDB_TYPE_INTEGER, '6', null, null, null, null, 'question');
+
+        // Launch change of type for field mark
+        $dbman->change_field_type($table, $field);
+
+        // bim savepoint reached
+        upgrade_mod_savepoint(true, 2011013119, 'bim');
+    }
+
+    // the right? change to mark type
+    if ($oldversion < 2011013120) {
+
+        // Changing type of field mark on table bim_marking to number
+        $table = new xmldb_table('bim_marking');
+        $field = new xmldb_field('mark', XMLDB_TYPE_NUMBER, '6, 2', null, null, null, null, 'question');
+
+        // Launch change of type for field mark
+        $dbman->change_field_type($table, $field);
+
+        // bim savepoint reached
+        upgrade_mod_savepoint(true, 2011013120, 'bim');
+    }
     return true;
 }
 

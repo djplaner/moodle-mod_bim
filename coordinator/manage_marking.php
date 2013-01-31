@@ -298,13 +298,15 @@ function bim_manage_release( $bim, $userid, $cm ) {
 
 function bim_update_gradebook( $bim ) {
     global $DB;
-
+print "<h1> update gradebook</h1>";
     // update the gradebook entry if configured to
     if ( $bim->grade > 0 ) {
+print "doing change??<br />";
         // get sum max marks for all this bim's questions
         $max_sql = "SELECT bim,sum(max_mark) as max from {bim_questions} where bim= ? group by bim";
         $max_results = $DB->get_records_sql($max_sql, array($bim->id));
         $max_total = $max_results[$bim->id]->max;
+print "max_total is $max_total<br />";
 
         // only do the update if max_total is greater than 0
         if ( $max_total > 0 ) {

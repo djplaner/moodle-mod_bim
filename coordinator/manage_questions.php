@@ -36,6 +36,7 @@
  */
 
 require_once($CFG->dirroot.'/mod/bim/coordinator/question_form.php');
+require_once($CFG->dirroot.'/mod/bim/coordinator/manage_marking.php');
 
 /*******
  * bim_manage_questions( $bim, $cm )
@@ -156,7 +157,9 @@ function bim_manage_questions( $bim, $cm ) {
             }
             echo "</ul>";
         }
-        if ( $changes || $deletions ) {
+        if ( $changes > 0 || $deletions || $additions ) {
+            // need to update the gradebook to represent the new max marks
+            bim_update_gradebook( $bim ); 
             add_to_log( $cm->course, "bim", "Questions manage",
                     "view.php?id=$cm->id&tab=questions",
                     "Modified question(s)", $cm->id );

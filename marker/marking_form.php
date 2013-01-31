@@ -38,6 +38,7 @@ class marking_form extends moodleform {
         $uid = $this->_customdata['uid'];
         $id = $this->_customdata['id'];
         $marking = $this->_customdata['marking'];
+        $mark = $this->_customdata['mark'];
 
         // print_object( $this->_customdata );
         $attributes = 'onchange="this.form.submit()"';
@@ -89,6 +90,7 @@ class marking_form extends moodleform {
         //                             get_string('marking_form_mark','bim'),'size="10"' );
         $mform->addRule('mark', null, 'numeric', null, 'client' );
         $mform->setType( 'mark', PARAM_NUMBER );
+        $mform->setDefault('mark',$mark);
 
         $mform->addElement( 'html',
                             '<br /><small>' .
