@@ -3,10 +3,9 @@ INTRODUCING BIM (v2.0a)
 
 BIM v2.0a is a port of BIM to run on Moodle 2.x.  
 
-It is currently in Alpha.  i.e. most of the important user screens
-are working, but there will be some bugs to iron out.
+It is now essentially complete in terms of the functionality planned for the 2.0 release. There may still be minor bugs that will be removed during early Feb 2013. In preparation for submitting BIM to CONTRIB.
 
-Most of the current known issues are recorded on github here
+Any known issues (including future functionality plans) are recorded on github here
   https://github.com/djplaner/BIM/issues?labels=immediate&state=open
 Feel free to add issues that you find. Or even just ask questions.
 
