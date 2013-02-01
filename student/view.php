@@ -36,6 +36,7 @@ require_once($CFG->dirroot.'/mod/bim/student/register_form.php');
  */
 
 function show_student( $bim, $userid, $cm, $course) {
+    global $OUTPUT;
     $bimid = $bim->id;
 
     bim_print_header( $cm, $bim, $course, $screen);
@@ -54,6 +55,8 @@ function show_student( $bim, $userid, $cm, $course) {
             show_student_details( $bim, $userid, $cm );
         }
     }
+
+    echo $OUTPUT->footer();
 }
 
 /*
@@ -155,7 +158,7 @@ function show_student_details( $bim, $userid, $cm ) {
                     get_string('student_details_markers_comment_heading', 'bim'));
             $answers->tablealign = "center";
             $answers->size = array( "30%", "20%", "50%" );
-            $answers->width="80%";
+            $answers->width="90%";
 
             foreach ($mark_details as $post) {
                 if ( $post->status == "Released" ) {
@@ -165,7 +168,8 @@ function show_student_details( $bim, $userid, $cm ) {
                             '<small>(<a href="' . $post->link . '">'.
                                 get_string('student_details_your_answer', 'bim') .
                                 '</a>)</small>',
-                            $post->mark,
+                            sprintf("%3.2f out of %3.2f", $post->mark, 
+                                     $question_hash[$question_id]->max_mark),
                             $post->comments );
                 }
             }

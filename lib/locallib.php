@@ -709,6 +709,7 @@ function bim_is_item_allocated( $detail, $questions ) {
                   'bim', true, false, '', true ); */
         $help = $OUTPUT->help_icon( 'unallocatedPostStudent', 'bim' );
 
+print "<xmp>" . $help . "</xmp>";
         return get_string( 'bim_item_allocated_not', 'bim' ) . $help;
     } else if ( $detail->status == "Released" ) {
         $qid = $detail->question;
@@ -726,6 +727,7 @@ function bim_is_item_allocated( $detail, $questions ) {
                           'What does not allocated mean',
                           'bim', true, false, '', true ); */
             $help = $OUTPUT->help_icon( 'allocatedPostStudent', 'bim' );
+print "<xmp>" . $help . "</xmp>";
             return get_string( 'bim_item_allocated_allocated', 'bim',
                     $question_title ) . $help;
         }
