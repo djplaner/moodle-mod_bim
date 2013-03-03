@@ -58,8 +58,10 @@ class allocation_form extends moodleform {
         $uid = $this->_customdata['uid'];
         $id = $this->_customdata['id'];
 
-        // turn off the checking
-        $mform->disable_form_change_checker();
+        // turn off the checking -- but only for Moodle versions that can
+        if ( method_exists( $mform, "disable_form_change_checker" ) ) {
+            $mform->disable_form_change_checker();
+        }
 
         // Add hidden fields to get going the right way
         $mform->addElement( 'hidden', 'id', $id );
