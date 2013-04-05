@@ -34,4 +34,7 @@ $module->version  = 2011013120;  // The current module version (Date: YYYYMMDDXX
 $module->requires = 2010031900;
 $module->cron     = 3600;           // Period for cron to check this module (secs)
 $module->component = 'mod_bim';
+$module->release = 2.0;
+$module->component = "mod_bim";
+$module->maturity = MATURITY_BETA;
 
