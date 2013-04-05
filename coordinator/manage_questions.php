@@ -53,6 +53,7 @@ function bim_manage_questions( $bim, $cm ) {
         $num_questions=0;
     }
 
+//bim_cron();
     $question_form = bim_get_question_form( $questions, $cm );
 
     if ( ! $question_form->is_submitted() ) {

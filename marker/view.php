@@ -401,6 +401,7 @@ function show_marker_student_details( $bim, $userid, $cm ) {
     // Get data
     // Array of all student information
     $student_details = bim_get_markers_students( $bim, $userid );
+
     // get marker user details
     $marker_details = $DB->get_records_select( "user", "id=$userid" );
 

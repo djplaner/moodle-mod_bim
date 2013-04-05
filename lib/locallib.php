@@ -117,7 +117,6 @@ function bim_get_feed_details( $bim, $user_ids ) {
 
     $feed_details = $DB->get_records_select( "bim_student_feeds",
             $usql, $params );
-
     if ( $feed_details ) {
         foreach ($feed_details as $row) {
             $student_feeds[$row->userid] = $row;
