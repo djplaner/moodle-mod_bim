@@ -1,30 +1,34 @@
-INTRODUCING BIM (v2.0a)
+INTRODUCING BIM (v2.0)
 =======================
 
-BIM v2.0a is a port of BIM to run on Moodle 2.x.  
+BIM v2.0 is a port of BIM to run on Moodle 2.x.  
 
-It is now essentially complete in terms of the functionality planned for the 2.0 release. There may still be minor bugs that will be removed during early Feb 2013. In preparation for submitting BIM to CONTRIB.
+It is now complete. The functionality of BIM 1.0 is working for Moodle 2.x.
 
 Any known issues (including future functionality plans) are recorded on github here
-  https://github.com/djplaner/BIM/issues?labels=immediate&state=open
+  https://github.com/djplaner/moodle-mod_bim/issues?labels=bim2
 Feel free to add issues that you find. Or even just ask questions.
 
 *What is BIM*
 
 BIM is an activity module for Moodle.  It provides support for teaching
 staff to manage, mark and comment (in a private way) on individual 
-student blogs that are hosted on external blog engines.  More information
-about BIM available on the web
+student blogs that are hosted on external blog engines.  
+
+It has been typically used to manage students maintaining their own reflective/learning journal.
+
+More information about BIM available on the web
  http://davidtjones.wordpress.com/research/bam-blog-aggregation-management/
 
 The latest code and issues tracking around BIM is hosted on github
-    http://github.com/djplaner/BIM/
+  https://github.com/djplaner/moodle-mod_bim/tree/bim2
 
 *Installing BIM*
 
-1. Unpack the archive from github into the mod directory
+1. Unpack the archive (.zip file or similar) into the mod directory
    of your moodle installation.
-2. Re-name the directory github created (e.g. djplaner-BIM-36784f5) to bim
+2. Re-name the created folder/directory (e.g. "bim 2" or "djplaner-BIM-36784f5") 
+   to bim
 3. Login to your Moodle site as administrator
 4. Click on Notifications
 5. Moodle should install BIM
@@ -35,9 +39,16 @@ http://davidtjones.wordpress.com/research/bam-blog-aggregation-management/curren
 
 *Using BIM*
 
-Go to a course site and add a BIM activity.  Follow online
-help from there.
+In short, go to a course site and add a BIM activity.  Follow online help from there.
 
- http://davidtjones.wordpress.com/research/bam-blog-aggregation-management/
+Some videos created for BIM 1.0 still provide a useful introduction to using BIM
+* Creating and configuring a BIM activity - https://vimeo.com/9659597
+* Managing a BIM activity - https://vimeo.com/9662476
+
+There are also two videos for staff marking a BIM activity
+* Marking a BIM activity #1 - https://vimeo.com/9658955
+* Marking a BIM activity #2 - https://vimeo.com/9611439
+  
+
 
 
