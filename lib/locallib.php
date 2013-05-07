@@ -140,7 +140,7 @@ function bim_get_marking_details( $bim, $user_ids ) {
 
     list( $usql, $params ) = $DB->get_in_or_equal( $user_ids );
     array_unshift( $params, $bim );
-    $usql = "bim=? and userid $usql";
+    $usql = "bim=? and userid $usql order by timepublished";
     $marking_details = $DB->get_records_select( "bim_marking",
             $usql, $params);
 
