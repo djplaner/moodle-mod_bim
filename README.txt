@@ -1,12 +1,10 @@
-INTRODUCING BIM (v2.0)
+INTRODUCING BIM - for Moodle 2.1 through 2.3
 =======================
 
-BIM v2.0 is a port of BIM to run on Moodle 2.x.  
-
-It is now complete. The functionality of BIM 1.0 is working for Moodle 2.x.
+A Moodle (2.1 to 2.3) Activity module that manages the process of students maintaining an individual learning journal using their choice of blog (or other RSS/ATOM generating service).
 
 Any known issues (including future functionality plans) are recorded on github here
-  https://github.com/djplaner/moodle-mod_bim/issues?labels=bim2
+  https://github.com/djplaner/moodle-mod_bim/issues
 Feel free to add issues that you find. Or even just ask questions.
 
 *What is BIM*
