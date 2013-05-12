@@ -233,18 +233,16 @@ function bim_print_header($cm, $bim, $course, $screen) {
     $PAGE->set_title(format_string($bim->name));
     $PAGE->set_heading(format_string($course->fullname));
     $PAGE->set_context($context);
-    //  $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
-
-    // $strbims = get_string('modulenameplural', 'bim');
+    $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id";
+    $strbims = get_string('modulenameplural', 'bim');
     // $strbim  = get_string('modulename', 'bim');
-
     $navlinks = array();
 
     if ( $screen == "student" || $screen == "") {
         $navlinks[] = array('name' => $strbims,
                 'link' => "index.php?id=$course->id",
                 'type' => 'activity');
-        $navlinks[] = array('name' => get_string( 'bim_header_details', 'bim' ) .
+        $navlinks[] = array('name' => get_string( 'bim_header_details', 'bim' ).
                 format_string($bim->name),
                 'link' => $base_url,
                 'type' => 'activityinstance');
