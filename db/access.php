@@ -28,37 +28,49 @@
 defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
-        // administrator can do lots of things
-        'mod/bim:coordinator' => array(
-            'captype' => 'write',
-            'contextlevel' => CONTEXT_MODULE,
-            'archetypes' => array(
-                'editingteacher' => CAP_ALLOW,
-                'coursecreator' => CAP_ALLOW,
-                'teacher' => CAP_ALLOW,
-                'manager' => CAP_ALLOW
-                )
-            ),
 
-        // teacher can view student details
-        'mod/bim:marker' => array(
-            'captype' => 'write',
+    'mod/bim:addinstance' => array(
+        'riskbitmask' => RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
+        'clonepermissionsfrom' => 'moodle/course:manageactivities'
+    ),
+
+    // administrator can do lots of things
+    'mod/bim:coordinator' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+            )
+        ),
+
+    // teacher can view student details
+    'mod/bim:marker' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW
+            ),
+        ),
+
+    // student can view their details
+    'mod/bim:student' => array(
+            'captype' => 'read',
             'contextlevel' => CONTEXT_MODULE,
             'archetypes' => array(
-                'teacher' => CAP_ALLOW
+                'guest' => CAP_PROHIBIT,
+                'student' => CAP_ALLOW
+                /*          'teacher' => CAP_PROHIBIT,
+                            'editingteacher' => CAP_PROHIBIT, */
                 ),
-            ),
-
-        // student can view their details
-        'mod/bim:student' => array(
-                'captype' => 'read',
-                'contextlevel' => CONTEXT_MODULE,
-                'archetypes' => array(
-                    'guest' => CAP_PROHIBIT,
-                    'student' => CAP_ALLOW
-                    /*          'teacher' => CAP_PROHIBIT,
-                                'editingteacher' => CAP_PROHIBIT, */
-                    ),
-                )
-        );
+            )
+    );
 
