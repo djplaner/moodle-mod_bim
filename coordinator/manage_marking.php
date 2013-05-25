@@ -75,11 +75,10 @@ function bim_manage_marking( $bim, $userid, $cm ) {
     // - Get all the students so we can add the stats
     $markers_students = bim_get_all_markers_students( $bim );
     if ( empty( $markers_students ) ) {
-        print_heading( get_string( 'bim_marking_no_markers_heading', 'bim' ), 'left', 2 );
+        echo $OUTPUT->heading( get_string( 'bim_marking_no_markers_heading', 'bim' ), 2, 'left' );
         print_string( 'bim_marking_no_markers_description', 'bim' );
     } else {
-        $markers_students = bim_get_all_marker_stats( $markers_students, $questions,
-                $bim );
+        $markers_students = bim_get_all_marker_stats( $markers_students, $questions, $bim );
         // get the ids of all ther markers
         $markers = array_keys( $markers_students );
 
@@ -199,7 +198,7 @@ function bim_manage_marking( $bim, $userid, $cm ) {
     $table->data = $unreg_data_purge;
 
     echo '<a name="unreg"></a>';
-    print_heading( "Unregistered students", "left", 2 );
+    echo $OUTPUT->heading( "Unregistered students", 2, "left" );
     print_container( "<p>The following " . count($unregistered) .
             " student(s) have not yet registered their feeds</p>" );
     // show the email textbox
@@ -224,8 +223,7 @@ function bim_manage_marking( $bim, $userid, $cm ) {
  */
 
 function bim_manage_release( $bim, $userid, $cm ) {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
 
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
@@ -267,7 +265,7 @@ function bim_manage_release( $bim, $userid, $cm ) {
 
     bim_update_gradebook( $bim );
 
-    print_heading( get_string( 'bim_release_heading', 'bim' ), "left", 2);
+    echo $OUTPUT->heading( get_string( 'bim_release_heading', 'bim' ), 2, 'left');
 
     if ( $released && $time_released  ) {
         print_string( 'bim_release_success', 'bim' );
@@ -298,6 +296,15 @@ function bim_manage_release( $bim, $userid, $cm ) {
 
 function bim_update_gradebook( $bim ) {
     global $DB;
+
+    // need to make sure we have cmidnumber set
+    if ( ! isset( $bim->cmidnumber ) ) {
+        if ( ! $cm = get_coursemodule_from_instance( 'bim', $bim->id )) {
+            error( "no get cmid" );
+        } else {
+            $bim->cmidnumber = $cm->id;
+        }
+    }
     // update the gradebook entry if configured to
     if ( $bim->grade > 0 ) {
         // get sum max marks for all this bim's questions
@@ -337,8 +344,7 @@ function bim_update_gradebook( $bim ) {
  */
 
 function bim_manage_view( $bim, $userid, $cm ) {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
 
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
@@ -403,7 +409,8 @@ function bim_manage_view( $bim, $userid, $cm ) {
     $registered = array_diff_key( $student_details, $unregistered );
 
     // Show the what we found
-    print_heading( get_string( 'bim_release_manage_header', 'bim' ), "left", 2 );
+    echo $OUTPUT->heading( get_string( 'bim_release_manage_header', 'bim' ), 2, "left" );
+    $a = new StdClass;
     $a->match = count( $student_details );
     $a->registered = count( $registered );
     $a->unregistered = count($unregistered);
@@ -436,8 +443,7 @@ function bim_manage_view( $bim, $userid, $cm ) {
     print_string( 'bim_release_return', 'bim', $base_url );
     if ( $registered ) {
         echo '<a name="registered"></a>';
-        print_heading( get_string( 'bim_release_manage_registered_heading', 'bim' ),
-                "left", 2 );
+        echo $OUTPUT->heading( get_string( 'bim_release_manage_registered_heading', 'bim' ), 2, "left" );
         $a = count($registered);
         print_string( 'bim_release_manage_registered_description', 'bim', $a );
         bim_email_merge( array_keys( $registered), $cm->course, $base_url,
@@ -455,8 +461,7 @@ function bim_manage_view( $bim, $userid, $cm ) {
 
     if ( $unregistered ) {
         echo '<a name="unregistered"></a>';
-        print_heading(get_string('bim_release_manage_unregistered_heading', 'bim' ),
-                "left", 2 );
+        echo $OUTPUT->heading(get_string('bim_release_manage_unregistered_heading', 'bim' ), 2, "left" );
         $a = count($unregistered);
         print_string( 'bim_release_manage_unregistered_description', 'bim', $a );
         bim_email_merge( array_keys( $unregistered), $cm->course, $base_url,
