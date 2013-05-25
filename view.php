@@ -16,7 +16,6 @@
  *   - Implemented in show_teacher
  *
  * @author  David Jones <davidthomjones@gmail.com>
- * @version $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
  * @package mod/bim
  */
 

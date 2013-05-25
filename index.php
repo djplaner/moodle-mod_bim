@@ -3,8 +3,7 @@
 /**
  * This page lists all the instances of bim in a particular course
  *
- * @author  Your Name <your@email.address>
- * @version $Id: index.php,v 1.7.2.2 2009/03/31 13:07:21 mudrd8mz Exp $
+ * @author  David Jones <davidthomjones@gmail.com>
  * @package mod/bim
  */
 
