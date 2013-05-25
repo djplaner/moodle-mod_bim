@@ -123,6 +123,7 @@ $string['bim_find_too_many'] = '<p>Your search for <blockquote><strong>{$a->sear
 $string['bim_marking_no_markers_heading'] = 'No markers allocated';
 $string['bim_marking_no_markers_description'] = '<p>There are no markers with students allocated to mark. This means it is impossible to view marking progress.</p><p>To view marking progress you will need to use <strong>Allocate Markers</strong> to allocate markers.</p>';
 
+$string['bim_cmiderror'] = 'Course module ID was incorrect';
 $string['bim_marking_to_do'] = '<p>The following table gives an overview of marking progress for the different markers for this BIM.  There are two main tasks you can perform from here:</p><ul> <li> release marked posts so that students can see marker comments and marks; and<br /> (Only possible when there are <em>Marked</em> posts) </li><li> drill down to see more detail on groups of students.</li></ul>';
 $string['bim_marking_heading'] = 'Manage marking';
 $string['bim_marking_no_questions'] = '<p>There are currently no questions defined for this activity. This means that no marking can be done.  Use the "Manage Questions" tab above to add questions.</p>';
