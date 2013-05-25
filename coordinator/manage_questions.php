@@ -94,7 +94,7 @@ function bim_manage_questions( $bim, $cm ) {
             print_string( 'bim_questions_adding', 'bim', $fromform->title_new );
 
             if ( ! $DB->insert_record( "bim_questions", $new_question ) ) {
-                error( get_string( 'bim_questions_error_insert', 'bim' ) );
+                print_error( 'bim_questions_error_insert', 'bim' );
             }
             $additions = true;
             add_to_log( $cm->course, "bim", "Questions manage",
@@ -154,7 +154,7 @@ function bim_manage_questions( $bim, $cm ) {
             foreach ($changed as $change) {
                 echo "<li> $change->title </li> ";
                 if ( ! $DB->update_record( 'bim_questions', $change ) ) {
-                    error( get_string( 'bim_questions_error_changing_title', 'bim' ) );
+                    print_error( 'bim_questions_error_changing_title', 'bim' );
                 }
             }
             echo "</ul>";

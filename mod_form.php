@@ -73,9 +73,9 @@ class mod_bim_mod_form extends moodleform_mod {
         //                         $editor_settings);
         //      $mform->setType('intro', PARAM_RAW);
         //        $mform->addRule('intro', get_string('required'), 'required', null, 'client');
-        $mform->addHelpButton( 'intro', 'bimintro', 'bim' );
 
         $this->add_intro_editor();
+        //$mform->addHelpButton( 'intro', 'bimintro', 'bim' );
 
         // Adding the rest of bim settings, spreeading all them into this fieldset
         // or adding more fieldsets ('header' elements) if needed for better logic
@@ -92,7 +92,7 @@ class mod_bim_mod_form extends moodleform_mod {
 
         $mform->addHelpButton( 'register_feed', 'bim_register_feed', 'bim' );
         $mform->addHelpButton( 'mirror_feed', 'bim_mirror_feed', 'bim' );
-        $mform->addHelpButton( 'grade_feed', 'bim_grade_feed', 'bim' );
+        //$mform->addHelpButton( 'grade_feed', 'bim_grade_feed', 'bim' );
 
         $this->standard_grading_coursemodule_elements();
 

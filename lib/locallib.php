@@ -430,6 +430,7 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim ) {
             $total = new StdClass;
             foreach ($rs as $rec) {
                 $status = $rec->status;
+                $stats[$rec->question] = new StdClass;
                 $stats[$rec->question]->$status = $rec->x;
                 $total->$status += $rec->x;
             }
@@ -581,7 +582,7 @@ function bim_show_student_details( $student, $marking_details,
     }
     $student_details = $DB->get_record( "user", Array("id" => $student) );
 
-    print_heading( get_string('bim_find_student_details_heading', 'bim'), 'left', 2 );
+    echo $OUTPUT->heading( get_string('bim_find_student_details_heading', 'bim'), 2, 'left' );
 
     $details_table = new html_table;
 
@@ -665,10 +666,10 @@ function bim_get_marked( $bim ) { global $DB;
  */
 
 function bim_show_student_posts( $mark_details, $questions ) {
+    global $OUTPUT;
 
     echo '<a name="allposts"></a>';
-    print_heading( get_string('student_details_allposts_heading', 'bim'),
-            'left', 2 );
+    echo $OUTPUT->heading( get_string('student_details_allposts_heading', 'bim'), 2, 'left' );
 
     $total_posts = count( $mark_details );
     print_string( 'student_details_allposts_description', 'bim', $total_posts );
@@ -747,6 +748,7 @@ function bim_is_item_allocated( $detail, $questions ) {
  */
 
 function bim_show_questions( $cm, $bim ) {
+    global $OUTPUT;
 
     // get the questions
     $questions = bim_get_question_hash( $bim->id );
@@ -758,7 +760,7 @@ function bim_show_questions( $cm, $bim ) {
     }
 
     // show the heading/description
-    print_heading( get_string('show_qs_heading', 'bim'), 'left', 2 );
+    echo $OUTPUT->heading( get_string('show_qs_heading', 'bim'), 2, 'left' );
     print_string( 'show_qs_description', 'bim', count( $questions ) );
 
     // create the table of questions
