@@ -30,7 +30,7 @@ require_once($CFG->dirroot.'/mod/bim/coordinator/find_student_form.php' );
  */
 
 function bim_find_student( $bim, $cm ) {
-    global $CFG;
+    global $CFG, $OUTPUT;
 
     // create the form
     $find_form = new find_student_form( 'view.php', array( 'id' => $cm->id ) );
@@ -45,7 +45,7 @@ function bim_find_student( $bim, $cm ) {
 
         $userid = optional_param( 'student', 0, PARAM_NUMBER );
         $heading = get_string('bim_find_again_heading', 'bim' );
-        print_heading( $heading, "left", 2 );
+        echo $OUTPUT->heading( $heading, 2, "left" );
         print_string( 'bim_find_again_description', 'bim' );
         $find_form->display();
         show_student_details( $bim, $userid, $cm );
@@ -53,7 +53,7 @@ function bim_find_student( $bim, $cm ) {
         add_to_log( $cm->course, "bim", "find student",
                 "view.php?id=$cm->id&tab=find",
                 "start search", $cm->id );
-        print_heading( get_string( 'bim_find_heading', 'bim' ), "left", 2 );
+        echo $OUTPUT->heading( get_string( 'bim_find_heading', 'bim' ), 2, "left" );
         print_string( 'bim_find_description', 'bim' );
 
         $find_form->display();
@@ -74,8 +74,7 @@ function bim_find_student( $bim, $cm ) {
  */
 
 function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
 
     $search = $fromform->student;
 
@@ -111,7 +110,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
         add_to_log( $cm->course, "bim", "find student",
                 "view.php?id=$cm->id&tab=find",
                 "no matching students", $cm->id );
-        print_heading( get_string( 'bim_find_none_heading', 'bim' ), 'left', 2 );
+        echo $OUTPUT->heading( get_string( 'bim_find_none_heading', 'bim' ), 2, 'left' );
         print_string( 'bim_find_none_description', 'bim', $search );
         $find_form->display();
     } else if ( $match_count == 1 ) {
@@ -119,7 +118,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
                 "view.php?id=$cm->id&tab=find",
                 "1 matching student", $cm->id );
         $userid = array_shift(array_keys($matches));
-        print_heading( get_string( 'bim_find_one_heading', 'bim' ), 'left', 2 );
+        echo $OUTPUT->heading( get_string( 'bim_find_one_heading', 'bim' ), 2, 'left' );
         print_string( 'bim_find_one_description', 'bim', $search );
 
         $find_form->display();
@@ -130,8 +129,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
         add_to_log( $cm->course, "bim", "find student",
                 "view.php?id=$cm->id&tab=find",
                 "$match_count matching students", $cm->id );
-        print_heading( get_string( 'bim_find_x_heading', 'bim', $match_count ),
-                'left', 2 );
+        echo $OUTPUT->heading( get_string( 'bim_find_x_heading', 'bim', $match_count ), 2, 'left' );
         $a = new StdClass();
         $a->search = $search;
         $a->count = $match_count;
@@ -139,7 +137,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
 
         $find_form->display();
 
-        print_heading( get_string('bim_find_student_details_heading', 'bim' ), 3 );
+        echo $OUTPUT->heading( get_string('bim_find_student_details_heading', 'bim' ), 3 );
 
         $match_ids = array_keys( $matches );
         // get matching student details
@@ -179,8 +177,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
         add_to_log( $cm->course, "bim", "find student",
                 "view.php?id=$cm->id&tab=find",
                 "Too many ($match_count) matching students", $cm->id );
-        print_heading( get_string( 'bim_find_x_heading', 'bim', $match_count ),
-                "left", 2 );
+        echo $OUTPUT->heading( get_string( 'bim_find_x_heading', 'bim', $match_count ), 2, "left" );
         $a->search = $search;
         $a->count = $match_count;
         print_string( 'bim_find_too_many', 'bim', $a );
