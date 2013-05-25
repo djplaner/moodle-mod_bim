@@ -300,7 +300,7 @@ function bim_update_gradebook( $bim ) {
     // need to make sure we have cmidnumber set
     if ( ! isset( $bim->cmidnumber ) ) {
         if ( ! $cm = get_coursemodule_from_instance( 'bim', $bim->id )) {
-            error( "no get cmid" );
+            print_error( 'bim_cmiderror', 'bim'  );
         } else {
             $bim->cmidnumber = $cm->id;
         }
