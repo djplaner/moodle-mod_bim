@@ -1,4 +1,4 @@
-<?php    // $Id
+<?php    
 
 /****************
  * Library of functions for manipulating the student feeds
