@@ -59,6 +59,8 @@ $string['bim_cancel'] = 'Cancel';
 
 $string['bim_error_updating'] = 'Error updating database';
 
+$string['bim_error_update_instance'] = 'Cannot update bim';
+
 // BIM specific settings
 
 $string['bim_register_feed'] = 'Allow registration?';
