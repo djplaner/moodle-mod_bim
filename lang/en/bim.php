@@ -178,6 +178,8 @@ $string['bim_questions_error_changing_title'] = 'ERROR updating database';
 $string['bim_questions_nochanges'] = '<p>No changes were made.</p>';
 $string['bim_questions_error_processing'] = 'Problem process the question form.';
 
+$string['bim_continue'] = '<p>(<a href="{$a}">Continue</a>)</p>';
+
 // coordinator/question_form.php
 $string['bim_qform_addnew'] = 'Add new question';
 $string['bim_qform_title_help'] = 'Title {$a}:';
