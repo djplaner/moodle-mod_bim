@@ -298,13 +298,15 @@ function bim_is_valid_url($url) {
  */
 
 function bim_display_error( $error, $fromform, $cm ) {
+    global $OUTPUT;
+
     if ( $error == BIM_FEED_INVALID_URL ) {
         add_to_log( $cm->course, "bim", "registration error",
                 "view.php?id=$cm->id",
                 "$fromform->blogurl Invalid URL", $cm->id );
 
-        print_heading( get_string( 'bim_register_invalid_url_heading', 'bim' ),
-                "left", 2 );
+        echo $OUTPUT->heading( 
+            get_string( 'bim_register_invalid_url_heading', 'bim' ), 2, left );
         print_string( 'bim_register_invalid_url_description', 'bim',
                 $fromform->blogurl );
         return 1;
@@ -313,8 +315,8 @@ function bim_display_error( $error, $fromform, $cm ) {
         add_to_log( $cm->course, "bim", "registration error",
                 "view.php?id=$cm->id",
                 "$fromform->blogurl no retrieve", $cm->id );
-        print_heading( get_string( 'bim_register_no_retrieve_heading', 'bim' ),
-                "left", 2 );
+        echo $OUTPUT->heading( 
+            get_string( 'bim_register_no_retrieve_heading', 'bim' ), 2, "left" );
         $a = new StdClass();
         $a->url = $fromform->blogurl;
         $a->error = $fromform->error;
@@ -326,8 +328,8 @@ function bim_display_error( $error, $fromform, $cm ) {
         add_to_log( $cm->course, "bim", "registration error",
                 "view.php?id=$cm->id",
                 "$fromform->blogurl no feed links", $cm->id );
-        print_heading( get_string( 'bim_register_nolinks_heading', 'bim' ),
-                "left", 2 );
+        echo $OUTPUT->heading( 
+                get_string( 'bim_register_nolinks_heading', 'bim' ), 2, "left" );
         print_string( 'bim_register_nolinks_description', 'bim',
                 $fromform->blogurl );
         return 1;
@@ -336,8 +338,8 @@ function bim_display_error( $error, $fromform, $cm ) {
         add_to_log( $cm->course, "bim", "registration error",
                 "view.php?id=$cm->id",
                 "$fromform->blogurl wrong url", $cm->id );
-        print_heading( get_string( 'bim_register_wrong_url_heading', 'bim' ),
-                "left", 2 );
+        echo $OUTPUT->heading( 
+            get_string( 'bim_register_wrong_url_heading', 'bim' ), 2, "left" );
         echo $fromform->error;
         return 1;
     }
@@ -345,8 +347,8 @@ function bim_display_error( $error, $fromform, $cm ) {
         add_to_log( $cm->course, "bim", "registration error",
                 "view.php?id=$cm->id",
                 "$fromform->blogurl timeout", $cm->id );
-        print_heading( get_string( 'bim_register_timeout_heading', 'bim' ),
-                "left", 2 );
+        echo $OUTPUT->heading( 
+                get_string( 'bim_register_timeout_heading', 'bim' ), 2, "left" );
         $a = new StdClass();
         $a->url = $fromform->blogurl;
         $a->error = $fromform->error;

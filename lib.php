@@ -103,7 +103,7 @@ function bim_update_instance($bim, $mform = null) {
 
     // - what about removing grades?
     if ( ! $DB->update_record('bim', $bim) ) {
-        error( 'Cannot update bim' );
+        print_error( 'bim_error_update_instance', 'bim' );
     }
 
     bim_grade_item_update( $bim );
@@ -307,7 +307,7 @@ function bim_scale_used_anywhere($scaleid) {
  * @param stdClass $newmodule instance object with extra cmidnumber and modname property
  * @return void
  */
-function bim_grade_item_update(stdClass $bim, $grades=null) {
+function bim_grade_item_update( $bim, $grades=null) {
     global $CFG;
 
     if ( !function_exists('grade_update')) {

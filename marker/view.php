@@ -277,7 +277,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions ) {
                         $detail->timereleased = 0;
                     }
                     if ( ! $DB->update_record( 'bim_marking', $detail ) ) {
-                        error( get_string('bim_error_updating', 'bim') );
+                        print_error( 'bim_error_updating', 'bim' );
                     } else {
                         $detail->post = $post;
                         echo $OUTPUT->heading( get_string('marker_unallocating_heading', 'bim'), 2, "left" );
@@ -301,7 +301,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions ) {
                         $detail->timereleased = 0;
                     }
                     if ( ! $DB->update_record( 'bim_marking', $detail ) ) {
-                        error( get_string('bim_error_updating', 'bim') );
+                        print_error( 'bim_error_updating', 'bim' );
                     } else {
                         // return the post to pre-addslashes
                         $detail->post = $post;
@@ -837,7 +837,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
     $student = $DB->get_field( 'bim_marking', 'userid', Array( 'id' => $marking) );
 
     if ( ! $student ) {
-        error( get_string( 'bim_mark_details_error', 'bim') );
+        print_error( 'bim_mark_details_error', 'bim' );
         return;
     }
 
@@ -1062,7 +1062,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
                 $safe->timereleased = 0;
             }
             if ( ! $DB->update_record( 'bim_marking', $safe )) {
-                error( get_string('bim_error_updating', 'bim') );
+                print_error( 'bim_error_updating', 'bim' );
             }
         } else {
             print_string( 'bim_mark_nochanges', 'bim' );

@@ -38,7 +38,10 @@ class marking_form extends moodleform {
         $uid = $this->_customdata['uid'];
         $id = $this->_customdata['id'];
         $marking = $this->_customdata['marking'];
-        $mark = $this->_customdata['mark'];
+        $mark = "";
+        if ( array_key_exists( 'mark', $this->_customdata )) { 
+            $mark = $this->_customdata['mark'];
+        }
 
         // print_object( $this->_customdata );
         $attributes = 'onchange="this.form.submit()"';
@@ -92,12 +95,17 @@ class marking_form extends moodleform {
         $mform->setType( 'mark', PARAM_NUMBER );
         $mform->setDefault('mark',$mark);
 
+        $min_mark = 0;  $max_mark = 10000;
+        if ( array_key_exists( $row->question, $questions ) ) {
+            $min_mark = $questions[$row->question]->min_mark;
+            $max_mark = $questions[$row->question]->max_mark;
+        }
         $mform->addElement( 'html',
                             '<br /><small>' .
                             get_string('marking_form_min', 'bim') .
-                            $questions[$row->question]->min_mark . ' ' .
+                            $min_mark . ' ' .
                             get_string('marking_form_max', 'bim') .
-                            $questions[$row->question]->max_mark .
+                            $max_mark .
                             '<small></td><td valign="top" align="left">'  );
 
         // add suspend checkbox
