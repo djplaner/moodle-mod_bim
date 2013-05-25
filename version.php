@@ -24,7 +24,7 @@
  * Code fragment to define the version of bim
  * This fragment is called by moodle_needs_upgrading() and /admin/index.php
  *
- * @author  Your Name <your@email.address>
+ * @author  David Jones <davidthomjones@gmail.com>
  * @package mod_bim
  */
 
