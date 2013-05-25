@@ -92,7 +92,7 @@ $string['bim_allocate_marker_nomarkers_description'] = '<p>Unable to find any ma
 $string['bim_allocate_marker_nogroups_heading'] = 'Can not allocate markers';
 $string['bim_allocate_marker_nogroups_description'] = '<p>Unable to find any groups for this course.  Marker allocation is only possible with existing course groups.</p><p>Course groups need to be created using Moodle\'s groups facility.</p>';
 // process_markers_form
-$string['bim_group_allocations_heading'] = "Updating group allocations";
+$string['bim_group_allocations_heading'] = "Updating marker allocations";
 $string['bim_group_allocations_added'] =
        '<li>Added group {$a->group} for {$a->marker} </li>';
 $string['bim_group_allocations_removed'] =
@@ -178,7 +178,7 @@ $string['bim_questions_error_changing_title'] = 'ERROR updating database';
 $string['bim_questions_nochanges'] = '<p>No changes were made.</p>';
 $string['bim_questions_error_processing'] = 'Problem process the question form.';
 
-$string['bim_continue'] = '<p>(<a href="{$a}">Continue</a>)</p>';
+$string['bim_continue'] = '<p align="center">(<a href="{$a}">Continue</a>)</p>';
 
 // coordinator/question_form.php
 $string['bim_qform_addnew'] = 'Add new question';
