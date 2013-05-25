@@ -80,7 +80,7 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
                 "List all", $cm->id );
 
         $heading = get_string('bim_allocate_marker_heading', 'bim' );
-        echo $OUTPUT->heading( $heading, 2 );
+        echo $OUTPUT->heading( $heading, 2, 'left' );
         print_string('bim_allocate_marker_description', 'bim' );
 
         $toform = new StdClass;
@@ -98,8 +98,8 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
     } else if ( $fromform = $allocate_form->get_data() ) {
         process_markers_form( $markers, $fromform, $groups, $bim, $cm );
 
-        redirect( "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=markers" );
-        // Do the redirect?
+        $url="$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=markers";
+        print_string( 'bim_continue', 'bim', $url );
     }
 }
 
@@ -145,6 +145,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm ) {
                 }
             }
         }
+     
         // Now, what about current dbase allocations that aren't
         // in the form for the marker. i.e. we need to delete them
 
@@ -184,6 +185,7 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm ) {
             }
         }
     }
+    echo '</ul>';
     if ( ! $change ) {
         print_string( 'bim_group_allocations_none', 'bim' );
     } else {
