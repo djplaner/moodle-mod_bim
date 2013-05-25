@@ -1,14 +1,9 @@
 INTRODUCING BIM for Moodle 1.9
-===============
-
-BIM is an activity module Moodle 1.9.
+==============================
 
 *What is BIM*
 
-BIM is an activity module for Moodle.  It provides support for teaching
-staff to manage, mark and comment (in a private way) on individual 
-student blogs that are hosted on external blog engines.  More information
-about BIM available on the web
+BIM is an activity module for Moodle.  It provides support for teaching staff to manage, mark and comment (in a private way) on individual student blogs that are hosted on external blog engines.  More information about BIM available on the web
  http://davidtjones.wordpress.com/research/bam-blog-aggregation-management/
 
 The latest code and issues tracking around BIM is hosted on github
