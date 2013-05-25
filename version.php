@@ -11,4 +11,6 @@
 $module->version  = 2011013115;  // The current module version (Date: YYYYMMDDXX)
 $module->cron     = 3600;           // Period for cron to check this module (secs)
 $module->requires = 2007101592; // require 1.9
+$module->release = 1; // version 1 for Moodle 1.9
+$module->maturity = MATURITY_STABLE;
 ?>
