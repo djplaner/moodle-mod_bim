@@ -39,7 +39,7 @@ function show_student( $bim, $userid, $cm, $course) {
     global $OUTPUT;
     $bimid = $bim->id;
 
-    bim_print_header( $cm, $bim, $course, $screen);
+    bim_print_header( $cm, $bim, $course, "student");
     // if there isn't a feed registered, show the register form
     if ( ! bim_feed_exists( $bimid, $userid ) ) {
         // need to check for passing in of parameters
@@ -64,8 +64,7 @@ function show_student( $bim, $userid, $cm, $course) {
  */
 
 function show_student_details( $bim, $userid, $cm ) {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=showQuestions";
 
     $bimid = $bim->id;
@@ -87,8 +86,8 @@ function show_student_details( $bim, $userid, $cm ) {
     // report error if no feed found
     if ( empty( $feed_details )) {
         $a = $user->firstname . ' ' . $user->lastname;
-        print_heading(
-                get_string( 'student_details_nofeed_heading', 'bim' ),  1 );
+        echo $OUTPUT->heading(
+                get_string( 'student_details_nofeed_heading', 'bim' ), 1, 'left' );
         print_string( 'student_details_nofeed_description', 'bim', $a );
         return;
     }
@@ -120,7 +119,7 @@ function show_student_details( $bim, $userid, $cm ) {
     // Start display
 
     // Details
-    print_heading( get_string('student_details_header', 'bim'), 'left', 1 );
+    echo $OUTPUT->heading( get_string('student_details_header', 'bim'), 1, 'left' );
     if ( ! empty( $question_hash )) {
         print_string( 'student_details_questions_description', 'bim',
                 $base_url);
@@ -132,7 +131,7 @@ function show_student_details( $bim, $userid, $cm ) {
 
     // show extra message if no posts recorded
     if ( $total_posts == 0 ) {
-        print_heading( get_string('student_details_noposts_heading', 'bim'), 'left', 2);
+        echo $OUTPUT->heading( get_string('student_details_noposts_heading', 'bim'), 2, 'left');
         print_string('student_details_noposts_description', 'bim' );
         if ( $bim->mirror_feed == 0 ) {
             print_string('student_details_not_mirrored', 'bim' );
@@ -146,8 +145,7 @@ function show_student_details( $bim, $userid, $cm ) {
     if ( $num_marked > 0 ) {
         //    print_string('student_details_num_marked','bim',$num_marked);
         if ( $post_stats["Released"] != 0 ) {
-            print_heading( get_string('student_details_released_heading', 'bim'),
-                    "left", 2 );
+            echo $OUTPUT->heading( get_string('student_details_released_heading', 'bim'), 2, "left" );
             //        print_string( 'student_details_released_description','bim',
             //                         $post_stats["Released"] );
 
@@ -183,7 +181,7 @@ function show_student_details( $bim, $userid, $cm ) {
 
     // show information about the activity
     echo '<a name="about"></a>';
-    print_heading( get_string( 'student_details_about_heading', 'bim'), 'left', 2);
+    echo $OUTPUT->heading( get_string( 'student_details_about_heading', 'bim'), 2, 'left');
     print_string( 'student_details_about_description', 'bim', $bim->intro );
 }
 
@@ -231,7 +229,7 @@ function show_register_feed( $bim, $userid, $cm) {
                 add_to_log( $cm->course, "bim", "registration success",
                         "view.php?id=$cm->id",
                         "$fromform->blogurl", $cm->id );
-                print_heading( get_string('register_success_heading', 'bim'), "left", 2 );
+                echo $OUTPUT->heading( get_string('register_success_heading', 'bim'), 2, "left" );
                 print_string( 'register_success_description', 'bim' );
 
                 // get the questions for this bim
