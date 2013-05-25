@@ -92,7 +92,7 @@ function show_marker( $bim, $userid, $cm, $course ) {
 function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
     global $CFG, $DB, $OUTPUT;
 
-    print_box( '<a href="'.
+    echo $OUTPUT->box( '<a href="'.
             "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
             '">' .
             get_string( 'bim_marker_student_details', 'bim' ) .
@@ -102,8 +102,7 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
             'noticebox boxaligncenter boxwidthnarrow centerpara highlight' );
 
     $help = $OUTPUT->help_icon( 'markAllocation', 'bim' );
-    print_heading(get_string('bim_marker_allocate_heading', 'bim').'&nbsp;'.$help,
-            'left', 1 );
+    echo $OUTPUT->heading(get_string('bim_marker_allocate_heading', 'bim').'&nbsp;'.$help, 1, 'left' );
 
     // Get the necessary data
 
@@ -111,8 +110,9 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
     $markers_students = bim_get_markers_students( $bim, $userid );
     // make sure the student is one of the markers
     if ( ! isset( $markers_students[$student] )) {
-        print_heading( get_string( 'bim_marker_notstudent_heading', 'bim' ),
-                'left', 2 );
+        echo $OUTPUT->heading( 
+                get_string( 'bim_marker_notstudent_heading', 'bim' ),
+                2, 'left' );
         print_string( 'bim_marker_notstudent_description', 'bim', $student );
         return;
     }
@@ -138,7 +138,9 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
         add_to_log( $cm->course, "bim", "posts allocate",
                 "view.php?id=$cm->id&screen=AllocatePosts&uid=$student",
                 "List all $student", $cm->id );
-        print_heading( get_string('marker_allocation_heading', 'bim'), 2 );
+        echo $OUTPUT->heading( 
+                get_string('marker_allocation_heading', 'bim'), 2, 'left');
+
         $allocation_form->display();
     } else if ( $fromform = $allocation_form->get_data() ) {
         add_to_log( $cm->course, "bim", "posts allocate",
@@ -153,7 +155,7 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
                 $marking_details, $feed_details,
                 $post_stats, $progress );
 
-        print_heading( get_string('marker_allocation_heading', 'bim'), 2 );
+        echo $OUTPUT->heading( get_string('marker_allocation_heading', 'bim'), 2, 'left' );
         $allocation_form = new allocation_form( 'view.php', array(
                     'marking_details' => $marking_details,
                     'questions' => $questions ,
@@ -167,7 +169,7 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
         add_to_log( $cm->course, "bim", "posts allocate",
                 "view.php?id=$cm->id&screen=AllocatePosts&uid=$student",
                 "Error processing form - $student", $cm->id );
-        print_heading( get_string('bim_marker_error_heading', 'bim'), 'left', 2 );
+        echo $OUTPUT->heading( get_string('bim_marker_error_heading', 'bim'), 2, 'left' );
         print_string( 'bim_marker_error_description', 'bim' );
         $allocation_form->display();
     }
@@ -202,8 +204,10 @@ function marker_get_student_details_table( $student, $bim, $cm ) {
 
 function marker_show_student_details_table( $student, $student_details,
         $marking_details, $feed_details, $post_stats, $progress ) {
-    print_heading( get_string( 'bim_find_student_details_heading', 'bim' ),
-            'left', 2 );
+    global $OUTPUT;
+    echo $OUTPUT->heading( 
+        get_string( 'bim_find_student_details_heading', 'bim' ),
+        2, 'left' );
 
     $details_table = new html_table;
     $details_table->class = 'generaltable';
@@ -248,7 +252,7 @@ function marker_show_student_details_table( $student, $student_details,
  */
 
 function bim_process_allocate_form( $marking_details, $fromform, $questions ) {
-    global $DB;
+    global $DB, $OUTPUT;
 
     foreach ($marking_details as $detail) {
         // get the key and value for the select menu matching
@@ -276,8 +280,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions ) {
                         error( get_string('bim_error_updating', 'bim') );
                     } else {
                         $detail->post = $post;
-                        print_heading( get_string('marker_unallocating_heading', 'bim'),
-                                "left", 2 );
+                        echo $OUTPUT->heading( get_string('marker_unallocating_heading', 'bim'), 2, "left" );
                         print_string( 'marker_unallocating_description', 'bim',
                                 $detail->link );
                     }
@@ -302,8 +305,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions ) {
                     } else {
                         // return the post to pre-addslashes
                         $detail->post = $post;
-                        print_heading( get_string('marker_change_alloc_heading', 'bim'),
-                                'left', 2 );
+                        echo $OUTPUT->heading( get_string('marker_change_alloc_heading', 'bim'), 2, 'left' );
                         // print "...old status is $old_status...";
                         if ( $old_status != "Unallocated" ) {
                             $a = new StdClass();
@@ -337,7 +339,7 @@ function show_marker_post_details( $bim, $userid, $cm ) {
     $show_qs_url = $CFG->wwwroot.'/mod/bim/view.php?id='.$cm->id.
         '&screen=showQuestions';
 
-    print_box( '<a href="'.
+    echo $OUTPUT->box( '<a href="'.
             "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
             '">'  .
             get_string( 'bim_marker_student_details', 'bim' ) .
@@ -368,7 +370,8 @@ function show_marker_post_details( $bim, $userid, $cm ) {
 
     // Show registered information
     $help = $OUTPUT->help_icon( 'markPostsAll', 'bim' );
-    print_heading( get_string('bim_post_heading', 'bim').'&nbsp;'.$help, "left", 2);
+    echo $OUTPUT->heading( 
+        get_string('bim_post_heading', 'bim').'&nbsp;'.$help, 2, "left");
 
     if ( empty( $questions ) ) {
         print_string( 'bim_post_no_questions', 'bim', $help );
@@ -463,8 +466,9 @@ function show_marker_student_details( $bim, $userid, $cm ) {
 
         echo '<a name="unreg"></a>';
 
-        print_heading(get_string('bim_release_manage_unregistered_heading',
-                    'bim').'&nbsp;'.$help, 2 );
+        echo $OUTPUT->heading(
+                get_string('bim_release_manage_unregistered_heading',
+                    'bim').'&nbsp;'.$help, 2, 'left' );
         echo get_string( 'bim_details_unregistered_description',
                 'bim' );
 
@@ -815,17 +819,17 @@ function bim_create_details_display( $user_details, $feed_details=null, $cm = nu
  */
 
 function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
-    global $CFG;
-    global $DB;
+    global $CFG, $OUTPUT, $DB;
     // show navigation to view all student options
-    print_box( '<a href="'.
+    echo $OUTPUT->box( '<a href="'.
                 "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
                 '">'.get_string('bim_marker_student_details', 'bim').'</a> | <a href="'.
                 "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails".
                 '">'.get_string('bim_marker_post_details', 'bim').'</a>',
                 'noticebox boxaligncenter boxwidthnarrow centerpara highlight ' );
 
-    print_heading( get_string('bim_mark_post_heading', 'bim'), 'left', 1 );
+    echo $OUTPUT->heading( get_string('bim_mark_post_heading', 'bim'), 1,
+                                'left' );
 
     // Get the necessary data
 
@@ -842,8 +846,8 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
 
     // make sure the student is one of the markers
     if ( ! isset( $markers_students[$student] )) {
-        print_heading( get_string('bim_marker_notstudent_heading', 'bim'),
-                    'left', 2 );
+        echo $OUTPUT->heading( 
+            get_string('bim_marker_notstudent_heading', 'bim'), 2, 'left' );
         print_string( 'bim_marker_notstudent_description', 'bim', $student );
         return;
     }
@@ -900,20 +904,21 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
         //      ivew.php cm->id, screen=MarkPost and markingId
         $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=MarkPost&" .
                 "markingId=";
-        print_box_start( "box generalbox boxaligncenter boxwidthnormal centerpara" );
+        echo $OUTPUT->box_start( "box generalbox boxaligncenter boxwidthnormal centerpara" );
         bim_show_next_prev_question( $cm, $next_prev_q, $url, "q"  );
         bim_show_next_prev_question( $cm, $next_prev_s, $url, "s"  );
-        print_box_end();
+        echo $OUTPUT->box_end();
 
-        print_heading( get_string('bim_mark_post', 'bim'), "left", 2 );
+        echo $OUTPUT->heading( get_string('bim_mark_post', 'bim'), 2, "left" );
 
         $marking_form->display();
     } else if ( $marking_form->is_cancelled() ) {
         // send user back to post details page
-        print_heading( get_string('bim_mark_cancel_heading', 'bim'), 'left', 1);
+        echo $OUTPUT->heading( get_string('bim_mark_cancel_heading', 'bim'), 1,
+                                    'left');
         print_string( 'bim_mark_cancel_description', 'bim');
-        redirect( "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&" .
-                    "screen=ShowPostDetails", 15 );
+        $url="$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails";
+        print_string( 'bim_continue', 'bim', $url );
     } else if ( $fromform = $marking_form->get_data() ) {
         // Process the form content
         $comments_change = $fromform->comments['text'] !=
@@ -943,30 +948,28 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
 
         } else if ( $fromform->mark >
                 $questions[$marking_details[$marking]->question]->max_mark ) {
-            print_box_start( 'noticebox boxwidthnormal' );
-            print_heading( get_string('bim_mark_max_exceeded_heading', 'bim'),
-                        'left', 2 );
+            echo $OUTPUT->box_start( 'noticebox boxwidthnormal' );
+            echo $OUTPUT->heading( get_string('bim_mark_max_exceeded_heading', 'bim'), 2, 'left' );
             $a = new stdClass;
             $a->mark = $fromform->mark;
             $a->max = $questions[$marking_details[$marking]->question]->max_mark;
             print_string( 'bim_mark_max_exceeded_description', 'bim', $a );
-            print_box_end();
+            echo $OUTPUT->box_end();
         }
             // check and show error if mark is below min mark for question
         if ( $fromform->mark <
                     $questions[$marking_details[$marking]->question]->min_mark ) {
-            print_box_start( 'noticebox boxwidthnormal' );
-            print_heading( get_string('bim_mark_min_exceeded_heading', 'bim'),
-                        'left', 2 );
+            echo $OUTPUT->box_start( 'noticebox boxwidthnormal' );
+            echo $OUTPUT->heading( get_string('bim_mark_min_exceeded_heading', 'bim'), 2, 'left' );
             $a = new stdClass;
             $a->mark = $fromform->mark;
             $a->max = $questions[$marking_details[$marking]->question]->min_mark;
             print_string( 'bim_mark_min_exceeded_description', 'bim', $a );
-            print_box_end();
+            echo $OUTPUT->box_end();
         }
 
-        print_box_start( 'noticebox boxwidthnormal' );
-        print_heading( get_string('bim_mark_changes_heading', 'bim'), 'left', 2);
+        echo $OUTPUT->box_start( 'noticebox boxwidthnormal' );
+        echo $OUTPUT->heading( get_string('bim_mark_changes_heading', 'bim'), 2, 'left' );
         $menu_name = "Reallocate$marking";
 
         // ensure that suspend is set in the form - makes it easier below
@@ -1064,7 +1067,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
         } else {
             print_string( 'bim_mark_nochanges', 'bim' );
         }
-        print_box_end();
+        echo $OUTPUT->box_end();
 
         $marking_details = bim_get_marking_details( $bim->id, $student_ids);
         // the student details table first
@@ -1073,12 +1076,12 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
 
         $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=MarkPost&" .
                 "markingId=";
-        print_box_start( "box generalbox boxaligncenter boxwidthnormal centerpara" );
+        echo $OUTPUT->box_start( "box generalbox boxaligncenter boxwidthnormal centerpara" );
         bim_show_next_prev_question( $cm, $next_prev_q, $url, "q"  );
         bim_show_next_prev_question( $cm, $next_prev_s, $url, "s"  );
-        print_box_end();
+        echo $OUTPUT->box_end();
 
-        print_heading( get_string('bim_mark_continue', 'bim'), 'left', 2 );
+        echo $OUTPUT->heading( get_string('bim_mark_continue', 'bim'), 2, 'left' );
 
         $marking_form = new marking_form( 'view.php', array(
                         'marking_details' => $marking_details,
@@ -1090,7 +1093,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
                     );
         $marking_form->display();
     } else {
-        print_heading( get_string('bim_marker_error_heading', 'bim'));
+        echo $OUTPUT->heading( get_string('bim_marker_error_heading', 'bim'));
         print_string( 'bim_mark_nochanges', 'bim' );
         $marking_form->display();
     }
@@ -1103,8 +1106,7 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
  */
 
 function bim_change_blog_registration( $bim, $student, $cm ) {
-    global $DB;
-    global $CFG;
+    global $DB, $CFG, $OUTPUT;
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=".
             "changeBlogRegistration&student=$student";
 
@@ -1133,7 +1135,7 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
                     "Start/display", $cm->id );
 
         // heading and description
-        print_heading( get_string($heading, 'bim'), 'left', 2);
+        echo $OUTPUT->heading( get_string($heading, 'bim'), 2, 'left');
         print_string( $description, 'bim' );
 
         if ( ! empty( $feed_details ) ) {
@@ -1217,7 +1219,7 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
             $feed_details = bim_get_feed_details( $bim->id, Array( $student ));
 
             // heading and description
-            print_heading( get_string('bim_change_success_heading', 'bim'), 'left', 2);
+            echo $OUTPUT->heading( get_string('bim_change_success_heading', 'bim'), 2, 'left');
             print_string( 'bim_change_success_description', 'bim' );
             bim_show_student_details( $student, $marking_details,
                     $questions, $feed_details, $cm );
