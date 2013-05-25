@@ -1,4 +1,4 @@
-<?php // $Id: version.php,v 1.5.2.2 2009/03/19 12:23:11 mudrd8mz Exp $
+<?php 
 
 /**
  * Code fragment to define the version of bim

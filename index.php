@@ -1,4 +1,4 @@
-<?php // $Id: index.php,v 1.7.2.2 2009/03/31 13:07:21 mudrd8mz Exp $
+<?php 
 
 /**
  * This page lists all the instances of bim in a particular course
