@@ -44,8 +44,7 @@ require_once($CFG->dirroot.'/mod/bim/coordinator/manage_marking.php');
  */
 
 function bim_manage_questions( $bim, $cm ) {
-    global $CFG;
-    global $DB;
+    global $CFG, $DB, $OUTPUT;
 
     $questions = bim_get_question_hash( $bim->id );
     $num_questions = count( $questions );
@@ -53,7 +52,6 @@ function bim_manage_questions( $bim, $cm ) {
         $num_questions=0;
     }
 
-//bim_cron();
     $question_form = bim_get_question_form( $questions, $cm );
 
     if ( ! $question_form->is_submitted() ) {
@@ -61,7 +59,8 @@ function bim_manage_questions( $bim, $cm ) {
         if ( $num_questions > 0 ) {
             print_string( 'bim_questions_current', 'bim', $num_questions );
         } else {
-            print_heading( get_string( 'bim_questions_none_heading', 'bim' ), 2 );
+            echo $OUTPUT->heading( get_string( 'bim_questions_none_heading', 
+                    'bim' ), 2, 'left' );
             print_string( 'bim_questions_none_description', 'bim' );
         }
         add_to_log( $cm->course, "bim", "Questions manage",
@@ -74,8 +73,9 @@ function bim_manage_questions( $bim, $cm ) {
         $additions = false;
         $deletions = false;
 
-        print_box_start( 'noticebox boxwidthnormal' );
-        print_heading( get_string( 'bim_questions_changes_heading', 'bim' ), 2 );
+        echo $OUTPUT->box_start( 'noticebox boxwidthnormal' );
+        echo $OUTPUT->heading( 
+            get_string( 'bim_questions_changes_heading', 'bim' ), 2, 'left' );
         // check the new/add question
 
         $fromform->body_new = $fromform->body_new['text'];
@@ -83,6 +83,7 @@ function bim_manage_questions( $bim, $cm ) {
         if ( $fromform->title_new != "" || $fromform->max_new != 0 ||
                 $fromform->min_new != 0 || $fromform->body_new != "" ) {
             // create new record
+            $new_question = new StdClass();
             $new_question->title = $fromform->title_new;
             $new_question->min_mark = $fromform->min_new;
             $new_question->max_mark = $fromform->max_new;
@@ -168,11 +169,13 @@ function bim_manage_questions( $bim, $cm ) {
         if ( ! $additions && ! $deletions && $changes == 0 ) {
             print_string( 'bim_questions_nochanges', 'bim' );
         }
-        print_box_end();
-        redirect( "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&" .
-                "tab=questions", 15 );
+        echo $OUTPUT->box_end();
+ 
+        $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=questions";
+        print_string( 'bim_continue', 'bim', $url );
+
     } else {
-        error( get_string( 'bim_questions_error_processing', 'bim' ) );
+        print_error( 'bim_questions_error_processing', 'bim' );
     }
 }
 
