@@ -183,6 +183,8 @@ function bim_check_post( $title, $content, $question ) {
  */
 
 function bim_process_unallocated( $bim, $student_feed, $questions ) {
+    global $DB;
+
     // get the marking_details for the student
     $marking_details = bim_get_marking_details( $bim->id,
             Array( $student_feed->userid => $student_feed->userid ) );
@@ -201,7 +203,7 @@ function bim_process_unallocated( $bim, $student_feed, $questions ) {
                     $detail->timereleased = 0;
 
                     //          $safe = addslashes_object( $detail );
-                    $DB->update_record( "bim_marking", $safe );
+                    $DB->update_record( "bim_marking", $detail );
                     unset( $unanswered_qs[$unanswered_q] );
 
                     // update the database with the new entry now
@@ -242,7 +244,7 @@ function bim_get_feed_url( $fromform, $cm, $bim ) {
         return false;
     }
 
-    $feed = new SimplePie();
+    $feed = new moodle_simplepie();
     $feed->set_feed_url( $fromform->blogurl );
     $feed->enable_cache( true );
     $feed->set_cache_location( $dir );
@@ -274,7 +276,12 @@ function bim_get_feed_url( $fromform, $cm, $bim ) {
 
     // getting here means success, get the date published for lastpost
     $item = $feed->get_item();
-    $fromform->lastpost = $item->get_date( "U" );
+    // situations where there is a feed, but no items
+    if ( $item ) {
+        $fromform->lastpost = $item->get_date( "U" );
+    } else {
+        $fromform->lastpost = "";
+    }
 
     return $fromform;
 }
