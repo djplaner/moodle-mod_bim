@@ -242,7 +242,7 @@ function bim_get_feed_url( $fromform, $cm, $bim ) {
         return false;
     }
 
-    $feed = new SimplePie();
+    $feed = new moodle_simplepie();
     $feed->set_feed_url( $fromform->blogurl );
     $feed->enable_cache( true );
     $feed->set_cache_location( $dir );
