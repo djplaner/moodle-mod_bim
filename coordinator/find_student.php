@@ -117,7 +117,8 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
         add_to_log( $cm->course, "bim", "find student",
                 "view.php?id=$cm->id&tab=find",
                 "1 matching student", $cm->id );
-        $userid = array_shift(array_keys($matches));
+        $match_keys = array_keys($matches);
+        $userid = array_shift($match_keys);
         echo $OUTPUT->heading( get_string( 'bim_find_one_heading', 'bim' ), 2, 'left' );
         print_string( 'bim_find_one_description', 'bim', $search );
 
