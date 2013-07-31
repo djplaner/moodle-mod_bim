@@ -35,20 +35,17 @@ $capabilities = array(
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
             'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
+            'coursecreator' => CAP_ALLOW
         ),
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
 
-    // administrator can do lots of things
+    // coordinator is the manager of BIM, allocating markers etc.
     'mod/bim:coordinator' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
-            'coursecreator' => CAP_ALLOW,
-            'teacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
+            'editingteacher' => CAP_ALLOW
             )
         ),
 
@@ -68,8 +65,6 @@ $capabilities = array(
             'archetypes' => array(
                 'guest' => CAP_PROHIBIT,
                 'student' => CAP_ALLOW
-                /*          'teacher' => CAP_PROHIBIT,
-                            'editingteacher' => CAP_PROHIBIT, */
                 ),
             )
     );
