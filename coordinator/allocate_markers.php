@@ -40,7 +40,7 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
     $markers = get_users_by_capability( $context,
             array( 'mod/bim:marker', 'mod/bim:coordinator' ),
             'u.id,u.firstname,u.lastname', 'u.lastname',
-            '', '', '', '', false, true );
+            '', '', '', '', false );
 
     // error if no markers
     if ( empty( $markers )) {
@@ -49,13 +49,20 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
         return;
     }
     $markers_ids = array_keys( $markers );
-
-    $markers_allocations = bim_get_all_markers_groups( $bim, $markers_ids );
+    $enrolled_ids = array();
+    $enrolled_markers = array();
+    foreach ( $markers_ids as $id ) {
+        if ( is_enrolled( $context, $id, '', true )) {
+            array_push( $enrolled_ids, $id );
+            $enrolled_markers[$id] = $markers[$id];
+        }
+    }
+    $markers_allocations = bim_get_all_markers_groups( $bim, $enrolled_ids );
     // Connect the groups for each marker into $markers->allocations
     // Markers_allocations will be empty initially
     if ( $markers_allocations ) {
         foreach ($markers_allocations as $allocation) {
-            $markers[$allocation->userid]->allocations[$allocation->groupid] =
+            $enrolled_markers[$allocation->userid]->allocations[$allocation->groupid] =
                 $allocation->groupid;
         }
     }
@@ -70,7 +77,7 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
     // *** PROCESS AND DISPLAY
     // create the form
     $allocate_form = new marker_allocation_form( 'view.php',
-            array( 'groups' => $groups, 'markers' => $markers,
+            array( 'groups' => $groups, 'markers' => $enrolled_markers,
                 'id' => $cm->id ) );
 
     // process it
@@ -85,7 +92,7 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
 
         $toform = new StdClass;
         // for each marker set up $toform based on their current allocations
-        foreach ($markers as $marker) {
+        foreach ($enrolled_markers as $marker) {
             // only proceed if there are groups currently allocated in the dbase
             if ( isset( $marker->allocations ) ) {
                 $id = "groups_".$marker->id;
