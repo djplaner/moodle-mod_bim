@@ -1115,7 +1115,6 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
     $marking_details = bim_get_marking_details( $bim->id, Array( $student ));
     $feed_details = bim_get_feed_details( $bim->id, Array( $student ));
     $questions = bim_get_question_hash( $bim->id );
-
     // let's show and process the form
     $form = new change_blog_form( 'view.php', array( 'id' => $cm->id,
                     'student' => $student ));
