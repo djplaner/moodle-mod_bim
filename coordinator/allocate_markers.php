@@ -48,6 +48,9 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
         print_string( 'bim_allocate_marker_nomarkers_description', 'bim' );
         return;
     }
+
+    // now exclude all those nasty managers and other folk who aren't
+    // actually teaching into the course
     $markers_ids = array_keys( $markers );
     $enrolled_ids = array();
     $enrolled_markers = array();
