@@ -811,7 +811,7 @@ function bim_truncate( $string, $limit = 250, $break = " ", $pad = "..." ) {
 
 function bim_email_merge( $ids, $course, $returnto, $button_msg ) {
 
-    global $CFG;
+    global $CFG, $USER;
 
     print <<<EOF
         <form method="post" action="$CFG->wwwroot/user/messageselect.php" />
@@ -819,6 +819,7 @@ function bim_email_merge( $ids, $course, $returnto, $button_msg ) {
         <input type="hidden" name="returnto" value="$returnto" />
         <input type="hidden" name="formaction" value="messageselect.php" />
         <input type="submit" name="submit" value="$button_msg" />
+        <input type="hidden" name="sesskey" value="$USER->sesskey" />
 EOF;
 
     foreach ($ids as $id) {
