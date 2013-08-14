@@ -90,19 +90,20 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
 
     $sql = "id in ( $ids_string ) and ";
 
-    // any only those that match search
-    // *** Changed this during conversion fo bim2
-    //  $concat = " firstname || lastname like '%$search%'";
-    //  if ( $CFG->dbfamily == "mysql" ) {
-    //    $concat = "concat(firstname,lastname) like '%$search%'";
-    //  } else if ( $CFG->dbfamily == "mssql" ) {
-    //    $concat = "firstname + lastname like '%$search%'";
-    //  }
+    $username_sql = $DB->sql_like( 'username', ':search1', false );
+    $email_sql = $DB->sql_like( 'email', ':search2', false );
+    $firstname_sql = $DB->sql_like( 'firstname', ':search3', false );
+    $lastname_sql = $DB->sql_like( 'lastname', ':search4', false );
 
-    $sql .= "( username like '%$search%' or email like '%$search%' or " .
-        " firstname like '%$search%' or lastname like '%$search%' ) ";
+    $params['search1'] = "%$search%";
+    $params['search2'] = "%$search%";
+    $params['search3'] = "%$search%";
+    $params['search4'] = "%$search%";
+
+    $sql .= "( $username_sql or $email_sql or $firstname_sql or $lastname_sql )";
+
     $match_count = 0;
-    if ( $matches = $DB->get_records_select( "user", $sql, Array(), 'lastname', 'id', 0, 200 ) ) {
+    if ( $matches = $DB->get_records_select( "user", $sql, $params, 'lastname', 'id', 0, 200 ) ) {
         $match_count = count( $matches );
     }
 
