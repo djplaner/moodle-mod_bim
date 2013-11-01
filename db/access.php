@@ -40,32 +40,32 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
 
-    // coordinator is the manager of BIM, allocating markers etc.
-    'mod/bim:coordinator' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_MODULE,
-        'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
-            )
-        ),
-
     // teacher can view student details
     'mod/bim:marker' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
         'archetypes' => array(
-            'teacher' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW
             ),
         ),
 
     // student can view their details
     'mod/bim:student' => array(
-            'captype' => 'read',
+            'captype' => 'write',
             'contextlevel' => CONTEXT_MODULE,
             'archetypes' => array(
-                'guest' => CAP_PROHIBIT,
                 'student' => CAP_ALLOW
                 ),
+            ),
+
+    // coordinator is the manager of BIM, allocating markers etc.
+    'mod/bim:coordinator' => array(
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'coursecreator' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW
             )
+        )
     );
 

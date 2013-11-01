@@ -65,7 +65,9 @@ if ($id) {
 }
 
 require_login($course, true, $cm);
-$context = get_context_instance( CONTEXT_MODULE, $cm->id );
+#$context = get_context_instance( CONTEXT_MODULE, $cm->id );
+$context = context_module::instance( $cm->id );
+#require_capability('mod/quiz:view', $context );
 
 add_to_log($course->id, "bim", "view", "view.php?id={$cm->id}", $bim->id, $cm->id);
 
@@ -88,11 +90,11 @@ if ( empty($USER->id)) {
 if ( has_capability( 'mod/bim:coordinator', $context)) {
     // administrator can the configure stuff
     show_coordinator( $bim, $userid, $cm, $course );
+} else if ( has_capability( 'mod/bim:marker', $context )) {
+    show_marker( $bim, $userid, $cm, $course );
 } else if (has_capability('mod/bim:student', $context)) {
     // student can see details of their registered blog
     show_student($bim, $userid, $cm, $course );
-} else if ( has_capability( 'mod/bim:marker', $context )) {
-    show_marker( $bim, $userid, $cm, $course );
 } else {
     print_error( "No capability to access this page" );
 }

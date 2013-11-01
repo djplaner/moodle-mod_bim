@@ -77,6 +77,7 @@ $string['bim_grade_feed_help'] = 'If this option is selected then a new field wi
 $string['bim:marker'] = 'Teacher view of student details';
 $string['bim:student'] = 'Student change/view details';
 $string['bim:coordinator'] = 'Admin do just about anything';
+$string['bim:addinstance'] = 'Add a BIM activity';
 
 // student/register_form.php
 $string['bim_please_register_heading'] = 'Please register your blog';
