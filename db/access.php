@@ -34,9 +34,7 @@ $capabilities = array(
             'contextlevel' => CONTEXT_MODULE,
             'archetypes' => array(
                 'editingteacher' => CAP_ALLOW,
-                'coursecreator' => CAP_ALLOW,
-                'teacher' => CAP_ALLOW,
-                'manager' => CAP_ALLOW
+                'coursecreator' => CAP_ALLOW
                 )
             ),
 
@@ -54,10 +52,7 @@ $capabilities = array(
                 'captype' => 'read',
                 'contextlevel' => CONTEXT_MODULE,
                 'archetypes' => array(
-                    'guest' => CAP_PROHIBIT,
                     'student' => CAP_ALLOW
-                    /*          'teacher' => CAP_PROHIBIT,
-                                'editingteacher' => CAP_PROHIBIT, */
                     ),
                 )
         );
