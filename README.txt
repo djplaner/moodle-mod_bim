@@ -1,7 +1,14 @@
-INTRODUCING BIM - for Moodle 2.4
+INTRODUCING BIM - for Moodle 2.5
 =======================
 
-A Moodle (2.4) Activity module that manages the process of students maintaining an individual learning journal using their choice of blog (or other RSS/ATOM generating service).
+A Moodle (2.5) Activity module that manages the process of students maintaining an individual learning journal using their choice of blog (or other RSS/ATOM generating service).
+
+*2.5 Specific changes*
+
+Initial move to using nested tabs for the coordinator/marker interface.  Pre-cursor to more work later
+
+
+*More information*
 
 Any known issues (including future functionality plans) are recorded on github here
   https://github.com/djplaner/moodle-mod_bim/issues
