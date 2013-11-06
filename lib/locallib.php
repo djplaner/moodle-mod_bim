@@ -319,34 +319,35 @@ function bim_print_header($cm, $bim, $course, $screen) {
  */
 
 function bim_build_coordinator_tabs( $cm, $tab ) {
-    global $CFG;
+    global $CFG, $OUTPUT;
 
     $tabs = array();
     $rows = array();
     $inactive = array();  $activated = array();
 
     $rows[] = new tabobject( 'config',
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=config",
+            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=config" ),
             get_string('bim_tabs_config', 'bim' ) );
     $rows[] = new tabobject( 'questions',
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=questions",
+            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=questions" ),
             get_string('bim_tabs_questions', 'bim' ) );
     $rows[] = new tabobject( 'markers',
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=markers",
+            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=markers" ),
             get_string('bim_tabs_markers', 'bim' ) );
     $rows[] = new tabobject( 'manage',
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage",
+            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=manage" ),
             get_string('bim_tabs_manage', 'bim' ) );
     $rows[] = new tabobject( 'find',
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=find",
+            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=find" ),
             get_string('bim_tabs_find', 'bim' ) );
 
     $rows[] = new tabobject( 'details',
             "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=details&screen=ShowDetails",
             get_string('bim_tabs_details', 'bim' ) );
 
-    $tabs[] = $rows;
-    print_tabs( $tabs, $tab );
+#    $tabs[] = $rows;
+#    print_tabs( $tabs, $tab );
+    echo $OUTPUT->tabtree( $rows, $tab );
 }
 
 /*****

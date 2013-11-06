@@ -24,6 +24,7 @@
 
 require_once($CFG->dirroot.'/lib/grouplib.php' );
 require_once($CFG->dirroot.'/mod/bim/coordinator/find_student_form.php' );
+require_once($CFG->dirroot.'/mod/bim/student/view.php' );
 
 /***
  * - handle the form for allocating markers
@@ -87,7 +88,6 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
 
     $ids = array_keys( $students );
     $ids_string = implode( ",", $ids );
-
     $sql = "id in ( $ids_string ) and ";
 
     $username_sql = $DB->sql_like( 'username', ':search1', false );
@@ -123,10 +123,10 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
         echo $OUTPUT->heading( get_string( 'bim_find_one_heading', 'bim' ), 2, 'left' );
         print_string( 'bim_find_one_description', 'bim', $search );
 
-        $find_form->display();
-        $student_details = $DB->get_records_select( "user",
-                "id=$userid " );
+# This is not required as show_student_details gets the information
+        $student_details = $DB->get_records_select( "user", "id=$userid" );
         show_student_details( $bim, $userid, $cm );
+        $find_form->display();
     } else if ( $match_count > 1 && $match_count < 200 ) {
         add_to_log( $cm->course, "bim", "find student",
                 "view.php?id=$cm->id&tab=find",

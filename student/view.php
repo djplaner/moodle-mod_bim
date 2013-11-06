@@ -65,6 +65,7 @@ function show_student( $bim, $userid, $cm, $course) {
 
 function show_student_details( $bim, $userid, $cm ) {
     global $CFG, $DB, $OUTPUT;
+
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=showQuestions";
 
     $bimid = $bim->id;
@@ -75,9 +76,11 @@ function show_student_details( $bim, $userid, $cm ) {
         return;
     }
 
+
     // Get the question hash
     $question_hash = bim_get_question_hash( $bimid );
     $total_questions = count($question_hash);
+
 
     // get the feed details
     $student_ids = array( $userid );
@@ -97,7 +100,7 @@ function show_student_details( $bim, $userid, $cm ) {
         bim_process_feed( $bim, $feed_details[$userid], $question_hash );
         bim_process_unallocated( $bim, $feed_details[$userid], $question_hash );
     }
-    // Get data from bim_marking
+   // Get data from bim_marking
     $mark_select = "( bim= " . $bimid . " AND userid=" . $userid . ")";
     $mark_details = $DB->get_records_select( "bim_marking", $mark_select );
 
@@ -129,7 +132,7 @@ function show_student_details( $bim, $userid, $cm ) {
     bim_show_student_details( $userid, $mark_details,
             $question_hash, $feed_details, $cm );
 
-    // show extra message if no posts recorded
+   // show extra message if no posts recorded
     if ( $total_posts == 0 ) {
         echo $OUTPUT->heading( get_string('student_details_noposts_heading', 'bim'), 2, 'left');
         print_string('student_details_noposts_description', 'bim' );
