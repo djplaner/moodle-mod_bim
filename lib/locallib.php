@@ -321,32 +321,41 @@ function bim_print_header($cm, $bim, $course, $screen) {
 function bim_build_coordinator_tabs( $cm, $tab ) {
     global $CFG, $OUTPUT;
 
-    $tabs = array();
     $rows = array();
     $inactive = array();  $activated = array();
 
     $rows[] = new tabobject( 'config',
-            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=config" ),
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=config" ),
             get_string('bim_tabs_config', 'bim' ) );
     $rows[] = new tabobject( 'questions',
-            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=questions" ),
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=questions" ),
             get_string('bim_tabs_questions', 'bim' ) );
     $rows[] = new tabobject( 'markers',
-            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=markers" ),
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=markers" ),
             get_string('bim_tabs_markers', 'bim' ) );
     $rows[] = new tabobject( 'manage',
-            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=manage" ),
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=manage" ),
             get_string('bim_tabs_manage', 'bim' ) );
     $rows[] = new tabobject( 'find',
-            new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=find" ),
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=find" ),
             get_string('bim_tabs_find', 'bim' ) );
 
-    $rows[] = new tabobject( 'details',
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=details&screen=ShowDetails",
+    #-- set up the subtree for details
+    $detailsTabs = array();
+    $details = new tabobject( 'details',
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&tab=details&screen=ShowDetails" ),
             get_string('bim_tabs_details', 'bim' ) );
 
-#    $tabs[] = $rows;
-#    print_tabs( $tabs, $tab );
+    $detailsTabs[] = new tabobject( 'showDetails', 
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&screen=ShowDetails" ),
+            get_string('bim_header_student_details', 'bim' ) );
+    $detailsTabs[] = new tabobject( 'showPostDetails', 
+                    new moodle_url( "/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails" ),
+            get_string('bim_header_post_details', 'bim' ) );
+
+    $details->subtree = $detailsTabs;
+    $rows[] = $details;
+
     echo $OUTPUT->tabtree( $rows, $tab );
 }
 

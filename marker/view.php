@@ -92,14 +92,14 @@ function show_marker( $bim, $userid, $cm, $course ) {
 function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
     global $CFG, $DB, $OUTPUT;
 
-    echo $OUTPUT->box( '<a href="'.
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
-            '">' .
-            get_string( 'bim_marker_student_details', 'bim' ) .
-            '</a> | <a href="'.
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails".
-            '">' .  get_string( 'bim_marker_post_details', 'bim' ) .  '</a>',
-            'noticebox boxaligncenter boxwidthnarrow centerpara highlight' );
+#    echo $OUTPUT->box( '<a href="'.
+#            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
+#            '">' .
+#            get_string( 'bim_marker_student_details', 'bim' ) .
+#            '</a> | <a href="'.
+#            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails".
+#            '">' .  get_string( 'bim_marker_post_details', 'bim' ) .  '</a>',
+#            'noticebox boxaligncenter boxwidthnarrow centerpara highlight' );
 
     $help = $OUTPUT->help_icon( 'markAllocation', 'bim' );
     echo $OUTPUT->heading(get_string('bim_marker_allocate_heading', 'bim').'&nbsp;'.$help, 1, 'left' );
@@ -339,15 +339,6 @@ function show_marker_post_details( $bim, $userid, $cm ) {
     $show_qs_url = $CFG->wwwroot.'/mod/bim/view.php?id='.$cm->id.
         '&screen=showQuestions';
 
-    echo $OUTPUT->box( '<a href="'.
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
-            '">'  .
-            get_string( 'bim_marker_student_details', 'bim' ) .
-            '</a> | <strong>' .
-            get_string( 'bim_marker_post_details', 'bim' ) .
-            '</strong>',
-            'noticebox boxaligncenter boxwidthnarrow centerpara highlight ' );
-
     // Get data
     // Array of all student information
     $student_details = bim_get_markers_students( $bim, $userid );
@@ -443,13 +434,6 @@ function show_marker_student_details( $bim, $userid, $cm ) {
         return;
     }
     // Start displaying details about students
-    echo $OUTPUT->box( '<strong>' .
-            get_string( 'bim_marker_student_details', 'bim' ) .
-            '</strong> | <a href="'.
-            "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails".'">'.
-            get_string( 'bim_marker_post_details', 'bim' ) .  '</a>',
-            'noticebox boxaligncenter boxwidthnarrow centerpara highlight ' );
-    echo $OUTPUT->box_start();
     $help = $OUTPUT->help_icon( 'bim_student_details_heading', 'bim' );
     echo $OUTPUT->heading(get_string('bim_student_details_heading', 'bim').'&nbsp;'.
             $help, 2);
@@ -820,13 +804,6 @@ function bim_create_details_display( $user_details, $feed_details=null, $cm = nu
 
 function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
     global $CFG, $OUTPUT, $DB;
-    // show navigation to view all student options
-    echo $OUTPUT->box( '<a href="'.
-                "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowDetails".
-                '">'.get_string('bim_marker_student_details', 'bim').'</a> | <a href="'.
-                "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails".
-                '">'.get_string('bim_marker_post_details', 'bim').'</a>',
-                'noticebox boxaligncenter boxwidthnarrow centerpara highlight ' );
 
     echo $OUTPUT->heading( get_string('bim_mark_post_heading', 'bim'), 1,
                                 'left' );
