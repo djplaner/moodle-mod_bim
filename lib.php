@@ -363,10 +363,11 @@ function bim_install() {
  * This function was added in 1.9
  *
  * @return boolean true if success, false on error
+ *    *** Currently commented out as this is deprecated for 2.0
  */
-function bim_uninstall() {
+/*function bim_uninstall() {
     return true;
-}
+} */
 
 // File API
 
