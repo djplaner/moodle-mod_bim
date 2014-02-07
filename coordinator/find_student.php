@@ -106,7 +106,6 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
     if ( $matches = $DB->get_records_select( "user", $sql, $params, 'lastname', 'id', 0, 200 ) ) {
         $match_count = count( $matches );
     }
-
     if ( $match_count == 0 ) {
         add_to_log( $cm->course, "bim", "find student",
                 "view.php?id=$cm->id&tab=find",
