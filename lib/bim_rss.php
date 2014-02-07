@@ -72,7 +72,7 @@ function bim_process_feed( $bim, $student_feed, $questions ) {
     //    $feed = new SimplePie();
     $feed = new moodle_simplepie();
     $feed->set_feed_url( $student_feed->feedurl );
-    $feed->set_timeout( 18000 );
+    $feed->set_timeout( 20 );
     $feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_ALL);
     $feed->init();
 
@@ -246,7 +246,7 @@ function bim_get_feed_url( $fromform, $cm, $bim ) {
 
     $feed = new moodle_simplepie();
     $feed->set_feed_url( $fromform->blogurl );
-    $feed->set_timeout( 18000 );
+    $feed->set_timeout( 20 );
     $feed->enable_cache( true );
     $feed->set_cache_location( $dir );
     $feed->init();
