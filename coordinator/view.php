@@ -1,4 +1,29 @@
-<?php  // $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * The main "controller" for the coordinator's interface, figure out what they
+ * wanted to do and call the appropriate function.
+ *
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/manage_questions.php');
@@ -12,7 +37,8 @@ require_once($CFG->dirroot.'/mod/bim/coordinator/find_student.php');
  */
 
 function show_coordinator( $bim, $userid, $cm, $course ) {
-
+    global $OUTPUT;
+    // echo $OUTPUT->heading( "Hello there coordinator" );
     // optional params required to chose screen/tab
     $tab = optional_param('tab', "config", PARAM_ALPHA);
     $screen = optional_param('screen', "", PARAM_ALPHA);
@@ -20,8 +46,8 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
     // Some kludges here, if $screen is set to ShowPostDetails
     // ShowDetails and AllocatePosts then tab is ShowCoordDetails
     if ( $screen == "ShowPostDetails" || $screen == "AllocatePosts" ||
-         $screen == "ShowDetails" || $screen == "MarkPost" ||
-         $screen == "changeBlogRegistration" || $screen == "generateOpml" ) {
+            $screen == "ShowDetails" || $screen == "MarkPost" ||
+            $screen == "changeBlogRegistration" || $screen == "generateOpml" ) {
         $tab = "details";
     }
 
@@ -32,7 +58,7 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
         // ** eventually will need to pass screen
         bim_build_coordinator_tabs( $cm, $tab );
     }
-  
+
     if ( $tab == "config" ) {
         bim_configuration_screen( $bim, $cm );
     } else if ( $tab == "markers" ) {
@@ -40,13 +66,14 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
     } else if ( $tab == "questions" ) {
         bim_manage_questions( $bim, $cm );
     } else if ( $tab == "manage" ) {
-        $op = optional_param('op', NULL, PARAM_ALPHA);
-        if ( $op == "" )
+        $op = optional_param('op', null, PARAM_ALPHA);
+        if ( $op == "" ) {
             bim_manage_marking( $bim, $userid, $cm );
-        else if ( $op == "release" )
+        } else if ( $op == "release" ) {
             bim_manage_release( $bim, $userid, $cm );
-        else if ( $op == "view" )
+        } else if ( $op == "view" ) {
             bim_manage_view( $bim, $userid, $cm );
+        }
     } else if ( $tab == "find" ) {
         bim_find_student( $bim, $cm );
     } else if ( $tab == "details" ) {
@@ -68,7 +95,7 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
         }
     }
     if ( $screen != "generateOpml" ) {
-        print_footer( $course );
+        echo $OUTPUT->footer();
     }
 }
 
@@ -77,61 +104,79 @@ function show_coordinator( $bim, $userid, $cm, $course ) {
  * - display the HTML for the coordinators configuration screen
  */
 
-function bim_configuration_screen( $bim, $cm )
-{
-  global $CFG;
+function bim_configuration_screen( $bim, $cm ) {
+    global $CFG, $OUTPUT;
 
-  $a = new StdClass();
-  $a->wwwroot = $CFG->wwwroot;
-  $a->cmid = $cm->id;
+    $a = new StdClass();
+    $a->wwwroot = $CFG->wwwroot;
+    $a->cmid = $cm->id;
 
-  print_string( 'bim_configuration_screen', 'bim', $a );
+    print_string( 'bim_configuration_screen', 'bim', $a );
 
-  print_heading( get_string( 'bim_configuration_details', 'bim' ), 'left', 2);
+    echo $OUTPUT->heading( get_string( 'bim_configuration_details', 'bim' ), 2);
 
-  $details = new stdClass;
-  $details->class = 'generaltable';
-  $details->align = array( 'center', 'left' );
-  $details->valign = array( 'top', 'top' );
-  $details->size =  array( '20%', '80%' );
-  $details->width = "80%";
+    // Construct a table containing a summary of the current configuration elements
+    // of the BIM activity
+    $table = new html_table;
 
-  if ( $bim->register_feed == 0 )
-  {
-    print_string( 'bim_configuration_no_register', 'bim' );
-  }
-  if ( $bim->mirror_feed == 0 )
-  {
-    print_string( 'bim_configuration_no_mirror', 'bim' );
-  }
+    //  $details = new stdClass;
+    $table->class = 'generaltable';
+    $table->align = array( 'left', 'left' );
+    $table->valign = array( 'top', 'top' );
+    $table->size =  array( '20%', '80%' );
+    $table->width = "80%";
 
-  $details->head = array( get_string('bim_configuration_settings','bim' ),
-                          get_string('bim_configuration_values', 'bim' ));
+    if ( $bim->register_feed == 0 ) {
+        print_string( 'bim_configuration_no_register', 'bim' );
+    }
+    if ( $bim->mirror_feed == 0 ) {
+        print_string( 'bim_configuration_no_mirror', 'bim' );
+    }
 
-  $details->data = array();
-  $details->data[] = array( get_string('bim_configuration_name','bim'),
-                format_string( $bim->name ) );
+    $table->head = array( get_string('bim_configuration_settings', 'bim'),
+            get_string('bim_configuration_values', 'bim' ));
 
-  // simple array to get yes/no
-  $yes = array( 0 => "<strong>No</strong>", 1 => "Yes" );
-  $details->data[] = array( get_string('bim_configuration_registration','bim'),
-                          $yes[$bim->register_feed] );
-  $details->data[] = array( get_string('bim_configuration_mirror','bim'),
-                          $yes[$bim->mirror_feed] );
-  $details->data[] = array( get_string('bim_configuration_grade','bim'),
-                          $yes[$bim->grade_feed] );
+    $table->data = array();
 
-  $details->data[] = array( get_string('bim_configuration_intro','bim'),
-                format_text( $bim->intro ) );
-  print_table( $details );
+    // name of the activity
+    $title_cell = $OUTPUT->help_icon( 'config_bim_name', 'bim' ) . '&nbsp;' .
+        get_string( 'config_bim_name', 'bim' );
 
-  // display general advice on steps
-  print_heading( get_string('bim_configuration_steps_heading', 'bim' ),
-                   'left', 2 );
-  echo '<a name="steps"></a>';
-  print_string( 'bim_configuration_steps_description', 'bim' );
+    $table->data[] = array( $title_cell, $bim->name );
+
+    // Can students register their feed?
+    $yes = array( 0 => "<strong>No</strong>", 1 => "Yes" );
+    $title_cell = $OUTPUT->help_icon( 'config_student_reg', 'bim' ) . '&nbsp;' .
+        get_string( 'config_student_reg', 'bim' );
+    $table->data[] = array( $title_cell, $yes[$bim->register_feed] );
+
+    // Are posts being mirrored
+    $title_cell = $OUTPUT->help_icon( 'config_mirror', 'bim' ) . '&nbsp;' .
+        get_string( 'config_mirror', 'bim' );
+    $table->data[] = array( $title_cell, $yes[$bim->register_feed] );
+
+    // Gradebook integration?
+    $title_cell = $OUTPUT->help_icon( 'config_grade', 'bim' ) . '&nbsp;' .
+        get_string( 'config_grade', 'bim' );
+    if ( $bim->grade == 0 ) {
+        $table->data[] = array($title_cell, get_string('config_no_grade', 'bim'));
+    } else if ( $bim->grade > 0 ) {
+        $table->data[] = array($title_cell,
+                get_string('config_grade_max', 'bim', $bim->grade));
+    }
+
+    // the introduction/about information for the activity
+    $title_cell = $OUTPUT->help_icon('config_about', 'bim') . '&nbsp;' .
+        get_string( 'config_about', 'bim' );
+    $table->data[] = array( $title_cell, $bim->intro );
+
+    echo html_writer::table( $table );
+
+    // display general advice on steps
+    echo $OUTPUT->heading( get_string('bim_configuration_steps_heading', 'bim' ), 2 );
+    echo '<a name="steps"></a>';
+    print_string( 'bim_configuration_steps_description', 'bim' );
 
 }
 
 
-?>

@@ -1,8 +1,21 @@
-<?php  // $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This page prints a particular instance of bim
- *
+ * Figure out what an individual bim activity will show when viewed
  * What is shown depends on the role the user is performing. The
  * different roles recognised are
  * - mod/bim:administrator (the coordinator usually)
@@ -15,28 +28,24 @@
  *   - Can see/mark their students posts
  *   - Implemented in show_teacher
  *
- * @author  David Jones <davidthomjones@gmail.com>
- * @version $Id: view.php,v 1.6.2.3 2009/04/17 22:06:25 skodak Exp $
- * @package mod/bim
+ * @package mod_bim
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-/// (Replace bim with the name of your module and remove this line)
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
-require_once('lib.php');
-require_once($CFG->dirroot.'/mod/bim/lib/locallib.php');
 require_once($CFG->dirroot.'/mod/bim/student/view.php');
 require_once($CFG->dirroot.'/mod/bim/marker/view.php');
 require_once($CFG->dirroot.'/mod/bim/coordinator/view.php');
-require_once($CFG->dirroot.'/mod/bim/lib/bim_rss.php');
-require_once($CFG->dirroot.'/lib/tablelib.php' );
 
 global $USER;
+global $DB;
 
 // course_module id ($cm) entry from course_modules table
 // - is the unique combination of course and module/activity
-$id = optional_param('id', 0, PARAM_INT); 
+$id = optional_param('id', 0, PARAM_INT);
+$n = optional_param('n', 0, PARAM_INT);
 
 // Given the course module id, get the other information
 // $cm - row from course_module table
@@ -44,42 +53,30 @@ $id = optional_param('id', 0, PARAM_INT);
 // $bim - row from bim
 
 if ($id) {
-    if (! $cm = get_coursemodule_from_id('bim', $id)) {
-        error('Course Module ID was incorrect');
-    }
-    if (! $course = get_record('course', 'id', $cm->course)) {
-        error('Course is misconfigured');
-    }
-    if (! $bim = get_record('bim', 'id', $cm->instance)) {
-        error('Course module is incorrect');
-    }
-/*} else if ($a) {
-    if (! $bim = get_record('bim', 'id', $a)) {
-        error('Course module is incorrect');
-    }
-    if (! $course = get_record('course', 'id', $bim->course)) {
-        error('Course is misconfigured');
-    }
-    if (! $cm = get_coursemodule_from_instance('bim', $bim->id, $course->id)) {
-        error('Course Module ID was incorrect');
-    }
-*/
+    $cm = get_coursemodule_from_id('bim', $id, 0, false, MUST_EXIST);
+    $course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST );
+    $bim = $DB->get_record('bim', array('id'=>$cm->instance), '*', MUST_EXIST );
+} else if ($n) {
+    $bim = $DB->get_record('bim', array('id'=>$n), '*', MUST_EXIST );
+    $course = $DB->get_record('course', array('id'=>$bim->course), '*', MUST_EXIST );
+    $cm = get_coursemodule_from_instance('bim', $bim->id, $course->id, false, MUST_EXIST);
 } else {
-    error('You must specify a course_module ID or an instance ID');
+    print_error( 'invalidcoursemodule' );
 }
 
 require_login($course, true, $cm);
+#$context = get_context_instance( CONTEXT_MODULE, $cm->id );
+$context = context_module::instance( $cm->id );
+#require_capability('mod/quiz:view', $context );
 
-// log additions now moved down into specific actions
-//add_to_log($course->id, "bim", "view", "view.php?id=$cm->id", "$bim->id");
+add_to_log($course->id, "bim", "view", "view.php?id={$cm->id}", $bim->id, $cm->id);
 
+// Print the page header
 
-/// Print the main part of the page
-
-// determine the type of user
-$context = get_context_instance( CONTEXT_MODULE, $cm->id );
-
-// Who is the user
+$PAGE->set_url('/mod/bim/view.php', array('id' => $cm->id));
+$PAGE->set_title(format_string($bim->name));
+$PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context($context);
 
 if ( empty($USER->id)) {
     $userid = 0;
@@ -87,22 +84,19 @@ if ( empty($USER->id)) {
     $userid = $USER->id;
 }
 
-//*****************************
 // Time to handle over to the different functions that
 // figure out what to show for each "type of user"
 
 if ( has_capability( 'mod/bim:coordinator', $context)) {
     // administrator can the configure stuff
     show_coordinator( $bim, $userid, $cm, $course );
-}else if (has_capability('mod/bim:student', $context)) {
-    // student can see details of their registered blog
-    show_student($bim, $userid, $cm, $course );
 } else if ( has_capability( 'mod/bim:marker', $context )) {
     show_marker( $bim, $userid, $cm, $course );
+} else if (has_capability('mod/bim:student', $context)) {
+    // student can see details of their registered blog
+    show_student($bim, $userid, $cm, $course );
 } else {
-  error( "No capability to access this page" );
+    print_error( "No capability to access this page" );
 }
 
-
-?>
 
