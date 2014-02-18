@@ -20,29 +20,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->libdir.'/formslib.php');
-
-class mod_bim_register_form extends moodleform {
-
-    public function definition() {
-        global $COURSE;
-        $mform =& $this->_form;
-
-        $mform->addElement( 'header', 'general',
-                get_string('bim_please_register_heading', 'bim'));
-
-        $unregistered = get_string( 'bim_please_register_description', 'bim' );
-
-        $mform->addElement('html', $unregistered );
-
-        $mform->addElement('text', 'blogurl', 'Blog URL', array('size'=>'50',
-                'maxlength'=>'255' ));
-        $mform->setType( 'blogurl', PARAM_TEXT );
-        $mform->addRule( 'blogurl', null, 'required', null, 'client' );
-
-        // add standard buttons, common to all modules
-        $this->add_action_buttons( true, get_string( 'bim_register', 'bim'));
-
-    }
-}
+ /* This activity has not particular settings but the inherited from the generic
+  * backup_activity_task so here there isn't any class definition, like the ones
+  * existing in /backup/moodle2/backup_settingslib.php (activities section).
+  */
 
