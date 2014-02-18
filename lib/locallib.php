@@ -442,6 +442,7 @@ function bim_get_all_marker_stats( $markers_students, $questions, $bim ) {
                 $status = $rec->status;
                 $stats[$rec->question] = new StdClass;
                 $stats[$rec->question]->$status = $rec->x;
+                if ( !isset( $total->$status)) { $total->$status = 0; }
                 $total->$status += $rec->x;
             }
             $rs->close( $rs );
