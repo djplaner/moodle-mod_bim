@@ -33,7 +33,7 @@ $string['modulename_help'] = '<p>The BIM activity module supports the management
 <p>BIM will</p>
 <ul>
   <li> Allow students to register their feeds </li>
-  <li> Keep copies of all entries in student feeds within the Moodle database</li> <li>Support the manual and automatic allocation of entries as responses to pre-defined questions (optional)</li>
+  <li> Keep copies of all entries in student feeds within the Moodle database</li> <li>Support the manual and automatic allocation of entries as responses to pre-defined prompts (optional)</li>
 <li> Help support and manage the marking of student feeds by marking staff</li>
 <li> Integrate marking into the Moodle gradebook</li>
 </ul>
@@ -128,7 +128,7 @@ $string['bim_marking_no_markers_description'] = '<p>There are no markers with st
 $string['bim_cmiderror'] = 'Course module ID was incorrect';
 $string['bim_marking_to_do'] = '<p>The following table gives an overview of marking progress for the different markers for this BIM.  There are two main tasks you can perform from here:</p><ul> <li> release marked posts so that students can see marker comments and marks; and<br /> (Only possible when there are <em>Marked</em> posts) </li><li> drill down to see more detail on groups of students.</li></ul>';
 $string['bim_marking_heading'] = 'Manage marking';
-$string['bim_marking_no_questions'] = '<p>There are currently no questions defined for this activity. This means that no marking can be done.  Use the "Manage Questions" tab above to add questions.</p>';
+$string['bim_marking_no_questions'] = '<p>There are currently no prompts defined for this activity. This means that no marking can be done.  Use the "Manage prompts" tab above to add prompts.</p>';
 $string['bim_marking_unregistered'] = '<p><strong><a href="#unreg">Unregistered students</a>:</strong> There are {$a} student(s) who have not registered their feeds.</p>';
 $string['bim_marking_release'] = 'Release all {$a} marked post(s)';
 // binm_manage_release
@@ -143,7 +143,7 @@ $string['bim_release_manage_any'] = ' with any posts.</p>';
 $string['bim_release_manage_criteria'] = ' with posts matching these criteria:</p><ul>';
 $string['bim_release_manage_status'] = '<li> status equal to <strong>{$a}</strong></li>';
 $string['bim_release_manage_marker'] = '<li> <strong>{$a}</strong> as marker.</li>';
-$string['bim_release_manage_response'] = '<li> in response to the question <strong>{$a}</strong>.</li>';
+$string['bim_release_manage_response'] = '<li> in response to the prompt <strong>{$a}</strong>.</li>';
 $string['bim_release_manage_registered_heading'] = 'Registered student details';
 $string['bim_release_manage_registered_description'] = '<p>{$a} student(s) who have registered with BIM, match the criteria.</p>';
 $string['bim_release_manage_unregistered_heading'] = 'Unregistered student details';
@@ -165,46 +165,46 @@ $string['bim_configuration_values'] = 'Current Values';
 $string['bim_configuration_no_register'] = "<p><strong>Important:</strong> students cannot currently register their feed.</p>";
 $string['bim_configuration_no_mirror'] = "<p><strong>Important:</strong> BIM is not currently copying/mirroring student posts to the local system.  No new student posts will enter the system.</p>";
 $string['bim_configuration_steps_heading'] = 'General steps for configuring a BIM activity';
-$string['bim_configuration_steps_description'] = '<p>Configuring a BIM activity would normally include these steps:</p><ol><li>Configure BIM;<br />Provide the title and descripton of the activity and set whether the activity is being graded, mirrored or students allowed to registere.</li><li>Manage questions;<br />Create a list of questions students are expected to answer. With mirroring on BIM will try to automatically allocate student posts to questions.</li><li>Allocate markers;<br />Specify which groups of students each marker is responsible for marking.</li></ol>';
+$string['bim_configuration_steps_description'] = '<p>Configuring a BIM activity would normally include these steps:</p><ol><li>Configure BIM;<br />Provide the title and descripton of the activity and set whether the activity is being graded, mirrored or students allowed to registere.</li><li>Manage prompts;<br />Create a list of prompts to which students are expected to respond. With mirroring on BIM will try to automatically allocate student posts to response.</li><li>Allocate markers;<br />Specify which groups of students each marker is responsible for marking.</li></ol>';
 // bim_manage_questions
-$string['bim_questions_current'] = '<p>There are currently {$a} questions for this BIM activity. The following allows you to:</p><ul> <li> add a new question;<br /> If students have already posted, BIM will try to allocate these existing posts to the new quesiton when it next trys to mirror posts. </li> <li> delete an existing question; or, <br /> It is advised you do not do this if students have already made posts. Currently BIM does not deallocate student posts that have already been allocated to a deleted question. </li> <li> modify an existing questions.<br />You can change the title, mark range and the description. </li> </ul>';
-$string['bim_questions_none_heading'] = 'No current questions';
-$string['bim_questions_none_description'] = '<p>There are currently no questions for this activity. BIM will still operate, students can register blogs and staff can track student blogs.  However, there will be no question allocation or tracking of progress by question.</p><p>Use the "Add new question" form below to start adding questions. Once questions are added you will be able to modify and delete them.</p><p>BIM will automatically check any existing students posts within BIM against new questions. This usually takes an hour or so after you have added the question.</p>';
+$string['bim_questions_current'] = '<p>There are currently {$a} prompts for this BIM activity. The following allows you to:</p><ul> <li> add a new prompt;<br /> If students have already posted, BIM will try to allocate these existing posts to the new quesiton when it next trys to mirror posts. </li> <li> delete an existing prompt; or, <br /> It is advised you do not do this if students have already made posts. Currently BIM does not deallocate student posts that have already been allocated to a deleted prompt. </li> <li> modify an existing prompt.<br />You can change the title, mark range and the description. </li> </ul>';
+$string['bim_questions_none_heading'] = 'No current prompts';
+$string['bim_questions_none_description'] = '<p>There are currently no prompts for this activity. BIM will still operate, students can register blogs and staff can track student blogs.  However, there will be no allocation or tracking of progress by prompts.</p><p>Use the "Add new prompt" form below to start adding prompts. Once prompts are added you will be able to modify and delete them.</p><p>BIM will automatically check any existing students posts within BIM against new prompts. This usually takes an hour or so after you have added the prompt.</p>';
 $string['bim_questions_changes_heading'] = '<p>Changes being made include..<p>';
-$string['bim_questions_adding'] = '<p>Adding a new question with the title <strong>{$a}</strong></p>';
-$string['bim_questions_error_insert'] = 'Error inserting new question';
-$string['bim_questions_error_delete'] = '<p><strong>ERROR</strong> unable to delete question with title <strong>{$a}</strong>.</p>';
-$string['bim_questions_deleting'] = '<p>Deleting question with title: <strong>{$a}</strong>.</p>';
-$string['bim_questions_changing'] = '<p>Changing {$a} question(s):</p><ul>';
+$string['bim_questions_adding'] = '<p>Adding a new prompt with the title <strong>{$a}</strong></p>';
+$string['bim_questions_error_insert'] = 'Error inserting new prompt';
+$string['bim_questions_error_delete'] = '<p><strong>ERROR</strong> unable to delete prompt with title <strong>{$a}</strong>.</p>';
+$string['bim_questions_deleting'] = '<p>Deleting prompt with title: <strong>{$a}</strong>.</p>';
+$string['bim_questions_changing'] = '<p>Changing {$a} prompt(s):</p><ul>';
 $string['bim_questions_error_changing_title'] = 'ERROR updating database';
 $string['bim_questions_nochanges'] = '<p>No changes were made.</p>';
-$string['bim_questions_error_processing'] = 'Problem process the question form.';
+$string['bim_questions_error_processing'] = 'Problem processing the prompt form.';
 
 $string['bim_continue'] = '<p align="center">(<a href="{$a}">Continue</a>)</p>';
 
 // coordinator/question_form.php
-$string['bim_qform_addnew'] = 'Add new question';
+$string['bim_qform_addnew'] = 'Add new prompt';
 $string['bim_qform_title_help'] = 'Title {$a}:';
 $string['bim_qform_title'] = 'Title :';
 $string['bim_qform_min_help'] = 'Min mark {$a}:';
 $string['bim_qform_min'] = 'Min mark :';
 $string['bim_qform_max_help'] = 'Max mark {$a}:';
 $string['bim_qform_max'] = 'Max mark :';
-$string['bim_qform_question'] = 'Question: {$a}';
+$string['bim_qform_question'] = 'Prompt: {$a}';
 $string['bim_qform_stats'] = '<p>Student answers {$a->help}: {$a->stats}</p>';
-$string['bim_qform_delete'] = 'Delete question?';
+$string['bim_qform_delete'] = 'Delete prompt?';
 
 // lib/bim_rss.php
 // bim_process_feed
 $string['bim_process_feed_error'] = 'bim_process_feed: inserting bim_marking {$a}';
 // bim_is_item_allocated
-$string['bim_item_allocated_not'] = 'Not allocated to a question';
-// $string['bim_item_allocated_not_help'] = 'Normally, a BIM activity requires you to post to your blog answers to a set of questions designed by the course teachers. When BIM sees a new post on your blog, it tries to allocate it to one of the questions. "Not allocated" means that BIM saw your post and made a copy of it (mirrored it) locally. However, it could not match your post with one of the questions.  Eventually, one of the teachers will manually allocate your post to a question, though this may take a little while.  To make sure BIM automatically allocates your posts, make sure you use the title of the question in the title or body of your blog post.  For example, if you are answering a question with the title "Week 12 - Reflection", make sure that "Week 12 - Reflection" is part of (or all of) the title of your post.';
-$string['bim_item_allocated_released'] = 'Allocated to the question <strong>{$a->title}</strong><br />Marked: {$a->mark} out of {$a->max}';
+$string['bim_item_allocated_not'] = 'Not allocated to a prompt';
+// $string['bim_item_allocated_not_help'] = 'Normally, a BIM activity requires you to post to your blog answers to a set of prompts designed by the course teachers. When BIM sees a new post on your blog, it tries to allocate it to one of the questions. "Not allocated" means that BIM saw your post and made a copy of it (mirrored it) locally. However, it could not match your post with one of the questions.  Eventually, one of the teachers will manually allocate your post to a question, though this may take a little while.  To make sure BIM automatically allocates your posts, make sure you use the title of the question in the title or body of your blog post.  For example, if you are answering a question with the title "Week 12 - Reflection", make sure that "Week 12 - Reflection" is part of (or all of) the title of your post.';
+$string['bim_item_allocated_released'] = 'Allocated to the prompt <strong>{$a->title}</strong><br />Marked: {$a->mark} out of {$a->max}';
 
-$string['bim_item_allocated_allocated'] = 'Allocated to the question <strong>{$a}</strong><br />(not marked yet)';
+$string['bim_item_allocated_allocated'] = 'Allocated to the prompt <strong>{$a}</strong><br />(not marked yet)';
 // $string['bim_item_allocated_allocated'] = 'When BIM finds a new post to your blog, it tries to see if it matches one of the questions created by the teachers of your course. When it finds a match, it allocates your post to that question.  Initially the newly allocated post will be "not marked". It is waiting for one of the teachers to mark the post. Once a post is marked, you will not be able to see any marks or comments on your post from the teachers, until your post is released. This delay is so that the marks/comments can be checked and compared with others.';
-$string['bim_item_allocated_marked'] = 'Allocated to the question <strong>{$a}</strong><br />(marked but not released)';
+$string['bim_item_allocated_marked'] = 'Allocated to the prompt <strong>{$a}</strong><br />(marked but not released)';
 // $string['bim_item_allocated_marked'] = 'A teacher has given your post a mark and perhaps added some comments. You will not be able to see these marks/comments until your post is released.';
 
 // bim_display_error
@@ -226,15 +226,15 @@ $string['bim_header_changeblog'] = 'Change student\'s blog';
 $string['bim_header_mark'] = 'Mark post';
 // bim_build_coordinator_tabs
 $string['bim_tabs_config'] = 'Configure BIM';
-$string['bim_tabs_questions'] = 'Manage Questions';
+$string['bim_tabs_questions'] = 'Manage Prompts';
 $string['bim_tabs_markers'] = 'Allocate Markers';
 $string['bim_tabs_manage'] = 'Manage Marking';
 $string['bim_tabs_find'] = 'Find Student';
 $string['bim_tabs_details'] = 'Your Students';
 
 // bim_show_questions
-$string['show_qs_heading'] = 'Current questions';
-$string['show_qs_description'] = '<p>This activity currently has {$a} questions as shown in the following table.</p><p><strong>IMPORTANT:</strong> when you answer a question with a post, please make sure that the title of your post contains the title of the question.<br />For example, if the question title is <strong>Week 12</strong> make sure you post\'s title contains <strong>Week 12</strong></p>';
+$string['show_qs_heading'] = 'Current prompts';
+$string['show_qs_description'] = '<p>This activity currently has {$a} prompts as shown in the following table.</p><p><strong>IMPORTANT:</strong> when you respond to a prompt with a post, please make sure that the title of your post contains the title of the prompt.<br />For example, if the prompt title is <strong>Week 12 prompt</strong> make sure you post\'s title contains <strong>Week 12 prompt</strong></p>';
 $string['show_qs_title'] = 'Title';
 $string['show_qs_body'] = 'Description';
 
@@ -242,8 +242,8 @@ $string['show_qs_body'] = 'Description';
 // bim_marker_allocate_posts
 $string['bim_marker_student_details'] = 'View student details';
 $string['bim_marker_post_details'] = 'Mark posts';
-$string['bim_marker_show_qs'] = '<p>This activity has set questions that the students must answer through their posts. You can <a href="{$a->url}">view the questions here</a>. For help on marking posts try {$a->help}</p>';
-$string['bim_marker_show_qs_link'] = 'view the questions here';
+$string['bim_marker_show_qs'] = '<p>This activity has set prompts that the students must answer through their posts. You can <a href="{$a->url}">view the prompts here</a>. For help on marking posts try {$a->help}</p>';
+$string['bim_marker_show_qs_link'] = 'view the prompts here';
 
 $string['marker_student_config_heading'] = 'Activity configuration information';
 $string['marker_student_config_description'] = '<p>The configuration of this activity is such that:</p><ul>';
@@ -259,26 +259,26 @@ $string['bim_marker_student'] = 'Student';
 $string['bim_marker_blog'] = 'Your blog';
 // $string['bim_marker_posts'] = 'Num. of Posts';
 $string['bim_marker_answers'] = '# actual answers / # required answers';
-$string['bim_marker_answers_help'] = 'Normally BIM expects you to respond to a range of questions set by the teacher. "Required answers" is the total number of questions you need to respond to. "Actual answers" is the number of posts BIM has automatically allocated as an answer to one of these questions.';
+$string['bim_marker_answers_help'] = 'Normally BIM expects you to respond to a range of prompts set by the teacher. "Required answers" is the total number of prompts you need to respond to. "Actual answers" is the number of posts BIM has automatically allocated as an answer to one of these prompts.';
 $string['bim_marker_m_r'] = '# Released / # Marked';
-$string['bim_marker_m_r_help'] = 'Eventually a teacher should mark the posts you have made which are answers to questions.  # Marked" is the number of your posts that teachers have marked.  You cannot see the marks or comments from the teachers on your marked posts until they are released, i.e. made available to you.
+$string['bim_marker_m_r_help'] = 'Eventually a teacher should mark the posts you have made which are answers to prompts.  # Marked" is the number of your posts that teachers have marked.  You cannot see the marks or comments from the teachers on your marked posts until they are released, i.e. made available to you.
 # Released" is the number of your marked posts that have been released.';
 $string['bim_marker_progress'] = 'Progress result';
-$string['bim_marker_progress_help'] = 'Each of your posts that answers a question and is marked, will be given a numeric mark. Progress result is the total number of marks from your marked and released posts.';
+$string['bim_marker_progress_help'] = 'Each of your posts that answers a prompt and is marked, will be given a numeric mark. Progress result is the total number of marks from your marked and released posts.';
 $string['bim_marker_posts'] = '# posts mirrored';
 $string['bim_marker_posts_help'] = 'BIM tries to keep a copy of every post you have ever made on your registered blog/feed.  This is a process called mirroring.  # posts mirrored" is the number of posts from your blog/feed that BIM has copied locally.';
 $string['bim_marker_error_heading'] = 'Error: validating form data for allocation';
 $string['bim_marker_error_description'] = '<p>No changes made.</p>';
 // bim_process_allocate_form
 $string['marker_unallocating_heading'] = 'Unallocating the post';
-$string['marker_unallocating_description'] = '<p>This <a href="{$a}">student post</a> has been unallocated as an answer to a question.</p>';
-$string['marker_change_alloc_heading'] = 'Changing question allocation';
+$string['marker_unallocating_description'] = '<p>This <a href="{$a}">student post</a> has been unallocated as an answer to a prompt.</p>';
+$string['marker_change_alloc_heading'] = 'Changing prompt allocation';
 $string['marker_change_alloc_description'] =
-         '<p>This <a href="{$a->link}">student post</a> has been reallocated from question <strong>{$a->old}</strong> to question <strong>{$a->new}</strong>.</p>';
-$string['marker_allocate'] = '<p>This <a href="{$a->link}">student post</a> has been allocated to question </strong>{$a->title}</strong>.</p>';
+         '<p>This <a href="{$a->link}">student post</a> has been reallocated from prompt <strong>{$a->old}</strong> to prompt <strong>{$a->new}</strong>.</p>';
+$string['marker_allocate'] = '<p>This <a href="{$a->link}">student post</a> has been allocated to prompt </strong>{$a->title}</strong>.</p>';
 // show_marker_post_details
 $string['bim_post_heading'] = 'Mark posts';
-$string['bim_post_no_questions'] = '<p>There are no questions currently defined for this activity. Use the "Manage Questions" tab above to add questions.</p>';
+$string['bim_post_no_questions'] = '<p>There are no prompts currently defined for this activity. Use the "Manage Prompts" tab above to add prompts.</p>';
 // show_marker_student_details
 $string['bim_details_unregistered_description'] = '<p>These students have not yet registered their feeds</p>';
 $string['bim_details_no_regs'] = '<p>None of your students have registered feeds.</p>';
@@ -328,17 +328,17 @@ $string['bim_suspended'] = 'SUSPENDED';
 $string['bim_not_marked'] = 'Mark it';
 // bim_marker_mark_post
 $string['bim_mark_prev_next_q'] = 'For this student: ';
-$string['bim_mark_prev_next_s'] = 'For this question: ';
-$string['bim_mark_prev_q'] = '<a href="{$a}">mark previous question</a>';
-$string['bim_mark_prev_q_none'] = 'mark previous question';
-$string['bim_mark_next_q'] = '<a href="{$a}">mark next question</a>';
-$string['bim_mark_next_q_none'] = 'mark next question';
+$string['bim_mark_prev_next_s'] = 'For this prompt: ';
+$string['bim_mark_prev_q'] = '<a href="{$a}">mark previous prompt</a>';
+$string['bim_mark_prev_q_none'] = 'mark previous prompt';
+$string['bim_mark_next_q'] = '<a href="{$a}">mark next prompt</a>';
+$string['bim_mark_next_q_none'] = 'mark next prompt';
 $string['bim_mark_prev_s'] = '<a href="{$a}">mark previous student</a>';
 $string['bim_mark_prev_s_none'] = 'mark previous student';
 $string['bim_mark_next_s'] = '<a href="{$a}">mark next student</a>';
 $string['bim_mark_next_s_none'] = 'mark next student';
 $string['bim_mark_prev_next_sep'] = ' | ';
-$string['bim_mark_prev_next_none_q'] = ' no other questions';
+$string['bim_mark_prev_next_none_q'] = ' no other prompts';
 $string['bim_mark_prev_next_none_s'] = ' no other students';
 
 $string['bim_mark_post_heading'] = 'Mark post';
@@ -351,32 +351,32 @@ $string['bim_mark_comments_updated'] = '<li> Markers comments updated.</li>';
 $string['bim_mark_mark_updated'] = '<li>Mark updated.</li>';
 $string['bim_mark_marked'] = '<li>Post status updated to Marked.</li>';
 $string['bim_mark_unallocated'] = '<li>Post unallocated as an answer.</li>';
-$string['bim_mark_allocated'] = '<li>Post allocation changed to question <strong>{$a}</strong>.</li>';
+$string['bim_mark_allocated'] = '<li>Post allocation changed to prompt <strong>{$a}</strong>.</li>';
 $string['bim_mark_suspended'] = '<li> Post has been suspended. </li>';
 $string['bim_mark_unsuspended'] = '<li> Post has unsuspended (set to Marked). </li>';
 $string['bim_mark_marker'] = '<li>Marker updated to you.</li>';
 $string['bim_mark_nochanges'] = '<p>No changes made.</p>';
 $string['bim_mark_max_exceeded_heading'] = 'Mark exceeds maximum mark';
-$string['bim_mark_max_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - exceeds the maximum allowed mark for this question - <strong>{$a->max}</strong>.</p><p>This is allowed, however, it may not be what is intended.</p>';
+$string['bim_mark_max_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - exceeds the maximum allowed mark for this prompt - <strong>{$a->max}</strong>.</p><p>This is allowed, however, it may not be what is intended.</p>';
 $string['bim_mark_min_exceeded_heading'] = 'Mark falls below minimum mark';
-$string['bim_mark_min_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - falls below the minimum allowed mark for this question - <strong>{$a->max}</strong>.</p><p>This is allowed, however, it may not be what is intended.</p>';
+$string['bim_mark_min_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - falls below the minimum allowed mark for this prompt - <strong>{$a->max}</strong>.</p><p>This is allowed, however, it may not be what is intended.</p>';
 $string['bim_mark_continue'] = 'Make more changes?';
 $string['bim_dbase_max_exceeded_heading'] = 'Mark exceeds maximum database mark';
-$string['bim_dbase_max_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - exceeds the maximum mark that will fit in the database - <strong>{$a->max}</strong>.</p><p>The mark has been set to the maximum allowed for this question - <strong>{$a->allowedmax}</strong>.</p>';
+$string['bim_dbase_max_exceeded_description'] = '<p>The mark you have awarded this student - <strong>{$a->mark}</strong> - exceeds the maximum mark that will fit in the database - <strong>{$a->max}</strong>.</p><p>The mark has been set to the maximum allowed for this prompt - <strong>{$a->allowedmax}</strong>.</p>';
 
 
 // marker/allocation_form.php
-$string['allocation_form_description'] = '<p>The following is a list of all the posts this student has made. Some may have been allocated to questions. Some may not.</p><p>Use the "Change allocation to:" menu to change the allocation of any student posts.</p>';
+$string['allocation_form_description'] = '<p>The following is a list of all the posts this student has made. Some may have been allocated to prompts. Some may not.</p><p>Use the "Change allocation to:" menu to change the allocation of any student posts.</p>';
 $string['allocation_form_status'] = '<span class="{$a->class}">Status: {$a->status}</span>';
 $string['marker_allocation_heading'] = 'All student posts';
 $string['allocation_form_original'] = 'Original post';
 $string['allocation_form_posted'] = 'Posted:';
 $string['allocation_form_change'] = 'Change allocation to';
-$string['allocation_form_change_help'] = 'Before you can mark a student post it has to be allocated as an answer to one of the specified questions. This allocation is done either automatically by BIM or manually be a teacher.
-The "Change allocation to" drop box provides a list of the question titles for all the questions not yet answered by this student.  If you select one of these question titles, the post will be reallocated to that question.';
+$string['allocation_form_change_help'] = 'Before you can mark a student post it has to be allocated as an answer to one of the specified prompts. This allocation is done either automatically by BIM or manually be a teacher.
+The "Change allocation to" drop box provides a list of the prompt titles for all the prompts not yet answered by this student.  If you select one of these prompt titles, the post will be reallocated to that prompt.';
 $string['allocation_form_post_title'] = 'Title: ';
 $string['allocation_form_mark'] = 'Mark';
-$string['allocation_form_mark_help'] = 'Each student post allocated to a question can be awarded a mark. Usually this mark should be no less than a minimum mark and no greater than a maximum mark allocated by the teacher in charge to this question. The form shows the minimum and maximum mark for the question on the Marking page as min and max.
+$string['allocation_form_mark_help'] = 'Each student post allocated to a prompt can be awarded a mark. Usually this mark should be no less than a minimum mark and no greater than a maximum mark allocated by the teacher in charge. The form shows the minimum and maximum mark for the prompt on the Marking page as min and max.
 BIM will not stop you from awarding a mark outside of the range specified by min and max.  It will warn you, but still store the mark you have awarded.';
 $string['allocation_form_suspend'] = 'Suspended?';
 $string['allocation_form_suspend_help'] = 'A student\'s post can be suspended. This means that the post, and in particular any mark or comments you have made, cannot be released back to the student. If the checkbox is ticked, the post is suspended.
@@ -395,9 +395,9 @@ $string['student_details_user_error'] = 'Error: cannot get user details for user
 $string['student_details_nofeed_heading'] = 'No registered feed';
 $string['student_details_nofeed_description'] = '<p>There is currently no registered feed for student <strong>{$a}</strong>.</p>';
 $string['student_details_header'] = 'Details about this activity';
-$string['student_details_questions_description'] = '<p>You are expected to use your blog to post answers to <a href="{$a}">a range of questions</a>.</p>';
-$string['student_details_show_qs'] = 'a range of questions';
-$string['student_details_show_qs_title'] = 'Show questions';
+$string['student_details_questions_description'] = '<p>You are expected to use your blog to post answers to <a href="{$a}">a range of prompts</a>.</p>';
+$string['student_details_show_qs'] = 'a range of prompts';
+$string['student_details_show_qs_title'] = 'Show prompts';
 $string['student_details_description'] = '<p>Below you will find details about what the system knows about you and your posts.</p>';
 $string['student_details_noposts_heading'] = '<p>No posts yet.</p>';
 $string['student_details_noposts_description'] = '<p>There appear to be no posts from you feed stored here.</p>';
@@ -453,10 +453,10 @@ $string['progressResult'] = 'Your current result';
 $string['progressResult_help'] = 'Shows the total marks awarded to your released answers. Results for marked answers are not included in this, they must be moderated first.';
 
 $string['unallocatedPostStudent'] = 'Not allocated?';
-$string['unallocatedPostStudent_help'] = 'Often your posts may be responses to questions posed by teaching staff. "Not allocated" means that bim could not automatically match your post to a question. Teaching staff may need to manually allocate.';
+$string['unallocatedPostStudent_help'] = 'Often your posts may be responses to prompts posed by teaching staff. "Not allocated" means that bim could not automatically match your post to a prompt. Teaching staff may need to manually allocate.';
 
 $string['allocatedPostStudent'] = 'Allocated';
-$string['allocatedPostStudent_help'] = 'Either BIM or a member of the teaching staff have allocated this post as an answer to one of the set questions.';
+$string['allocatedPostStudent_help'] = 'Either BIM or a member of the teaching staff have allocated this post as an answer to one of the set prompts.';
 
 $string['markedPostStudent'] = 'Marked post';
 $string['markedPostStudent_help'] = 'Someone has marked your post, however, it must be moderated before the result can be released to you.';
@@ -469,7 +469,7 @@ $string['unregisteredDetails'] = 'Unregistered students';
 $string['unregisteredDetails_help'] = 'The students in the following table have not yet succeeded in registering their blogs/feeds with BIM. You can email all unregistered students to remind them, email individual students, and register a blog for a student.';
 
 $string['markPostsAll'] = 'Marking posts';
-$string['markPostsAll_help'] = '<p>Allows you to evaluate, comment and individual students\' posts.</p><p> Before you can mark questions<ul><li>The activity must have some; </li> <li> Student posts need to be mirrored by BIM; and, <li> Some student posts need to be allocated to questions;<br />To allocate questions click on the link in the Questions colum. </li></ul> <p>To mark or remark click on the link an answer that has been submitted or marked.</p>';
+$string['markPostsAll_help'] = '<p>Allows you to evaluate, comment and individual students\' posts.</p><p> Before you can mark prompts<ul><li>The activity must have some; </li> <li> Student posts need to be mirrored by BIM; and, <li> Some student posts need to be allocated to prompts;<br />To allocate prompts click on the link in the Prompts colum. </li></ul> <p>To mark or remark click on the link an answer that has been submitted or marked.</p>';
 
 // marking an individual post
 $string['mark'] = 'Mark';
@@ -477,7 +477,7 @@ $string['mark_help'] = '<p>The numeric result you think this post is worth.</p><
 $string['suspend'] = 'Suspend';
 $string['suspend_help'] = '<p>A suspended post cannot be returned to the student.</p><p>Typically used if you suspect plagiarism or similar problem that requires the lead teacher to make a decision prior to releasing results to students. </p>';
 $string['markAllocation'] = 'Change allocation';
-$string['markAllocation_help'] = '<p>Student posts can be allocated as answers to one of the questions set by the lead teacher. </p><p>BIM does try to do this automatically, but you can also do it manually by selecting a question title from the drop down menu. </p><p>If you select the option "..Choose one.." then the student post becomes unallocated. It will still appear in BIM, but will not be allocated to a question.</p>';
+$string['markAllocation_help'] = '<p>Student posts can be allocated as answers to one of the prompts set by the lead teacher. </p><p>BIM does try to do this automatically, but you can also do it manually by selecting a prompt title from the drop down menu. </p><p>If you select the option "..Choose one.." then the student post becomes unallocated. It will still appear in BIM, but will not be allocated to a prompt.</p>';
 $string['markerComments'] = 'Comments';
 $string['markerComments_help'] = '<p>These are your comments on the post. They will, after the post is released, be visible to the student.</p>';
 
@@ -503,7 +503,7 @@ $string['config_about_help'] = '<p>The "about" field is meant to be a short desc
 
 // manage questions
 $string['qform_title'] = 'Question title';
-$string['qform_title_help'] = '<p>The question title - apart from identifying the question - is used by BIM when trying to automatically allocate (match) student posts to a question. </p><p>If the post of a student has a title that contains a question title, the post will be matched to that question.</p>';
+$string['qform_title_help'] = '<p>The prompt title - apart from identifying the prompt - is used by BIM when trying to automatically allocate (match) student posts to a prompt. </p><p>If the post of a student has a title that contains a prompt title, the post will be matched to that prompt.</p>';
 
 $string['qform_min'] = 'Minimum mark';
 $string['qform_min_help'] = '<p>This represents the smallest mark in the range shown to markers.</p><p><strong>Important:</strong> In the interests of flexibility, BIM does <strong>not</strong> police this minimum. i.e. it is possible for markers to set a mark lower than the minimum.</p>';
@@ -511,8 +511,8 @@ $string['qform_min_help'] = '<p>This represents the smallest mark in the range s
 $string['qform_max'] = 'Maximum mark';
 $string['qform_max_help'] = '<p>This represents the largest mark in the range shown to markers.</p><p><strong>Important:</strong> In the interests of flexibility, BIM does <strong>not</strong> police this maximum. i.e. it is possible for markers to set a mark greater than the maximum.</p>';
 
-$string['qform_stats'] = 'Current question statistics';
-$string['qform_stats_help'] = '<p>Shows the current number of student posts that have been allocated to the question, including what status they are currently in (submitted - student has submitted; Marked - the marker has marked; Released - returned to the student)</p>';
+$string['qform_stats'] = 'Current prompt statistics';
+$string['qform_stats_help'] = '<p>Shows the current number of student posts that have been allocated to the prompt, including what status they are currently in (submitted - student has submitted; Marked - the marker has marked; Released - returned to the student)</p>';
 
 $string['manageMarking'] = 'Manage marking';
 $string['manageMarking_help'] = '<p>Provides the coordinating teacher an overview of all student submissions and marking progress. For each marker shows the status of their students\' posts. Allows coordinator to release marked posts and to drill down to see more detail.</p>';
