@@ -491,7 +491,7 @@ function show_marker_student_details( $bim, $userid, $cm ) {
         }
         echo html_writer::table( $table );
     }
-    echo $OUTPUT->box_end();
+#    echo $OUTPUT->box_end();
 }
 
 /*
