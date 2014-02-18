@@ -49,6 +49,8 @@ class marking_form extends moodleform {
         // Add hidden fields to get going the right way
         $mform->addElement( 'hidden', 'id', $id );
         $mform->setType( 'id', PARAM_INT );
+        $mform->setTYpe( 'screen', PARAM_ALPHA );
+        $mform->setTYpe( 'markingId', PARAM_ALPHA );
         $mform->addElement( 'hidden', 'screen', 'MarkPost' );
         $mform->setType( 'id', PARAM_ALPHA );
         $mform->addElement( 'hidden', 'markingId', $marking );

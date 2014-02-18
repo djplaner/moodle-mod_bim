@@ -39,6 +39,7 @@ class marker_allocation_form extends moodleform {
         // Add hidden fields to get going the right way
         $mform->addElement( 'hidden', 'id', $id );
         $mform->setType( 'id', PARAM_INT );
+        $mform->setType( 'tab', PARAM_ALPHA );
         $mform->addElement( 'hidden', 'tab', 'markers' );
         $mform->setType( 'id', PARAM_ALPHA );
 
