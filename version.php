@@ -36,5 +36,5 @@ $module->cron     = 3600;           // Period for cron to check this module (sec
 $module->component = 'mod_bim';
 $module->release = 2.0;
 $module->component = "mod_bim";
-$module->maturity = MATURITY_BETA;
+$module->maturity = MATURITY_RC;
 
