@@ -199,7 +199,7 @@ function bim_manage_marking( $bim, $userid, $cm ) {
 
     echo '<a name="unreg"></a>';
     echo $OUTPUT->heading( "Unregistered students", 2, "left" );
-    print_container( "<p>The following " . count($unregistered) .
+    echo $OUTPUT->container( "<p>The following " . count($unregistered) .
             " student(s) have not yet registered their feeds</p>" );
     // show the email textbox
     // bim_show_unregistered_students_email( $unregistered );
