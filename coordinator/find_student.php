@@ -81,7 +81,7 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
 
     // see how many students this search will return
     // only want students in this course
-    $context = get_context_instance( CONTEXT_COURSE, $cm->course );
+    $context = context_course::instance( $cm->course );
     $students = get_users_by_capability( $context, 'mod/bim:student',
             'u.id,u.username,u.firstname,u.lastname,u.email',
             'u.lastname', '', '', '', '', false, true );

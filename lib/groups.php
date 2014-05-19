@@ -91,7 +91,7 @@ function bim_get_markers_students( $bim, $marker ) {
 function bim_get_all_students( $cm ) {
     global $DB;
     // get list of students in the course
-    $context = get_context_instance( CONTEXT_COURSE, $cm->course );
+    $context = context_course::instance( $cm->course );
     $students = get_users_by_capability( $context, 'mod/bim:student',
             'u.id,u.username,u.firstname,u.lastname,u.email',
             'u.lastname', '', '', '', '', false, true );

@@ -188,7 +188,7 @@ function bim_generate_student_results( $marking_details, $questions, $cm ) {
         return "No questions";
     }
 
-    $context = get_context_instance( CONTEXT_MODULE, $cm->id );
+    $context = context_module::instance( $cm->id );
 
     foreach ($marking_details as $details) {
         // if user is a student, then only include released posts
@@ -227,7 +227,7 @@ function bim_print_header($cm, $bim, $course, $screen) {
     global $CFG;
     global $PAGE, $OUTPUT;
 
-    $context = get_context_instance( CONTEXT_MODULE, $cm->id );
+    $context = context_module::instance( $cm->id );
 
     $PAGE->set_url( '/mod/bim/view.php', array( 'id'=> $cm->id ));
     $PAGE->set_title(format_string($bim->name));

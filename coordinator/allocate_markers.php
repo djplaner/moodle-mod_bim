@@ -36,7 +36,7 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
     // get all the groups for the course
     $groups = groups_get_all_groups( $cm->course );
     // get all the users who can mark/coordinator this activity
-    $context = get_context_instance( CONTEXT_MODULE, $cm->id );
+    $context = context_module::instance( $cm->id );
     $markers = get_users_by_capability( $context,
             array( 'mod/bim:marker', 'mod/bim:coordinator' ),
             'u.id,u.firstname,u.lastname', 'u.lastname',
