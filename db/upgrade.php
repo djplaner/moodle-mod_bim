@@ -45,7 +45,7 @@ function xmldb_bim_upgrade($oldversion = 0) {
     }
 
     // the wrong change to mark type
-    if ($oldversion < 2011013119) {
+/*    if ($oldversion < 2011013119) {
 
 
         // Changing type of field mark on table bim_marking to int
@@ -57,20 +57,27 @@ function xmldb_bim_upgrade($oldversion = 0) {
 
         // bim savepoint reached
         upgrade_mod_savepoint(true, 2011013119, 'bim');
-    }
+    } */
 
     // the right? change to mark type
-    if ($oldversion < 2011013120) {
+    //if ($oldversion < 2011013120) {
+    if ($oldversion < 2015011501) {
 
         // Changing type of field mark on table bim_marking to number
         $table = new xmldb_table('bim_marking');
         $field = new xmldb_field('mark', XMLDB_TYPE_NUMBER, '6, 2', null, null, null, null, 'question');
-
         // Launch change of type for field mark
         $dbman->change_field_type($table, $field);
 
+        //** also allow bim_questions min_mark and max_mark be number as well
+        $table = new xmldb_table('bim_questions');
+        $field = new xmldb_field('min_mark', XMLDB_TYPE_NUMBER, '6, 2', null, null, null, null, 'question');
+        $dbman->change_field_type($table, $field);
+        $field = new xmldb_field('max_mark', XMLDB_TYPE_NUMBER, '6, 2', null, null, null, null, 'question');
+        $dbman->change_field_type($table, $field);
+
         // bim savepoint reached
-        upgrade_mod_savepoint(true, 2011013120, 'bim');
+        upgrade_mod_savepoint(true, 2015011501, 'bim');
     }
     return true;
 }
