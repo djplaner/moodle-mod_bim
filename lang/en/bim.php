@@ -517,4 +517,8 @@ $string['qform_stats_help'] = '<p>Shows the current number of student posts that
 $string['manageMarking'] = 'Manage marking';
 $string['manageMarking_help'] = '<p>Provides the coordinating teacher an overview of all student submissions and marking progress. For each marker shows the status of their students\' posts. Allows coordinator to release marked posts and to drill down to see more detail.</p>';
 
+//*** event names
 
+$string['eventdetailsviewed'] = "Student BIM details viewed";
+$string['eventregistrationcreated'] = "Registration created";
+$string['eventregistrationstarted'] = 'Registration started';

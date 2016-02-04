@@ -50,8 +50,12 @@ function show_student( $bim, $userid, $cm, $course) {
         if ( $screen == "showQuestions" ) {
             bim_show_questions( $cm, $bim );
         } else {
-            add_to_log( $course->id, "bim", "view details", "view.php?id=$cm->id",
-                    "", $cm->id );
+//            add_to_log( $course->id, "bim", "view details", "view.php?id=$cm->id", "", $cm->id );
+            $event = \mod_bim\event\details_viewed::create(array(
+                'context' => context_module::instance($cm->id)
+            ));
+            $event->trigger();
+
             show_student_details( $bim, $userid, $cm );
         }
     }
