@@ -35,7 +35,11 @@ if (! $course = $DB->get_record('course', array('id'=> $id))) {
 require_course_login($course);
 $context = context_course::instance( $course->id );
 
-add_to_log($course->id, 'bim', 'view all', "index.php?id=$course->id", '');
+//add_to_log($course->id, 'bim', 'view all', "index.php?id=$course->id", '');
+$event = \mod_bim\event\course_module_instance_list_viewed::create(array(
+    'context' => context_course::instance($course->id)
+));
+$event->trigger();
 
 // Get all required stringsbim
 

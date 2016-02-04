@@ -14,27 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
+/*
  * @package mod_bim
- * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
+ * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com} 
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Code fragment to define the version of bim
- * This fragment is called by moodle_needs_upgrading() and /admin/index.php
- *
- * @author  David Jones <davidthomjones@gmail.com>
- * @package mod_bim
- */
+namespace mod_bim\event;
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2016020404;  // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires = 2013051400;
-$plugin->cron     = 3600;           // Period for cron to check this module (secs)
-$plugin->component = 'mod_bim';
-$plugin->release = "2.1 (Build: 2016020402)";
-$plugin->component = "mod_bim";
-$plugin->maturity = MATURITY_STABLE;
+class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
+}
+
 
