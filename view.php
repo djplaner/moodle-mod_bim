@@ -67,7 +67,11 @@ if ($id) {
 require_login($course, true, $cm);
 $context = context_module::instance( $cm->id );
 
-add_to_log($course->id, "bim", "view", "view.php?id={$cm->id}", $bim->id, $cm->id);
+$event = \mod_bim\event\course_module_viewed::create( array(
+    'objectid' => $bim->id,
+    'context'  => $context ));
+$event->add_record_snapshot('course', $PAGE->course);
+$event->trigger();
 
 // Print the page header
 
