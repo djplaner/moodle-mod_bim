@@ -309,9 +309,12 @@ function bim_display_error( $error, $fromform, $cm ) {
     global $OUTPUT;
 
     if ( $error == BIM_FEED_INVALID_URL ) {
-        add_to_log( $cm->course, "bim", "registration error",
-                "view.php?id=$cm->id",
-                "$fromform->blogurl Invalid URL", $cm->id );
+        // Appears this type of error logging doesn't fit with the 
+        // conception of Logging2. https://docs.moodle.org/dev/Logging_2#Related
+        // Removing for now.
+        //add_to_log( $cm->course, "bim", "registration error",
+        //        "view.php?id=$cm->id",
+        //        "$fromform->blogurl Invalid URL", $cm->id );
 
         echo $OUTPUT->heading( 
             get_string( 'bim_register_invalid_url_heading', 'bim' ), 2, left );
@@ -320,9 +323,9 @@ function bim_display_error( $error, $fromform, $cm ) {
         return 1;
     }
     if ( $error == BIM_FEED_NO_RETRIEVE_URL ) {
-        add_to_log( $cm->course, "bim", "registration error",
-                "view.php?id=$cm->id",
-                "$fromform->blogurl no retrieve", $cm->id );
+        // add_to_log( $cm->course, "bim", "registration error",
+        //         "view.php?id=$cm->id",
+        //         "$fromform->blogurl no retrieve", $cm->id );
         echo $OUTPUT->heading( 
             get_string( 'bim_register_no_retrieve_heading', 'bim' ), 2, "left" );
         $a = new StdClass();
@@ -333,9 +336,9 @@ function bim_display_error( $error, $fromform, $cm ) {
         return 1;
     }
     if ( $error == BIM_FEED_NO_LINKS ) {
-        add_to_log( $cm->course, "bim", "registration error",
-                "view.php?id=$cm->id",
-                "$fromform->blogurl no feed links", $cm->id );
+        // add_to_log( $cm->course, "bim", "registration error",
+        //         "view.php?id=$cm->id",
+        //         "$fromform->blogurl no feed links", $cm->id );
         echo $OUTPUT->heading( 
                 get_string( 'bim_register_nolinks_heading', 'bim' ), 2, "left" );
         print_string( 'bim_register_nolinks_description', 'bim',
@@ -343,18 +346,18 @@ function bim_display_error( $error, $fromform, $cm ) {
         return 1;
     }
     if ( $error == BIM_FEED_WRONG_URL ) {
-        add_to_log( $cm->course, "bim", "registration error",
-                "view.php?id=$cm->id",
-                "$fromform->blogurl wrong url", $cm->id );
+        // add_to_log( $cm->course, "bim", "registration error",
+        //         "view.php?id=$cm->id",
+        //         "$fromform->blogurl wrong url", $cm->id );
         echo $OUTPUT->heading( 
             get_string( 'bim_register_wrong_url_heading', 'bim' ), 2, "left" );
         echo $fromform->error;
         return 1;
     }
     if ( $error == BIM_FEED_TIMEOUT ) {
-        add_to_log( $cm->course, "bim", "registration error",
-                "view.php?id=$cm->id",
-                "$fromform->blogurl timeout", $cm->id );
+        // add_to_log( $cm->course, "bim", "registration error",
+        //         "view.php?id=$cm->id",
+        //         "$fromform->blogurl timeout", $cm->id );
         echo $OUTPUT->heading( 
                 get_string( 'bim_register_timeout_heading', 'bim' ), 2, "left" );
         $a = new StdClass();
