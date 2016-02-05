@@ -52,7 +52,8 @@ function show_student( $bim, $userid, $cm, $course) {
         } else {
 //            add_to_log( $course->id, "bim", "view details", "view.php?id=$cm->id", "", $cm->id );
             $event = \mod_bim\event\details_viewed::create(array(
-                'context' => context_module::instance($cm->id)
+                'context' => context_module::instance($cm->id),
+                'objectid' => $cm->id
             ));
             $event->trigger();
 
@@ -233,9 +234,18 @@ function show_register_feed( $bim, $userid, $cm) {
             if ( ! $feed_id = $DB->insert_record( 'bim_student_feeds', $response ) ) {
                 print_string('bim_error_updating', 'bim');
             } else {
-                add_to_log( $cm->course, "bim", "registration success",
+/*                add_to_log( $cm->course, "bim", "registration success",
                         "view.php?id=$cm->id",
                         "$fromform->blogurl", $cm->id );
+ */               $event = \mod_bim\event\registration_created::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+                     'other' => array(
+                            'blogurl' => $fromform->blogurl
+                     )
+                ));
+                $event->trigger();
+
                 echo $OUTPUT->heading( get_string('register_success_heading', 'bim'), 2, "left" );
                 print_string( 'register_success_description', 'bim' );
 
@@ -258,8 +268,13 @@ function show_register_feed( $bim, $userid, $cm) {
             return 0;
         }
     } else {
-        add_to_log( $cm->course, "bim", "registration start", "view.php?id=$cm->id",
-                "", $cm->id );
+ //       add_to_log( $cm->course, "bim", "registration start", "view.php?id=$cm->id",
+  //              "", $cm->id );
+        $event = \mod_bim\event\registration_started::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id
+                ));
+        $event->trigger();
         print format_text( $bim->intro );
         echo "<p><br /></p>";
         $mform->display();

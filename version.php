@@ -30,7 +30,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version  = 2016020408;  // The current plugin version (Date: YYYYMMDDXX)
+$plugin->version  = 2016020502;  // The current plugin version (Date: YYYYMMDDXX)
 $plugin->requires = 2013051400;
 $plugin->cron     = 3600;           // Period for cron to check this module (secs)
 $plugin->component = 'mod_bim';

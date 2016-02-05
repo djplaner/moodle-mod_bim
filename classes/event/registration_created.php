@@ -30,25 +30,23 @@ defined('MOODLE_INTERNAL') || die();
  * The details_viewed event class.
  *
  * @property-read array $other {
- * }
+ *      Extra information about the event
+ *      - string blogurl: The URL for the blog registered with BIM
  *
- * @since     Moodle MOODLEVERSION
- * @copyright 2014 YOUR NAME
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
-class details_viewed extends \core\event\base {
+class registration_created extends \core\event\base {
     protected function init() {
-        $this->data['crud'] = 'r'; // c(reate), r(ead), u(pdate), d(elete)
+        $this->data['crud'] = 'c'; // c(reate), r(ead), u(pdate), d(elete)
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
         $this->data['objecttable'] = 'bim_student_feeds';
     }
  
     public static function get_name() {
-        return get_string('eventdetailsviewed', 'mod_bim');
+        return get_string('eventregistrationcreated', 'mod_bim');
     }
  
     public function get_description() {
-        return "The user with id {$this->userid} viewed details of BIM with id {$this->objectid}.";
+        return "The user with id '$this->userid' registered '{$this->other['blogurl']}' with BIM with id '$this->objectid'.";
     }
  
     public function get_url() {
@@ -58,9 +56,9 @@ class details_viewed extends \core\event\base {
  
     public function get_legacy_logdata() {
         // Override if you are migrating an add_to_log() call.
-        return array($this->courseid, 'bim', 'view details',
+        return array($this->courseid, 'bim', 'registration success',
             'view.php?id=' . $this->contextinstanceid,
-            "", $this->contextinstanceid);
+            $this->other['blogurl'], $this->contextinstanceid);
     }
 }
 
