@@ -526,3 +526,6 @@ $string['eventregistrationstarted'] = 'Registration started';
 $string['eventmarkerallocationstarted'] = 'Marker allocation started';
 $string['eventmarkerallocationupdated'] = 'Marker allocation updated';
 
+$string['eventstudentsearchstarted'] = 'Student search started';
+$string['eventstudentsearched'] = 'Student searched';
+
