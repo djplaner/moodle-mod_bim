@@ -531,3 +531,7 @@ $string['eventstudentsearched'] = 'Student searched';
 
 $string['eventmarkingviewed'] = 'Marking status viewed';
 $string['eventmarkingupdated'] = 'Marking status updated';
+
+$string['eventpromptviewed'] = 'Prompts viewed';
+$string['eventpromptcreated'] = 'Prompt created';
+$string['eventpromptupdated'] = 'Prompt updated';
