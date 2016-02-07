@@ -40,9 +40,6 @@ function bim_find_student( $bim, $cm ) {
     // this avoids processing the form
     $details = optional_param( 'details', null, PARAM_ALPHANUM );
     if ( strcmp( $details, "yes")==0 ) {
-//        add_to_log( $cm->course, "bim", "find student",
- //               "view.php?id=$cm->id&tab=find",
-  //              "single student", $cm->id );
          $event = \mod_bim\event\studentSearch_searched::create(array(
                      'context' => context_module::instance($cm->id),
                      'objectid' => $cm->id,
@@ -60,9 +57,6 @@ function bim_find_student( $bim, $cm ) {
         $find_form->display();
         show_student_details( $bim, $userid, $cm );
     } else if ( ! $find_form->is_submitted() ) {
-//        add_to_log( $cm->course, "bim", "find student",
- //               "view.php?id=$cm->id&tab=find",
-  //              "start search", $cm->id );
          $event = \mod_bim\event\studentSearch_started::create(array(
                      'context' => context_module::instance($cm->id),
                      'objectid' => $cm->id,
@@ -132,17 +126,10 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
      $event->trigger();
 
     if ( $match_count == 0 ) {
-//        add_to_log( $cm->course, "bim", "find student",
- //               "view.php?id=$cm->id&tab=find",
-  //               "no matching students", $cm->id );
         echo $OUTPUT->heading( get_string( 'bim_find_none_heading', 'bim' ), 2, 'left' );
         print_string( 'bim_find_none_description', 'bim', $search );
         $find_form->display();
     } else if ( $match_count == 1 ) {
-//        add_to_log( $cm->course, "bim", "find student",
- //               "view.php?id=$cm->id&tab=find",
-  //              "1 matching student", $cm->id );
-
         $match_keys = array_keys($matches);
         $userid = array_shift($match_keys);
         echo $OUTPUT->heading( get_string( 'bim_find_one_heading', 'bim' ), 2, 'left' );
@@ -153,10 +140,6 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
         show_student_details( $bim, $userid, $cm );
         $find_form->display();
     } else if ( $match_count > 1 && $match_count < 200 ) {
-//        add_to_log( $cm->course, "bim", "find student",
- //               "view.php?id=$cm->id&tab=find",
-  //              "$match_count matching students", $cm->id );
-
         echo $OUTPUT->heading( get_string( 'bim_find_x_heading', 'bim', $match_count ), 2, 'left' );
         $a = new StdClass();
         $a->search = $search;
@@ -202,9 +185,6 @@ function bim_process_find_student( $fromform, $bim, $cm, $find_form ) {
         // show student details
 
     } else {
-        //add_to_log( $cm->course, "bim", "find student",
-         //       "view.php?id=$cm->id&tab=find",
-          //      "Too many ($match_count) matching students", $cm->id );
         echo $OUTPUT->heading( get_string( 'bim_find_x_heading', 'bim', $match_count ), 2, "left" );
         $a->search = $search;
         $a->count = $match_count;

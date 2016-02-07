@@ -135,17 +135,25 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
         marker_show_student_details_table( $student, $student_details,
                 $marking_details, $feed_details,
                 $post_stats, $progress );
-        add_to_log( $cm->course, "bim", "posts allocate",
-                "view.php?id=$cm->id&screen=AllocatePosts&uid=$student",
-                "List all $student", $cm->id );
+        $event = \mod_bim\event\student_viewed::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+                     'relateduserid' => $student,
+        ));
+        $event->trigger();
+
         echo $OUTPUT->heading( 
                 get_string('marker_allocation_heading', 'bim'), 2, 'left');
 
         $allocation_form->display();
     } else if ( $fromform = $allocation_form->get_data() ) {
-        add_to_log( $cm->course, "bim", "posts allocate",
-                "view.php?id=$cm->id&screen=AllocatePosts&uid=$student",
-                "Processing allocation", $cm->id );
+       $event = \mod_bim\event\student_updated::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+                     'relateduserid' => $student,
+        ));
+        $event->trigger();
+
         bim_process_allocate_form( $marking_details, $fromform, $questions );
 
         list( $student_details, $marking_details, $questions, $feed_details,
@@ -166,9 +174,6 @@ function bim_marker_allocate_posts( $bim, $userid, $cm, $student ) {
         $allocation_form->set_data( $fromform );
         $allocation_form->display();
     } else {
-        add_to_log( $cm->course, "bim", "posts allocate",
-                "view.php?id=$cm->id&screen=AllocatePosts&uid=$student",
-                "Error processing form - $student", $cm->id );
         echo $OUTPUT->heading( get_string('bim_marker_error_heading', 'bim'), 2, 'left' );
         print_string( 'bim_marker_error_description', 'bim' );
         $allocation_form->display();
@@ -312,7 +317,7 @@ function bim_process_allocate_form( $marking_details, $fromform, $questions ) {
                             $a->link = $detail->link;
                             $a->old = $questions[$old_allocation]->title;
                             $a->new = $questions[$allocation]->title;
-                            print_string( 'marker_change_alloc_descriptor', 'bim', $a );
+                            print_string( 'marker_change_alloc_description', 'bim', $a );
                         } else {
                             $a = new StdClass();
                             $a->link = $detail->link;
@@ -389,9 +394,13 @@ function show_marker_student_details( $bim, $userid, $cm ) {
 
     $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=ShowPostDetails";
 
-    add_to_log( $cm->course, "bim", "students details",
-            "view.php?id=$cm->id&screen=ShowDetails",
-            "", $cm->id );
+    $event = \mod_bim\event\studentlist_viewed::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id
+    ));
+    $event->trigger();
+
+
     // Get data
     // Array of all student information
     $student_details = bim_get_markers_students( $bim, $userid );
@@ -860,9 +869,17 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
 
     // display form for first time
     if ( ! $marking_form->is_submitted() ) {
-        add_to_log( $cm->course, "bim", "post mark",
-                    "view.php?id=$cm->id&screen=ShowPostDetails",
-                    "Starting marking", $cm->id );
+        $event = \mod_bim\event\marking_started::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+                     'relateduserid' => $student,
+                     'other' => array(
+                            'markingId' => $marking_details[$marking]->id,
+                            'link' => $marking_details[$marking]->link
+                     )
+        ));
+        $event->trigger();
+
         // make sure the comments from the dbase appear in the editor
         if ( $marking_details[$marking]->comments == "NULL" ) {
                 $marking_details[$marking]->comments = "";
@@ -1023,9 +1040,17 @@ function bim_marker_mark_post( $bim, $userid, $cm, $marking ) {
         }
 
         if ( $change ) {
-            add_to_log( $cm->course, "bim", "post mark",
-                        "view.php?id=$cm->id&screen=ShowPostDetails",
-                        "Marking change", $cm->id );
+            $event = \mod_bim\event\marking_assessed::create(array(
+                        'context' => context_module::instance($cm->id),
+                        'objectid' => $cm->id,
+                        'relateduserid' => $student,
+                        'other' => array(
+                            'markingId' => $marking_details[$marking]->id,
+                            'link' => $marking_details[$marking]->link
+                     )
+            ));
+            $event->trigger();
+
             $marking_details[$marking]->marker = $userid;
             print_string('bim_mark_marker', 'bim' );
             echo '</ul>';
@@ -1105,10 +1130,14 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
         $description = 'bim_change_register_description';
     }
     if ( ! $form->is_submitted() ) {
-        // add to log
-        add_to_log( $cm->course, "bim", "Change blog",
-                    "view.php?cm=id&screen=changeBlogRegistration",
-                    "Start/display", $cm->id );
+        $event = \mod_bim\event\registration_viewed::create(array(
+                        'context' => context_module::instance($cm->id),
+                        'objectid' => $cm->id,
+                        'relateduserid' => $student,
+        ));
+        $event->trigger();
+
+ 
 
         // heading and description
         echo $OUTPUT->heading( get_string($heading, 'bim'), 2, 'left');
@@ -1120,10 +1149,6 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
         }
         $form->display();
     } else if ( $form->is_cancelled() ) {
-        // ?????
-        add_to_log( $cm->course, "bim", "Change blog",
-                    "view.php?cm=id&screen=changeBlogRegistration",
-                    "Cancel", $cm->id );
     } else if ( $fromform = $form->get_data() ) {
 
         // do some checks and try to retrieve
@@ -1176,9 +1201,15 @@ function bim_change_blog_registration( $bim, $student, $cm ) {
             }
 
             // add to log and show record of success
-            add_to_log( $cm->course, 'bim', 'Change blog',
-                        "view.php?cm=id&screen=changeBlogRegistration",
-                        "user: $student $fromform->blogurl ", $cm->id );
+            $event = \mod_bim\event\registration_updated::create(array(
+                        'context' => context_module::instance($cm->id),
+                        'objectid' => $cm->id, 'relateduserid' => $student,
+                        'other' => array(
+                            'blogurl' => $fromform->blogurl
+                        )
+            ));
+            $event->trigger();
+
 
             // prepare to process new feeds
             $questions = bim_get_question_hash( $bim->id );

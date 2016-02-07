@@ -521,7 +521,9 @@ $string['manageMarking_help'] = '<p>Provides the coordinating teacher an overvie
 
 $string['eventdetailsviewed'] = 'Student BIM details viewed';
 $string['eventregistrationcreated'] = 'Registration created';
+$string['eventregistrationviewed'] = 'Registration viewed';
 $string['eventregistrationstarted'] = 'Registration started';
+$string['eventregistrationupdated'] = 'Registration updated';
 
 $string['eventmarkerallocationstarted'] = 'Marker allocation started';
 $string['eventmarkerallocationupdated'] = 'Marker allocation updated';
@@ -531,7 +533,15 @@ $string['eventstudentsearched'] = 'Student searched';
 
 $string['eventmarkingviewed'] = 'Marking status viewed';
 $string['eventmarkingupdated'] = 'Marking status updated';
+$string['eventmarkingstarted'] = 'Marking started';
+$string['eventmarkingassessed'] = 'Marking assessed';
 
 $string['eventpromptviewed'] = 'Prompts viewed';
 $string['eventpromptcreated'] = 'Prompt created';
 $string['eventpromptupdated'] = 'Prompt updated';
+
+$string['eventstudentviewed'] = 'Student marking/posts viewed';
+$string['eventstudentupdated'] = 'Student marking/posts updated';
+$string['eventstudentlistviewed'] = 'Student list viewed';
+
+$string['eventopmlcreated'] = 'OPML file created';

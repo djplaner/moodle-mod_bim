@@ -63,9 +63,6 @@ function bim_manage_questions( $bim, $cm ) {
                     'bim' ), 2, 'left' );
             print_string( 'bim_questions_none_description', 'bim' );
         }
-//        add_to_log( $cm->course, "bim", "Questions manage",
- //               "view.php?id=$cm->id&tab=questions",
-  //              "Display", $cm->id );
         $event = \mod_bim\event\prompt_viewed::create(array(
                       'context' => context_module::instance($cm->id),
                       'objectid' => $cm->id,
@@ -103,9 +100,6 @@ function bim_manage_questions( $bim, $cm ) {
                 print_error( 'bim_questions_error_insert', 'bim' );
             }
             $additions = true;
-        //    add_to_log( $cm->course, "bim", "Questions manage",
-         //           "view.php?id=$cm->id&tab=questions",
-          //          "Adding question", $cm->id );
             $event = \mod_bim\event\prompt_created::create(array(
                             'context' => context_module::instance($cm->id),
                             'objectid' => $cm->id,
@@ -173,9 +167,6 @@ function bim_manage_questions( $bim, $cm ) {
         if ( $changes > 0 || $deletions || $additions ) {
             // need to update the gradebook to represent the new max marks
             bim_update_gradebook( $bim ); 
-//            add_to_log( $cm->course, "bim", "Questions manage",
- //                   "view.php?id=$cm->id&tab=questions",
-  //                  "Modified question(s)", $cm->id );
             $event = \mod_bim\event\prompt_updated::create(array(
                         'context' => context_module::instance($cm->id),
                         'objectid' => $cm->id,

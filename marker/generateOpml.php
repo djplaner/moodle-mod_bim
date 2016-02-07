@@ -37,9 +37,11 @@ function bim_generate_opml( $bim, $cm, $userid ) {
     global $CFG, $COURSE;
     $url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&screen=generateOpml";
 
-    add_to_log( $cm->course, "bim", "generate opml",
-            "view.php?id=$cm->id&screen=generateOpml",
-            "", $cm->id );
+    $event = \mod_bim\event\opml_created::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+    ));
+    $event->trigger();
 
     // Get data
     // Get the student details
