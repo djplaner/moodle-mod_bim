@@ -53,6 +53,8 @@ class mod_bim_mod_form extends moodleform_mod {
     public function definition() {
 
         global $COURSE;
+        global $CFG;
+
         $mform =& $this->_form;
 
         // Adding the "general" fieldset, where all the common settings are showed
@@ -74,7 +76,12 @@ class mod_bim_mod_form extends moodleform_mod {
         //      $mform->setType('intro', PARAM_RAW);
         //        $mform->addRule('intro', get_string('required'), 'required', null, 'client');
 
-        $this->add_intro_editor();
+        if ($CFG->version >= 2015051100) {
+        // Moodle 2.9.0 and higher use the new API.
+            $this->standard_intro_elements();
+        } else {
+            $this->add_intro_editor();
+        }
         //$mform->addHelpButton( 'intro', 'bimintro', 'bim' );
 
         // Adding the rest of bim settings, spreeading all them into this fieldset
