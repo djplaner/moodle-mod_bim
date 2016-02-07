@@ -42,7 +42,7 @@ class markerAllocation_updated extends \core\event\base {
     }
  
     public static function get_name() {
-        return get_string('eventregistrationupdated', 'mod_bim');
+        return get_string('eventmarkerallocationupdated', 'mod_bim');
     }
  
     public function get_description() {

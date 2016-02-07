@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /*
- * The markerAllocation_viewed event.
+ * The markerAllocation_started event.
  *
  * @package mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com} 
@@ -27,13 +27,13 @@ namespace mod_bim\event;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The markerAllocation_viewed event class.
+ * The markerAllocation_started event class.
  *
  * @property-read array $other {
  *      Extra information about the event
  *
  **/
-class markerAllocation_viewed extends \core\event\base {
+class markerAllocation_started extends \core\event\base {
     protected function init() {
         $this->data['crud'] = 'r'; // c(reate), r(ead), u(pdate), d(elete)
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
