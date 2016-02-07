@@ -85,9 +85,14 @@ function bim_allocate_markers( $bim, $cm, $userid ) {
 
     // process it
     if ( ! $allocate_form->is_submitted() ) {
-        add_to_log( $cm->course, "bim", "markers allocate",
-                "view.php?id=$cm->id&tab=markers",
-                "List all", $cm->id );
+        //add_to_log( $cm->course, "bim", "markers allocate",
+         //       "view.php?id=$cm->id&tab=markers",
+          //      "List all", $cm->id );
+        $event = \mod_bim\event\markerAllocation_started::create(array(
+                'context' => context_module::instance($cm->id),
+                'objectid' => $cm->id
+        ));
+        $event->trigger();
 
         $heading = get_string('bim_allocate_marker_heading', 'bim' );
         echo $OUTPUT->heading( $heading, 2, 'left' );
@@ -199,9 +204,14 @@ function process_markers_form( $markers, $fromform, $groups, $bim, $cm ) {
     if ( ! $change ) {
         print_string( 'bim_group_allocations_none', 'bim' );
     } else {
-        add_to_log( $cm->course, "bim", "markers allocate",
-                "view.php?id=$cm->id&tab=markers",
-                "Change in allocation", $cm->id );
+        //add_to_log( $cm->course, "bim", "markers allocate",
+         //       "view.php?id=$cm->id&tab=markers",
+          //      "Change in allocation", $cm->id );
+        $event = \mod_bim\event\markerAllocation_updated::create(array(
+                'context' => context_module::instance($cm->id),
+                'objectid' => $cm->id
+        ));
+        $event->trigger();
     }
 
     echo $OUTPUT->box_end();

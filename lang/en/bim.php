@@ -519,6 +519,10 @@ $string['manageMarking_help'] = '<p>Provides the coordinating teacher an overvie
 
 //*** event names
 
-$string['eventdetailsviewed'] = "Student BIM details viewed";
-$string['eventregistrationcreated'] = "Registration created";
+$string['eventdetailsviewed'] = 'Student BIM details viewed';
+$string['eventregistrationcreated'] = 'Registration created';
 $string['eventregistrationstarted'] = 'Registration started';
+
+$string['eventmarkerallocationstarted'] = 'Marker allocation started';
+$string['eventmarkerallocationupdated'] = 'Marker allocation updated';
+
