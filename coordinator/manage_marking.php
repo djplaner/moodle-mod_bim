@@ -38,9 +38,14 @@ function bim_manage_marking( $bim, $userid, $cm ) {
     global $CFG, $OUTPUT;
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
-    add_to_log( $cm->course, "bim", "manage marking",
-            "view.php?id=$cm->id&tab=manage",
-            "Show status", $cm->id );
+    $event = \mod_bim\event\marking_viewed::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+                     'other' => array(
+                            'viewed' => 'show overall status'
+                     )
+     ));
+     $event->trigger();
 
     // Calculations to find out how many unregistered students there are
     $all_students = bim_get_all_students( $cm );
@@ -227,9 +232,11 @@ function bim_manage_release( $bim, $userid, $cm ) {
 
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
-    add_to_log( $cm->course, "bim", "manage marking",
-            "view.php?id=$cm->id&tab=manage",
-            "Releasing results", $cm->id );
+    $event = \mod_bim\event\marking_updated::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+         ));
+    $event->trigger();
 
     // Check parameters
     $marker = optional_param( "marker", null, PARAM_INT);
@@ -348,9 +355,14 @@ function bim_manage_view( $bim, $userid, $cm ) {
 
     $base_url = "$CFG->wwwroot/mod/bim/view.php?id=$cm->id&tab=manage";
 
-    add_to_log( $cm->course, "bim", "manage marking",
-            "view.php?id=$cm->id&tab=manage",
-            "Show state", $cm->id );
+    $event = \mod_bim\event\marking_viewed::create(array(
+                     'context' => context_module::instance($cm->id),
+                     'objectid' => $cm->id,
+                     'other' => array(
+                            'viewed' => 'students in state'
+                     )
+         ));
+    $event->trigger();
     // Check parameters
     $status = optional_param( "status", null, PARAM_ALPHA);
     $marker = optional_param( "marker", null, PARAM_INT);

@@ -529,3 +529,5 @@ $string['eventmarkerallocationupdated'] = 'Marker allocation updated';
 $string['eventstudentsearchstarted'] = 'Student search started';
 $string['eventstudentsearched'] = 'Student searched';
 
+$string['eventmarkingviewed'] = 'Marking status viewed';
+$string['eventmarkingupdated'] = 'Marking status updated';
