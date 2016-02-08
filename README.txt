@@ -5,6 +5,8 @@ A Moodle (2.5) Activity module that manages the process of students maintaining 
 
 *2.5 Specific changes*
 
+Feb 2016: Removed use of add_to_log and migrated to using the new event-based logging
+
 Initial move to using nested tabs for the coordinator/marker interface.  Pre-cursor to more work later.
 
 Also modified interface to talk about "prompts", rather than "questions". i.e. students have to respond to prompts for blogging, not questions.
