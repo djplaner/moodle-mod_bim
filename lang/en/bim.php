@@ -288,7 +288,7 @@ $string['bim_details_registered_heading_help'] = '<p>Details of students allocat
 $string['bim_student_details_heading'] = 'Your students';
 $string['bim_student_details_heading_help'] = '<p>The lead teacher has allocated you a group of students. The following provides details about those students and their use of this activity. </p>';
 
-$string['bim_details_count'] = '<p><strong>You have:</strong> {$a->unregistered} <a href="#unreg">unregistered students</a>, and {$a->registered} <a href="#reg">registered students.</a></p><p><strong>You can:</strong> View the students\' details below, or <a href="{$a->mark}">mark their posts</a>. (see the green navigation box up and to the right.)</p>';
+$string['bim_details_count'] = '<p><strong>You have:</strong> {$a->unregistered} <a href="#unreg">unregistered students</a>, and {$a->registered} <a href="#reg">registered students.</a></p><p><strong>You can:</strong> View the students\' details below, or <a href="{$a->mark}">mark their posts</a>.</p>';
 $string['bim_details_opml'] = '<p>{$a->help} Download OPML file: <a href="{$a->url}">your students</a></p>';
 $string['bim_details_unavailable'] = 'unavailable';
 // bim_change_blog_registration
