@@ -15,30 +15,30 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package mod_bim
+ * A scheduled task for BIM cron.
+ *
+ * @package   mod_bim
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace mod_bim\task;
 
-/**
- * Code fragment to define the version of bim
- * This fragment is called by moodle_needs_upgrading() and /admin/index.php
- *
- * @author  David Jones <davidthomjones@gmail.com>
- * @package mod_bim
- */
+class cron_task extends \core\task\scheduled_task {
+    /**
+     * Get a descriptive name for this task (shown to admins).
+     *
+     * @return string
+     */
+    public function get_name() {
+        return get_string('crontask', 'mod_bim');
+    }
 
-defined('MOODLE_INTERNAL') || die;
-
-global $CFG;
-
-$plugin->version  = 2017041000;  // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires = 2013051400;
-if (!empty($CFG->version) && $CFG->version < 2014051200) {  // < 2.7
-    $plugin->cron = 3600;        // Period for cron to check this module (secs)
+    /**
+     * Run forum cron.
+     */
+    public function execute() {
+        global $CFG;
+        require_once($CFG->dirroot . '/mod/bim/lib.php');
+        bim_cron();
+    }
 }
-$plugin->component = 'mod_bim';
-$plugin->release = "2.1 (Build: 2016020402)";
-$plugin->component = "mod_bim";
-$plugin->maturity = MATURITY_STABLE;
-

@@ -15,30 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package mod_bim
+ * Definition of BIM scheduled tasks.
+ *
+ * @package   mod_bim
+ * @category  task
  * @copyright 2010 onwards David Jones {@link http://davidtjones.wordpress.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Code fragment to define the version of bim
- * This fragment is called by moodle_needs_upgrading() and /admin/index.php
- *
- * @author  David Jones <davidthomjones@gmail.com>
- * @package mod_bim
- */
+defined('MOODLE_INTERNAL') || die();
 
-defined('MOODLE_INTERNAL') || die;
-
-global $CFG;
-
-$plugin->version  = 2017041000;  // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires = 2013051400;
-if (!empty($CFG->version) && $CFG->version < 2014051200) {  // < 2.7
-    $plugin->cron = 3600;        // Period for cron to check this module (secs)
-}
-$plugin->component = 'mod_bim';
-$plugin->release = "2.1 (Build: 2016020402)";
-$plugin->component = "mod_bim";
-$plugin->maturity = MATURITY_STABLE;
-
+$tasks = array(
+    array(
+        'classname' => 'mod_bim\task\cron_task',
+        'blocking' => 0,
+        'minute' => '0',
+        'hour' => '*/1',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*'
+    )
+);

@@ -39,6 +39,7 @@ $string['modulename_help'] = '<p>The BIM activity module supports the management
 </ul>
 ';
 
+$string['crontask'] = 'BIM processing task';
 $string['group_allocation'] = 'Marker Allocations';
 $string['marking'] = 'Marking data';
 $string['student_feeds'] = 'Student feeds';
