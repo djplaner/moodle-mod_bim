@@ -22,7 +22,7 @@ BIM is an activity module for Moodle.  It provides support for teaching staff to
 
 It has been typically used to manage students maintaining their own reflective/learning journal.
 
-More information about BIM available on the web at [http://djon.es/blog/research/bam-blog-aggregation-management/]http://djon.es/blog/research/bam-blog-aggregation-management/
+More information about BIM available on the web at http://djon.es/blog/research/bam-blog-aggregation-management/]http://djon.es/blog/research/bam-blog-aggregation-management/
 
 The latest code and issues tracking around BIM is hosted on [github](https://github.com/djplaner/moodle-mod_bim/tree/bim2)
 
