@@ -211,7 +211,7 @@ function show_register_feed( $bim, $userid, $cm) {
     if ( $mform->is_cancelled() ) {
         print( "cancelled" );
     } else if ( $fromform = $mform->get_data() ) {
-        $response = new object();
+        $response = new stdClass();
         $response->blogurl = $fromform->blogurl;
 
         $response->bim = $bim->id;
