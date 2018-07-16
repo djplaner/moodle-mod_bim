@@ -1,4 +1,4 @@
-# INTRODUCING BIM - for Moodle 2.5
+# Introducing BIM - for Moodle 2.5 (and a bit above)
 
 A Moodle (2.5) Activity module that manages the process of students maintaining an individual learning journal using their choice of blog (or other RSS/ATOM generating service).
 
