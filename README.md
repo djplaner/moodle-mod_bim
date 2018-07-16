@@ -2,7 +2,7 @@
 
 A Moodle (2.5) Activity module that manages the process of students maintaining an individual learning journal using their choice of blog (or other RSS/ATOM generating service).
 
-#####2.5 Specific changes
+####2.5 Specific changes
 
 Feb 2016: Removed use of add_to_log and migrated to using the new event-based logging
 
