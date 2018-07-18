@@ -44,7 +44,6 @@ function show_student( $bim, $userid, $cm, $course) {
     if ( ! bim_feed_exists( $bimid, $userid ) ) {
         // need to check for passing in of parameters
         show_register_feed( $bim, $userid, $cm );
-        return;
     } else {
         $screen = optional_param( 'screen', '', PARAM_ALPHA );
         if ( $screen == "showQuestions" ) {
